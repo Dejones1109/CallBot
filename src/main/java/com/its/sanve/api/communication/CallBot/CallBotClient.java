@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 @Log4j2
 
 public class CallBotClient {
-//    @Autowired
-//    SanveClient sanveClient;
-//    public boolean StartCity_EndCity(String StartCity,String End_City) throws Exception {
-//        SanveResponse data = (SanveResponse) sanveClient.getProvinceDistrict();
-//
-//
-//    }
+    @Autowired
+    SanveClient sanveClient;
+
+    public boolean StartCity_EndCity(String StartCity, String End_City) throws Exception {
+        SanveResponse data = (SanveResponse) sanveClient.getProvinceDistrict();
+        log.info(data.getData());
+        return true;
+    }
 }

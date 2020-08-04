@@ -69,7 +69,7 @@ public class SanveClient extends AbstractCommunication {
             if (response.isSuccessful()) {
                 log.info("4");
                 data = response.body();
-                log.info(data.data.getClass());
+              log.info(data);
              //   System.out.println(data.getData());
                 log.info("5");
 
