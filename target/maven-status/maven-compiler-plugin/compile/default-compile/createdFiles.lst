@@ -26,7 +26,9 @@ com\its\sanve\api\repositories\CompanyRepository.class
 com\its\sanve\api\repositories\PointRepository.class
 com\its\sanve\api\repositories\RouteInfoRepository.class
 com\its\sanve\api\config\LoggingAspectConfiguration.class
+com\its\sanve\api\controller\CallBotController.class
 com\its\sanve\api\exceptions\handlers\BussinessExceptionHandler.class
+com\its\sanve\api\communication\SanVe\SanveClient.class
 com\its\sanve\api\repositories\AgencyRepository.class
 com\its\sanve\api\controller\SanVeController.class
 com\its\sanve\api\communication\dto\PaymentRequest$PaymentRequestBuilder.class
@@ -53,9 +55,10 @@ com\its\sanve\api\entities\Point.class
 com\its\sanve\api\repositories\VehicleRepository.class
 com\its\sanve\api\entities\SeatMap.class
 com\its\sanve\api\entities\Ticket.class
+com\its\sanve\api\communication\CallBot\CallBotClient.class
+com\its\sanve\api\communication\SanVe\SanveResponse.class
 com\its\sanve\api\repositories\TicketRepository.class
 com\its\sanve\api\communication\dto\OrderTicketRequest$OrderTicketRequestBuilder.class
 com\its\sanve\api\exceptions\ProcessErrorException.class
 com\its\sanve\api\interceptors\GwInterceptor.class
 com\its\sanve\api\controller\TokenController.class
-com\its\sanve\api\communication\SanVe\ProvinceClient.class

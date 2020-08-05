@@ -1,16 +1,21 @@
 package com.its.sanve.api.communication.SanVe;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.its.sanve.api.communication.AbstractCommunication;
 import com.its.sanve.api.communication.SanVeCommunicate;
 
 import com.its.sanve.api.communication.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.dto.CalculatePriceResponse;
 import com.its.sanve.api.entities.Province;
+import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
+
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -19,7 +24,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.annotation.PostConstruct;
 import javax.jws.Oneway;
+import java.io.DataInput;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Component
@@ -123,6 +132,24 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data =  response.body();
                 log.info("5");
+                log.info(data.getData().toString().toLowerCase());
+
+//                isCheckSECity(data.getData().toString(),route_name);
+                Boolean IsCheckedCity = null;
+                String route_name =  "Hà Nội - Sài gòn";
+                log.info(route_name.toLowerCase());
+               // Byte[] bytes = new
+              //  log.info(StringUnicodeEncoderDecoder.encodeStringToUnicodeSequence(result));
+                if(data.getData().toString().toLowerCase().trim().contains(route_name.toLowerCase().trim()) ){
+                    log.info("6");
+                    IsCheckedCity = true;
+                }else {
+                    IsCheckedCity= false;
+                }
+//
+                log.info("7");
+                log.info(IsCheckedCity);
+                log.info("8");
 
             } else {
                 log.info("jambalaya");
@@ -229,5 +256,12 @@ public class SanveClient extends AbstractCommunication {
        }
        return  results;
     }
+    public  int isCheckCity(String data,String route_name){
+        if(data.toLowerCase().contains(route_name.toLowerCase())){
+            return 1;
+        }
+        return  0;
 
+    }
 }
+

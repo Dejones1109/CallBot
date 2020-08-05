@@ -28,9 +28,6 @@ public class SanVeController {
     @Autowired
     SanveClient SVClient;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
 
     @RequestMapping(value = "point/get_province_district",method = RequestMethod.GET)
       public ResponseEntity<Object> getProvinceDistrict() throws Exception {
