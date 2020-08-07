@@ -19,15 +19,15 @@ public class CallBotClient {
 
     public  Object StartCity_EndCity(String StartCity,String EndCity) throws Exception {
         String CompanyId= "TC01gWSmr8A9Qx";
-
         String route_name = StartCity +"-"+ EndCity;
      Object data = sanveClient.getCompaniesRoutes(CompanyId);
-     Integer
-             ischeck = sanveClient.isCheckCity(data.toString(),route_name);
+     Integer ischeck = sanveClient.isCheckCity(data.toString(),route_name);
      log.info(ischeck);
       return ischeck;
     }
+    public  Object StartTimeonDay(String StartCity,String EndCity,String date){
 
-
+        return true;
+    }
 
 }

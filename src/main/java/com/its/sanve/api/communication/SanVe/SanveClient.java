@@ -1,5 +1,7 @@
 package com.its.sanve.api.communication.SanVe;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.its.sanve.api.communication.AbstractCommunication;
@@ -9,6 +11,7 @@ import com.its.sanve.api.communication.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.dto.CalculatePriceResponse;
 import com.its.sanve.api.entities.Province;
 import com.its.sanve.api.entities.RouteInfo;
+import com.its.sanve.api.entities.Trip;
 import com.its.sanve.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.json.JSONParser;
@@ -27,6 +30,8 @@ import javax.jws.Oneway;
 import java.io.DataInput;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -177,6 +182,22 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data =  response.body();
                 log.info("5");
+                log.info(data.getData());
+                log.info("6");
+//                Trip[] trip = null;
+                ObjectMapper map = new ObjectMapper();
+                try {
+                    log.info("7");
+//                    trip = map.readValues(data.data,new TypeReference<Trip[]>);
+                    Trip[] trips =  map.readValue((JsonParser) data.getData(),new TypeReference<Trip[]>() {});
+                    log.info("8");
+                    log.info(trips.clone());
+                    log.info("9");
+
+
+                }catch (Exception e){
+                    log.info(e.getMessage());
+                }
 
             } else {
                 log.info("jambalaya");
@@ -263,5 +284,6 @@ public class SanveClient extends AbstractCommunication {
         return  0;
 
     }
+  //  public  int isTripsByTime()
 }
 
