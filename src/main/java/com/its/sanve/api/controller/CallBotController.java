@@ -61,12 +61,11 @@ public class CallBotController {
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         log.info(string1);
         p.put("listPointUp", sanveClient.listRoutes(string1, startCity, route_name));
-        p.put("listPointDown", sanveClient.listRoutes(string1, endCity, route_name));
+        p.put("listPointDown",sanveClient.listRoutes(string1, endCity, route_name));
         long time2 = System.currentTimeMillis();
         ;
         log.info(time2 - time3);
-        return new ResponseEntity<>(p, HttpStatus.OK);
+        return new ResponseEntity<>(p.values(), HttpStatus.OK);
     }
-
 
 }
