@@ -11,7 +11,5 @@ import org.springframework.stereotype.Component;
 public class Client {
     String apiKey;
     String secretKey;
-    int tokenExpireTimeMs;
-    String iss;
-
+    String creat_at;
 }

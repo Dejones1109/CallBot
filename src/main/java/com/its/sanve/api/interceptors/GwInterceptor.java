@@ -1,18 +1,15 @@
 package com.its.sanve.api.interceptors;
 
 import com.its.sanve.api.exceptions.AuthenException;
-import com.its.sanve.api.exceptions.ProcessErrorException;
 import com.its.sanve.api.limititer.RequestRateLimiter;
 import com.its.sanve.api.utils.Client;
 import com.its.sanve.api.utils.ClientManager;
 import com.its.sanve.api.utils.GwJwtTokenFactory;
-import com.its.sanve.api.utils.GwRequestBodyBuilder;
 import com.its.sanve.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,8 +34,7 @@ public class GwInterceptor implements HandlerInterceptor {
     private static final int AUTHEN_FAIL =1 ;
     private static final int FORBIDDEN = 2;
     private static final int NON_AUTHEN_INFO =3 ;
-    @Autowired
-    private GwRequestBodyBuilder builder;
+
 
     @Autowired
     private MessageUtils messageUtils;
@@ -133,18 +129,7 @@ public class GwInterceptor implements HandlerInterceptor {
                 request.getSession().getId(), response.getStatus(),
                 (System.currentTimeMillis() - (Long) request.getAttribute(
                         requestTime)));
-//            String url = request.getRequestURL().toString();
-//            logContent = new Log();
-//            logContent.setCode(response.getStatus());
-//            logContent.setRequestId(request.getSession().getId());
-//            logContent.setUrl(url);
-//            logContent.setContent(builder.buildRequestBody(request).toString());
-//
-//            log.info("Save content {}", logContent);
-//            bizLogFacade.saveLog(logContent);
-//        } catch (Exception e) {
-//            log.error("[postHandle] saveLog {}", logContent, e);
-//        }
+
     }
 
     @Override

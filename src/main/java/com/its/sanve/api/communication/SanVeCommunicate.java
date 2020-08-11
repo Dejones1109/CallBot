@@ -1,15 +1,10 @@
 package com.its.sanve.api.communication;
 
 import com.its.sanve.api.communication.SanVe.SanveResponse;
-import com.its.sanve.api.communication.dto.CalculatePriceRequest;
-import com.its.sanve.api.communication.dto.CalculatePriceResponse;
+import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceRequest;
+import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceResponse;
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.dto.PaymentRequest;
-import com.its.sanve.api.entities.RouteInfo;
-import com.its.sanve.api.entities.Ticket;
-import com.its.sanve.api.entities.Trip;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -37,7 +32,7 @@ public interface SanVeCommunicate {
     public Call<SanveResponse> getTripsByPoint(@Query("api_key") String apiKey,
                                             @Query("secret_key") String secretKey,
                                             @Query("page") int page, @Query("size") int size, @Query("date") String date,
-                                            @Query("startPoint") String startPoint, @Query("endPoint") String endPoint,
+                                            @Query(value = "startPoint",encoded = true) String startPoint, @Query(value = "endPoint",encoded = true) String endPoint,
                                             @Query("startTimeFrom") String startTimeFrom, @Query("startTimeTo") String startTimeTo);
 
     @GET("trips")
