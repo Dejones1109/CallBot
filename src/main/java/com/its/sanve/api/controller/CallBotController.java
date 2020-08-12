@@ -34,18 +34,16 @@ public class CallBotController {
             @ApiResponse(code = 200, message = "Created face register successfully", response = SanveClient.class),
             @ApiResponse(code = 400, message = "Bad Request", response = SanveClient.class),
             @ApiResponse(code = 500, message = "Failure", response = SanveClient.class)})
-    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity) throws Exception {
+    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity,@RequestParam String date) throws Exception {
         Map<String, Object> p = new HashMap<>();
-        String route_name = startCity + " - " + endCity;
-        String CompanyId = "TC01gWSmr8A9Qx";
-        long time1 = System.currentTimeMillis();
-        Object data = sanveClient.getCompaniesRoutes(CompanyId);
-        log.info(data.toString());
-        p.put("1", sanveClient.isCheckCity(data.toString(), route_name));
-        long time2 = System.currentTimeMillis();
-        log.info(p);
-        log.info(time2 - time1);
-        return new ResponseEntity<>(p.values(), HttpStatus.OK);
+        int size = 0;
+        int page = 0;
+        String startTimeFrom = "";
+        String endTimeFrom = "";
+        Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
+        String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+        p.put("getListStartTimer",sanveClient.listStartTimeReality(string1,date));
+        return new ResponseEntity<>(p.values(),HttpStatus.OK);
     }
 
     @PostMapping("getListPointCity")
@@ -61,11 +59,34 @@ public class CallBotController {
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         log.info(string1);
         p.put("listPointUp", sanveClient.listRoutes(string1, startCity, route_name));
-        p.put("listPointDown",sanveClient.listRoutes(string1, endCity, route_name));
+        p.put("listPointDown", sanveClient.listRoutes(string1, endCity, route_name));
         long time2 = System.currentTimeMillis();
         ;
         log.info(time2 - time3);
-        return new ResponseEntity<>(p.values(), HttpStatus.OK);
+        return new ResponseEntity<>(p, HttpStatus.OK);
+    }
+
+    @PostMapping("getListStartTimer")
+    public ResponseEntity<Object> getListStartTimerOrDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date) throws Exception {
+        Map<String, Object> p = new HashMap<>();
+        int size = 0;
+        int page = 0;
+        String startTimeFrom = "";
+        String endTimeFrom = "";
+        Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
+        String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+        p.put("getListStartTimer",sanveClient.listStartTimeReality(string1,date));
+        return new ResponseEntity<>(p.values(),HttpStatus.OK);
+    }
+    @PostMapping("getQuanitiesTickets")
+    private  ResponseEntity<Object> getQuanitiesTickets(@RequestParam String tripId,@RequestParam String pointUpId,@RequestParam String pointDownId) throws Exception {
+        Map<String,Object> p = new HashMap<>();
+        Object data = sanveClient.getTripsTickets(tripId,pointUpId,pointDownId);
+        String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+        Object list = sanveClient.QuantitiesTickets(string);
+        p.put("1",sanveClient.QuantitiesTickets(string));
+
+        return new ResponseEntity<>(p.values(),HttpStatus.OK);
     }
 
 }

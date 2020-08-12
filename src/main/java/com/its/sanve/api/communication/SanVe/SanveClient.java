@@ -27,10 +27,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
+import java.util.*;
 
 @Log4j2
 @Component
@@ -43,12 +40,14 @@ public class SanveClient extends AbstractCommunication {
     String SecretKey;
     @Value("${sanve.endpoint}")
     private String baseUrl;
-    @Autowired
-    private ObjectMapper objectMapper;
+
     @Autowired
     MessageUtils messageUtils;
 
     private SanVeCommunicate sanVeCommunicate;
+    @Autowired
+    private
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @PostConstruct
     public void intConnection() {
@@ -201,6 +200,7 @@ public class SanveClient extends AbstractCommunication {
         log.info(end);
         SanveResponse data = null;
         Call<SanveResponse> request = null;
+        long time1 = System.currentTimeMillis();
         try {
             log.info("1");
             request = sanVeCommunicate.getTripsByPoint(apiKey.trim(), SecretKey.trim(), page, size, date.trim(), start, end, startTimeFrom.trim(), startTimeTo.trim());
@@ -211,43 +211,51 @@ public class SanveClient extends AbstractCommunication {
             if (response.isSuccessful()) {
                 log.info("4");
                 data = response.body();
-                log.info("5");
-                ObjectMapper map = new ObjectMapper();
-                log.info(data.getData());
-                String string1 = map.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-
-                log.info("6");
-                log.info(string1);
-
-
-                try {
-                    log.info("7");
-                    JsonNode jsonNode = map.readTree(string1);
-                    log.info(jsonNode);
-                    log.info("8");
-                    JsonNode arraynode = jsonNode.get("trips");
-                    log.info("9");
-                    if (arraynode.isArray()) {
-                        log.info("10");
-                        for (final JsonNode objNode : arraynode) {
-                            log.info(objNode.get("routeId").asText() + ", ");
-                            log.info("a");
-//                            if(o)
-                        }
-                        log.info("11");
-                    }
-                    //  log.info(jsonNode.get("trips").asText());
-                    log.info("12");
-
-
-                } catch (Exception e) {
-                    log.info(e.getMessage());
-                }
-
-            } else {
-                log.info("jambalaya");
+//                log.info("5");
+//                ObjectMapper map = new ObjectMapper();
+//                log.info(data.getData());
+//                String string1 = map.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+//
+//                log.info("6");
+//                log.info(string1);
+//
+//
+//                try {
+//                    log.info("7");
+//                    JsonNode jsonNode = map.readTree(string1);
+//                    log.info(jsonNode);
+//                    log.info("8");
+//                    JsonNode arraynode = jsonNode.get("trips");
+//                    log.info("9");
+////                    String test = "20200810";
+//
+//                    if (arraynode.isArray()) {
+//                        log.info("10");
+//                        for (final JsonNode objNode : arraynode) {
+//                            if (objNode.get("startDateReality").asText().equals(date)) {
+//                                log.info(objNode.get("startTimeReality").asText() + ",");
+//
+//                                log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+//                            }
+//                        }
+//                        long time2 = System.currentTimeMillis();
+//                        log.info("a");
+//                        log.info(time2 - time1);
+//                        log.info("11");
+//                    }
+//                    //  log.info(jsonNode.get("trips").asText());
+//                    log.info("12");
+//
+//
+//                } catch (Exception e) {
+//                    log.info(e.getMessage());
+//                }
+//
+//            } else {
+//                log.info("jambalaya");
+//            }
+//
             }
-
         } catch (Exception e) {
             log.info(e.getMessage());
         }
@@ -271,6 +279,9 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("5");
+                String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+                log.info(string);
+                log.info("6");
 
             } else {
                 log.info("jambalaya");
@@ -297,7 +308,26 @@ public class SanveClient extends AbstractCommunication {
             if (response.isSuccessful()) {
                 log.info("4");
                 data = response.body();
-                log.info("5");
+//                String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+//                log.info(string);
+//                log.info("5");
+//                JsonNode node = objectMapper.readTree(string);
+//                JsonNode tickets = node.get("tickets");
+//                log.info(tickets);
+//                log.info("6");
+//                int count = 0;
+//                if (tickets.isArray()) {
+//                    log.info("7");
+//                    for (JsonNode ticket : tickets) {
+//                        if (ticket.get("ticketStatus").asText().equals("7")) {
+//                            count++;
+//                            log.info(ticket.get("originalTicketPrice") + "");
+//
+//                        }
+//                    }
+//                }
+//
+//                log.info(count);
 
             } else {
                 log.info("jambalaya");
@@ -335,7 +365,7 @@ public class SanveClient extends AbstractCommunication {
     }
 
     public Object listRoutes(String data, String City, String routeName) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+
         Map<Integer, String> listPoints = new HashMap<>();
 
         try {
@@ -366,8 +396,88 @@ public class SanveClient extends AbstractCommunication {
         return listPoints.values();
     }
 
+    public Object listStartTimeReality(String data, String date) {
+        List listTimes = new ArrayList();
 
+        log.info("6");
+
+
+        try {
+            log.info("7");
+            JsonNode jsonNode = objectMapper.readTree(data);
+            log.info(jsonNode);
+            log.info("8");
+            JsonNode arraynodes = jsonNode.get("data");
+            JsonNode arraynode = arraynodes.get("trips");
+            log.info("9");
+
+
+            if (arraynode.isArray()) {
+                log.info("10");
+                for (final JsonNode objNode : arraynode) {
+                    if (objNode.get("startDateReality").asText().equals(date)) {
+                        log.info(objNode.get("startTimeReality").asText() + ",");
+                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+                        log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+        }
+        return listTimes;
+    }
+
+    private String ConventTimer(String startTimeReality) {
+        String timer = null;
+        double Time = Double.parseDouble(startTimeReality);
+        double number = Time / 3600000;
+        int hour = (int) Math.floor(number);
+        if (number == hour) {
+            timer = hour + " giờ";
+        } else {
+            timer = hour + " giờ " + Math.round((number - hour) * 60) + " phút";
+        }
+        return timer;
+    }
+
+    public Object QuantitiesTickets(String data) throws JsonProcessingException {
+        List<Object> quantitys = new ArrayList<>();
+        JsonNode node = objectMapper.readTree(data);
+        JsonNode tickets = node.get("data");
+        JsonNode ti = tickets.get("tickets");
+
+        log.info(ti);
+        log.info("6");
+        int count = 0;
+        if (ti.isArray()) {
+            log.info("7");
+            int temp = 0;
+            for (JsonNode ticket : ti) {
+                if (ticket.get("ticketStatus").asText().equals("7")) {
+                    count++;
+                    temp = ticket.get("originalTicketPrice").asInt();
+                    if (temp < ticket.get("originalTicketPrice").asInt()) {
+                     temp =   ticket.get("originalTicketPrice").asInt();
+                    }
+                    log.info(ticket.get("originalTicketPrice") + "");
+
+                }
+
+
+            }
+            log.info(count);
+            quantitys.add(count);
+            log.info(temp);
+            quantitys.add(temp);
+        }
+
+        log.info(count);
+        return quantitys;
+    }
 }
+
 
 
 

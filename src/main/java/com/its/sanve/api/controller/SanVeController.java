@@ -55,18 +55,26 @@ public class SanVeController {
         return new ResponseEntity<>(p.values(), HttpStatus.OK);
     }
 
-    @GetMapping("trips")
+    @GetMapping("tripsPoint")
     //trips by Points
-    public ResponseEntity<Object> getTrips(@RequestParam int page, @RequestParam int size, @RequestParam String date, @RequestParam
-            String startPoint, @RequestParam String endPoint, @RequestParam String startTimeFrom, @RequestParam String startTimeTo, @RequestParam String rounteId) throws Exception {
+    public ResponseEntity<Object> getTripsPoint(@RequestParam int page, @RequestParam int size, @RequestParam String date, @RequestParam
+            String startPoint, @RequestParam String endPoint, @RequestParam String startTimeFrom, @RequestParam String startTimeTo) throws Exception {
 
         Map<String, Object> p = new HashMap<>();
-        if (startPoint != null && endPoint != null) {
+
             p.put("1", SVClient.getTripsbyPoints(page, size, date, startPoint, endPoint, startTimeFrom, startTimeTo));
-        }
-        if (rounteId != null) {
-            p.put("1", SVClient.getTripsbyRouteId(page, size, date, startTimeFrom, startTimeTo, rounteId));
-        }
+
+        return new ResponseEntity<>(p.values(), HttpStatus.OK);
+    }
+    @GetMapping("tripsRoute")
+    //trips by Points
+    public ResponseEntity<Object> getTrips(@RequestParam int page, @RequestParam int size, @RequestParam String date,
+            @RequestParam String startTimeFrom, @RequestParam String startTimeTo, @RequestParam String routeId) throws Exception {
+
+        Map<String, Object> p = new HashMap<>();
+
+            p.put("1", SVClient.getTripsbyRouteId(page, size, date, startTimeFrom, startTimeTo, routeId));
+
         return new ResponseEntity<>(p.values(), HttpStatus.OK);
     }
 
