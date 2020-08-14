@@ -36,14 +36,39 @@ public class CallBotController {
             @ApiResponse(code = 500, message = "Failure", response = SanveClient.class)})
     public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity,@RequestParam String date) throws Exception {
         Map<String, Object> p = new HashMap<>();
+
+        String companiesId = "TC01gWSmr8A9Qx";
+        String routeName = startCity+" - "+endCity;
         int size = 0;
         int page = 0;
         String startTimeFrom = "";
         String endTimeFrom = "";
-        Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
-        String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        p.put("getListStartTimer",sanveClient.listStartTimeReality(string1,date));
-        return new ResponseEntity<>(p.values(),HttpStatus.OK);
+        log.info("Request chuyến ");
+        Long time1 = System.currentTimeMillis();
+       Object   data1 = sanveClient.getCompaniesRoutes(companiesId);
+       Integer check = sanveClient.isCheckCity(data1.toString(),routeName);
+        log.info("trả về có chuyến hay không?");
+        log.info(check);
+        if(check==1){
+         log.info("có tuyến rồi check  có chuyến");
+            Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
+            String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+            Object list = sanveClient.listStartTimeReality(string1,date);
+            if (list!=null){
+                p.put("valid",1);
+            }else {
+                p.put("valid",2);
+            }
+        }else {
+
+            p.put("valid",0);
+        }
+        Long time2 = System.currentTimeMillis();
+        log.info("thành công");
+        log.info(time2-time1);
+
+
+        return new ResponseEntity<>(p,HttpStatus.OK);
     }
 
     @PostMapping("getListPointCity")
@@ -68,25 +93,35 @@ public class CallBotController {
 
     @PostMapping("getListStartTimer")
     public ResponseEntity<Object> getListStartTimerOrDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date) throws Exception {
-        Map<String, Object> p = new HashMap<>();
+        Map<String, Object> p=new HashMap<>();
         int size = 0;
         int page = 0;
         String startTimeFrom = "";
         String endTimeFrom = "";
+        Long time1 = System.currentTimeMillis();
         Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        p.put("getListStartTimer",sanveClient.listStartTimeReality(string1,date));
-        return new ResponseEntity<>(p.values(),HttpStatus.OK);
+        p= (Map<String, Object>) sanveClient.listStartTimeReality(string1,date);
+
+        Long time2 = System.currentTimeMillis();
+        log.info(time2-time1);
+        return new ResponseEntity<>(p,HttpStatus.OK);
     }
     @PostMapping("getQuanitiesTickets")
     private  ResponseEntity<Object> getQuanitiesTickets(@RequestParam String tripId,@RequestParam String pointUpId,@RequestParam String pointDownId) throws Exception {
         Map<String,Object> p = new HashMap<>();
+        Long time = System.currentTimeMillis();
+
         Object data = sanveClient.getTripsTickets(tripId,pointUpId,pointDownId);
         String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        Object list = sanveClient.QuantitiesTickets(string);
-        p.put("1",sanveClient.QuantitiesTickets(string));
-
-        return new ResponseEntity<>(p.values(),HttpStatus.OK);
+        p = (Map<String, Object>) sanveClient.QuantitiesTickets(string);
+        Long time1 = System.currentTimeMillis();
+        log.info(time1-time);
+         log.info(p);
+       // p.put("1",map.setK);
+//        p.put("key",map.equals("temp"));
+//        p.put("ticket_qtt",map.equals("count"));
+        return new ResponseEntity<>(p,HttpStatus.OK);
     }
 
 }
