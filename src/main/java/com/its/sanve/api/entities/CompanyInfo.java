@@ -29,6 +29,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 public class CompanyInfo {
+    public  CompanyInfo(String id){
+        this.id = id;
+    }
     @Id
     @JsonProperty("companyId")
     String id;

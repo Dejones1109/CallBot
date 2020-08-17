@@ -2,6 +2,7 @@ package com.its.sanve.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.SanVe.SanveClient;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @RestController
@@ -27,6 +25,7 @@ public class CallBotController {
     ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     SanveClient sanveClient;
+
 
     @PostMapping("StartEndCity")
     @ApiOperation(value = "StartEndCity")
@@ -73,7 +72,7 @@ public class CallBotController {
 
     @PostMapping("getListPointCity")
 
-    public ResponseEntity<Object> getListPointCity(@RequestParam String startCity, @RequestParam String endCity) throws Exception {
+    public ResponseEntity<Object> getListPointCity(@RequestParam String startCity, @RequestParam String endCity,@RequestParam String routeID) throws Exception {
         Map<String, Object> p = new HashMap<>();
 
         String route_name = startCity + " - " + endCity;
@@ -83,8 +82,8 @@ public class CallBotController {
         long time3 = System.currentTimeMillis();
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         log.info(string1);
-        p.put("listPointUp", sanveClient.listRoutes(string1, startCity, route_name));
-        p.put("listPointDown", sanveClient.listRoutes(string1, endCity, route_name));
+        p.put("listPointUp", sanveClient.listRoutes(string1, startCity, route_name,routeID));
+        p.put("listPointDown", sanveClient.listRoutes(string1, endCity, route_name,routeID));
         long time2 = System.currentTimeMillis();
         ;
         log.info(time2 - time3);
@@ -108,11 +107,11 @@ public class CallBotController {
         return new ResponseEntity<>(p,HttpStatus.OK);
     }
     @PostMapping("getQuanitiesTickets")
-    private  ResponseEntity<Object> getQuanitiesTickets(@RequestParam String tripId,@RequestParam String pointUpId,@RequestParam String pointDownId) throws Exception {
+    private  ResponseEntity<Object> getQuanitiesTickets(@RequestParam String tripID,@RequestParam String pointUpID,@RequestParam String pointDownID) throws Exception {
         Map<String,Object> p = new HashMap<>();
         Long time = System.currentTimeMillis();
 
-        Object data = sanveClient.getTripsTickets(tripId,pointUpId,pointDownId);
+        Object data = sanveClient.getTripsTickets(tripID,pointUpID,pointDownID);
         String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         p = (Map<String, Object>) sanveClient.QuantitiesTickets(string);
         Long time1 = System.currentTimeMillis();
@@ -123,5 +122,6 @@ public class CallBotController {
 //        p.put("ticket_qtt",map.equals("count"));
         return new ResponseEntity<>(p,HttpStatus.OK);
     }
+
 
 }

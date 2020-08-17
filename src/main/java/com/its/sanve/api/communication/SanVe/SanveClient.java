@@ -10,6 +10,7 @@ import com.its.sanve.api.communication.SanVeCommunicate;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceResponse;
 
+import com.its.sanve.api.entities.CompanyInfo;
 import com.its.sanve.api.utils.MessageUtils;
 
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +26,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -105,7 +107,7 @@ public class SanveClient extends AbstractCommunication {
         SanveResponse data = null;
         Call<SanveResponse> request = null;
         try {
-            log.info("1");
+            log.info("");
             request = sanVeCommunicate.getCompanies(apiKey.trim(), SecretKey.trim());
 
             Response<SanveResponse> response = request.execute();
@@ -114,6 +116,29 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("5");
+                ArrayList<CompanyInfo> companyInfos = new ArrayList<>();
+
+               CompanyInfo companyInfo = new CompanyInfo();
+               String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+                log.info(string1);
+                JsonNode jsonNode = objectMapper.readTree(string1);
+
+
+                for (JsonNode obj : jsonNode) {
+                    companyInfo.setId(obj.get("companyId").asText());
+                    companyInfos.add(new CompanyInfo(obj.get("companyId").asText()));
+                    log.info("10");
+                   // log.info(obj.get("companyId").asText());
+                    log.info("11");
+                 //   log.info(companyInfo.getId());
+                }
+                log.info("6");
+                log.info(companyInfos);
+              //  for(CompanyInfo  info : C)
+              //  log.info(companyInfos.l);
+                log.info(companyInfo.getId());
+
+                log.info("7");
 
             } else {
                 log.info("jambalaya");
@@ -131,34 +156,33 @@ public class SanveClient extends AbstractCommunication {
         SanveResponse data = null;
         Call<SanveResponse> request = null;
 
-        log.info("1");
+        log.info("request");
         Long time1 = System.currentTimeMillis();
         request = sanVeCommunicate.getCompanyRoute(apiKey.trim(), SecretKey.trim(), CompanyId.trim());
-        log.info(request);
-        log.info("2");
+
         Long time = null;
         Response<SanveResponse> response = request.execute();
-        log.info("3");
+        log.info("resqonse thành công");
         if (response.isSuccessful()) {
-            log.info("4");
+
             data = response.body();
             log.info(data.getData());
-            ObjectMapper objectMapper = new ObjectMapper();
-            String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-            log.info("5");
-          //  log.info(string1);
-            try {
-                log.info("6");
-                Map<Integer, String> map = new HashMap<>();
-                JsonNode routeInfos = objectMapper.readTree(string1);
-                String routeName = "Hà Nội - Sài Gòn";
-                log.info(routeName);
-
-
-                for (JsonNode obj : routeInfos) {
-                    if(obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())){
-                        log.info("1");
-                    }
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+            log.info("Successfully!!!");
+            //  log.info(string1);
+//            try {
+//                log.info("6");
+//                Map<Integer, String> map = new HashMap<>();
+//                JsonNode routeInfos = objectMapper.readTree(string1);
+//                String routeName = "Hà Nội - Sài Gòn";
+//                log.info(routeName);
+//
+//
+//                for (JsonNode obj : routeInfos) {
+//                    if(obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())){
+//                        log.info("1");
+//                    }
 //                    if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
 //                        log.info("7");
 //                        log.info(obj.get("routeName").asText());
@@ -186,12 +210,12 @@ public class SanveClient extends AbstractCommunication {
 //                        // log.info("7");
 //
 //                    }
-                }
-                Long time2 =System.currentTimeMillis();
-                log.info(time2-time1);
-            } catch (Exception e) {
-                log.info(e.getMessage());
-            }
+            //            }
+//                Long time2 =System.currentTimeMillis();
+//                log.info(time2-time1);
+//            } catch (Exception e) {
+//                log.info(e.getMessage());
+//            }
         }
         return data;
     }
@@ -288,10 +312,9 @@ public class SanveClient extends AbstractCommunication {
                 log.info("data trả về thành công");
 //                String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
 //                log.info(string);
-                log.info("6");
 
             } else {
-                log.info("jambalaya");
+                log.info("failed");
             }
 
         } catch (Exception e) {
@@ -373,7 +396,7 @@ public class SanveClient extends AbstractCommunication {
 
     }
 
-    public Object listRoutes(String data, String City, String routeName) throws JsonProcessingException {
+    public Object listRoutes(String data, String City, String routeName, String RouteId) throws JsonProcessingException {
 
         Map<Integer, String> listPoints = new HashMap<>();
 
@@ -385,14 +408,15 @@ public class SanveClient extends AbstractCommunication {
             log.info(Routes);
             log.info("So sánh chuyến");
             for (JsonNode obj : Routes) {
-
-                if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
-                    JsonNode listPoint = obj.get("listPoint");
-                    if (listPoint.isArray()) {
-                        for (JsonNode arr : listPoint) {
-                            // if(arr.get("province").asText().equals("Sài Gòn"||"Hô"))
-                            if (arr.get("province").asText().toLowerCase().equals(City.toLowerCase())) {
-                                listPoints.put(1, arr.get("name").asText());
+                if (obj.get("routeId").asText().equals(RouteId)) {
+                    if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
+                        JsonNode listPoint = obj.get("listPoint");
+                        if (listPoint.isArray()) {
+                            for (JsonNode arr : listPoint) {
+                                // if(arr.get("province").asText().equals("Sài Gòn"||"Hô"))
+                                if (arr.get("province").asText().toLowerCase().equals(City.toLowerCase())) {
+                                    listPoints.put(1, arr.get("name").asText());
+                                }
                             }
                         }
                     }
@@ -406,9 +430,12 @@ public class SanveClient extends AbstractCommunication {
     }
 
     public Object listStartTimeReality(String data, String date) {
-        Map<String,Object> list = new HashMap<>();
-        List listTimes = new ArrayList();
+        Map<String, Object> list = new HashMap<>();
+        Integer valid = 0;
         List listTripId = new ArrayList();
+        List listRouteId = new ArrayList();
+        List listTimes = new ArrayList();
+
 
         log.info("cắt chuyễn Json");
 
@@ -416,7 +443,7 @@ public class SanveClient extends AbstractCommunication {
         try {
             log.info("7");
             JsonNode jsonNode = objectMapper.readTree(data);
-         //   log.info(jsonNode);
+            //   log.info(jsonNode);
             log.info("8");
             JsonNode arraynodes = jsonNode.get("data");
             JsonNode arraynode = arraynodes.get("trips");
@@ -426,17 +453,28 @@ public class SanveClient extends AbstractCommunication {
             if (arraynode.isArray()) {
                 log.info("So sánh chuỗi");
                 for (final JsonNode objNode : arraynode) {
-                   // listTimes.put("routeId")
+                    // listTimes.put("routeId")
                     if (objNode.get("startDateReality").asText().equals(date)) {
                         log.info(objNode.get("startTimeReality").asText() + ",");
-                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
                         listTripId.add(objNode.get("tripId").asText());
-                       log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                        listRouteId.add(objNode.get("routeId").asText());
+                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+
+                        log.info(ConventTimer(objNode.get("startTimeReality").asText()));
                         log.info("thành công");
                     }
                 }
-                list.put("tripId",listTripId);
-                list.put("timer",listTimes);
+                if (listRouteId.isEmpty() && listTripId.isEmpty()) {
+                    valid = 0;
+                } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
+                    valid = 2;
+                } else {
+                    valid = 1;
+                }
+                list.put("valid", valid);
+                list.put("tripId", listTripId);
+                list.put("routeId", listRouteId);
+                list.put("timer", listTimes);
             }
         } catch (Exception e) {
             log.info(e.getMessage());
@@ -446,20 +484,31 @@ public class SanveClient extends AbstractCommunication {
     }
 
     private String ConventTimer(String startTimeReality) {
-        String timer = null;
+        String timer;
         double Time = Double.parseDouble(startTimeReality);
         double number = Time / 3600000;
         int hour = (int) Math.floor(number);
         if (number == hour) {
-            timer = hour + " giờ";
+            if (hour < 10) {
+                timer = "0" + hour + "h00";
+            } else {
+                timer = hour + "h00";
+
+            }
         } else {
-            timer = hour + " giờ " + Math.round((number - hour) * 60) + " phút";
+            if (hour < 10) {
+                timer = "0" + hour + "h" + Math.round((number - hour) * 60);
+            } else {
+                timer = hour + "h" + Math.round((number - hour) * 60);
+
+            }
+
         }
         return timer;
     }
 
     public Object QuantitiesTickets(String data) throws JsonProcessingException {
-        Map<String,Object> quantitys = new HashMap<>();
+        Map<String, Object> quantitys = new HashMap<>();
         JsonNode node = objectMapper.readTree(data);
         JsonNode tickets = node.get("data");
         JsonNode ti = tickets.get("tickets");
@@ -472,21 +521,21 @@ public class SanveClient extends AbstractCommunication {
 
             int temp = 0;
             for (JsonNode ticket : ti) {
-                if (ticket.get("ticketStatus").asInt()==7) {
+                if (ticket.get("ticketStatus").asInt() == 7) {
                     count++;
                     log.info(ticket.get("originalTicketPrice").asInt());
                     int code = ticket.get("originalTicketPrice").asInt();
-                    if(temp==0){
-                        temp=code;
-                    }else if(code<temp) {
-                        temp =code;
+                    if (temp == 0) {
+                        temp = code;
+                    } else if (code < temp) {
+                        temp = code;
                     }
                 }
             }
             log.info(count);
-            quantitys.put("ticket_qtt",count);
+            quantitys.put("ticket_qtt", count);
             log.info(temp);
-            quantitys.put("price",temp);
+            quantitys.put("price", temp);
 
         }
 
