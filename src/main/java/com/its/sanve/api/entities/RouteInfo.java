@@ -8,6 +8,7 @@ package com.its.sanve.api.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class RouteInfo {
     @Id
     @Column(name = "id")

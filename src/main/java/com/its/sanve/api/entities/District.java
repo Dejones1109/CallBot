@@ -7,6 +7,7 @@ package com.its.sanve.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class District {
     @Id
     @JsonProperty("districtId")

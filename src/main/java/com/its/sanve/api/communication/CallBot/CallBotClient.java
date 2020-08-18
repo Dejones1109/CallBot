@@ -1,5 +1,8 @@
 package com.its.sanve.api.communication.CallBot;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.SanVe.Data;
 import com.its.sanve.api.communication.SanVe.SanveClient;
 
@@ -9,29 +12,196 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Component
 public class CallBotClient {
+    @Autowired
+    ObjectMapper objectMapper = new ObjectMapper();
 
-    SanveClient sanveClient;
+    public int isCheckCity(String data, String route_name) {
+        if (data.toLowerCase().contains(route_name.toLowerCase())) {
+            return 1;
+        }
+        return 0;
 
-    public  Object StartCity_EndCity(String StartCity,String EndCity) throws Exception {
-        String CompanyId= "TC01gWSmr8A9Qx";
-        String route_name = StartCity +"-"+ EndCity;
-        long time1 = System.currentTimeMillis();
-     Object data = sanveClient.getCompaniesRoutes(CompanyId);
-     log.info(data.toString().split(","));
-     Integer ischeck = sanveClient.isCheckCity(data.toString(),route_name);
-        long time2 = System.currentTimeMillis();
-        log.info(time2-time1);
-     log.info(ischeck);
-      return ischeck;
     }
-    public  Object StartTimeonDay(String StartCity,String EndCity,String date){
 
-        return true;
+    public Object listStartTimeReality(String data, String date) {
+        Map<String, Object> list = new HashMap<>();
+        Integer valid = 0;
+        List listTripId = new ArrayList();
+        List listRouteId = new ArrayList();
+        List listTimes = new ArrayList();
+
+
+        log.info("cắt chuyễn Json");
+
+
+        try {
+            log.info("7");
+            JsonNode jsonNode = objectMapper.readTree(data);
+            //   log.info(jsonNode);
+            log.info("8");
+            JsonNode arraynodes = jsonNode.get("data");
+            JsonNode arraynode = arraynodes.get("trips");
+            log.info("9");
+
+
+            if (arraynode.isArray()) {
+                log.info("So sánh chuỗi");
+                for (final JsonNode objNode : arraynode) {
+                    // listTimes.put("routeId")
+                    if (objNode.get("startDateReality").asText().equals(date)) {
+                        log.info(objNode.get("startTimeReality").asText() + ",");
+                        listTripId.add(objNode.get("tripId").asText());
+                        listRouteId.add(objNode.get("routeId").asText());
+                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+
+                        log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                        log.info("thành công");
+                    }
+                }
+                if (listRouteId.isEmpty() && listTripId.isEmpty()) {
+                    valid = 0;
+                } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
+                    valid = 2;
+                } else {
+                    valid = 1;
+                }
+                list.put("valid", valid);
+                list.put("tripId", listTripId);
+                list.put("routeId", listRouteId);
+                list.put("timer", listTimes);
+            }
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+        }
+        return list;
+    }
+
+    private String ConventTimer(String startTimeReality) {
+        String timer;
+        double Time = Double.parseDouble(startTimeReality);
+        double number = Time / 3600000;
+        int hour = (int) Math.floor(number);
+        if (number == hour) {
+            if (hour < 10) {
+                timer = "0" + hour + "h00";
+            } else {
+                timer = hour + "h00";
+
+            }
+        } else {
+            if (hour < 10) {
+                timer = "0" + hour + "h" + Math.round((number - hour) * 60);
+            } else {
+                timer = hour + "h" + Math.round((number - hour) * 60);
+
+            }
+
+        }
+        return timer;
+    }
+
+    public Object QuantitiesTickets(String data) throws JsonProcessingException {
+        Map<String, Object> quantitys = new HashMap<>();
+        JsonNode node = objectMapper.readTree(data);
+        JsonNode tickets = node.get("data");
+        JsonNode ti = tickets.get("tickets");
+
+        log.info(ti);
+        log.info("6");
+        int count = 0;
+        if (ti.isArray()) {
+            log.info("7");
+
+            int temp = 0;
+            for (JsonNode ticket : ti) {
+                if (ticket.get("ticketStatus").asInt() == 7) {
+                    count++;
+                    log.info(ticket.get("originalTicketPrice").asInt());
+                    int code = ticket.get("originalTicketPrice").asInt();
+                    if (temp == 0) {
+                        temp = code;
+                    } else if (code < temp) {
+                        temp = code;
+                    }
+                }
+            }
+            log.info(count);
+            quantitys.put("ticket_qtt", count);
+            log.info(temp);
+            quantitys.put("price", temp);
+
+        }
+
+        log.info(count);
+        return quantitys;
+    }
+
+    public Object listRoutes(String data, String StartCity, String EndCity, String routeName, String RouteId) throws JsonProcessingException {
+
+        Map<String, Object> listPoints = new HashMap<>();
+        List PointUp = new ArrayList();
+        List PointUpId = new ArrayList();
+        List PointDown = new ArrayList();
+        List PointDownID = new ArrayList();
+        try {
+            log.info("Chuyển Json thành java Object");
+            JsonNode routeInfos = objectMapper.readTree(data);
+            //   log.info(routeInfos);
+            JsonNode Routes = routeInfos.get("data");
+            log.info(Routes);
+            log.info("So sánh chuyến");
+            log.info(Routes.isArray());
+
+                for (JsonNode obj : Routes) {
+                    if (obj.get("routeId").asText().equals(RouteId)) {
+                        if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
+                            JsonNode listPoint = obj.get("listPoint");
+                            if (listPoint.isArray()) {
+                                for (JsonNode arr : listPoint) {
+                                    log.info("vào vòng for");
+                                    if (arr.get("province").asText().toLowerCase().equals(StartCity.toLowerCase())) {
+
+                                        PointUp.add(arr.get("id").asText());
+                                        log.info(PointUp);
+                                        PointUpId.add(arr.get("name").asText());
+                                        log.info(PointUpId);
+
+                                    }
+                                    if (arr.get("province").asText().toLowerCase().equals(EndCity.toLowerCase())) {
+
+                                        PointDown.add(arr.get("id").asText());
+                                        log.info(PointDown);
+                                        PointDownID.add(arr.get("name").asText());
+                                        log.info(PointDownID);
+
+                                    }
+                                }
+
+                            }
+                            listPoints.put("PointUpID", PointUp);
+                            listPoints.put("PointUp", PointUpId);
+                            listPoints.put("PointDownID", PointDown);
+                            listPoints.put("PointDown", PointDownID);
+
+                        }
+
+                    }
+                }
+
+            log.info("thành công");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+        return listPoints;
     }
 
 }

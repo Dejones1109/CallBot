@@ -1,8 +1,12 @@
 package com.its.sanve.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.its.sanve.api.communication.CallBot.CallBotClient;
 import com.its.sanve.api.communication.SanVe.SanveClient;
 
+import com.its.sanve.api.entities.TransactionLog;
+import com.its.sanve.api.repositories.TransactionLogRepository;
+import com.its.sanve.api.utils.RandomString;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,6 +29,12 @@ public class CallBotController {
     ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     SanveClient sanveClient;
+    @Autowired
+    CallBotClient callBotClient;
+    @Autowired
+    RandomString randomString;
+    @Autowired
+    TransactionLogRepository transactionLogRepository;
 
 
     @PostMapping("StartEndCity")
@@ -45,14 +55,14 @@ public class CallBotController {
         log.info("Request chuyến ");
         Long time1 = System.currentTimeMillis();
        Object   data1 = sanveClient.getCompaniesRoutes(companiesId);
-       Integer check = sanveClient.isCheckCity(data1.toString(),routeName);
+       Integer check = callBotClient.isCheckCity(data1.toString(),routeName);
         log.info("trả về có chuyến hay không?");
         log.info(check);
         if(check==1){
          log.info("có tuyến rồi check  có chuyến");
             Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
             String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-            Object list = sanveClient.listStartTimeReality(string1,date);
+            Object list = callBotClient.listStartTimeReality(string1,date);
             if (list!=null){
                 p.put("valid",1);
             }else {
@@ -81,9 +91,10 @@ public class CallBotController {
         Object data = sanveClient.getCompaniesRoutes(CompanyId);
         long time3 = System.currentTimeMillis();
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        log.info(string1);
-        p.put("listPointUp", sanveClient.listRoutes(string1, startCity, route_name,routeID));
-        p.put("listPointDown", sanveClient.listRoutes(string1, endCity, route_name,routeID));
+       // log.info(string1);
+        p= (Map<String, Object>) callBotClient.listRoutes(string1,startCity, endCity, route_name,routeID);
+
+
         long time2 = System.currentTimeMillis();
         ;
         log.info(time2 - time3);
@@ -100,7 +111,7 @@ public class CallBotController {
         Long time1 = System.currentTimeMillis();
         Object data = sanveClient.getTripsbyPoints(page,size,date,startCity,endCity,startTimeFrom,endTimeFrom);
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        p= (Map<String, Object>) sanveClient.listStartTimeReality(string1,date);
+        p= (Map<String, Object>) callBotClient.listStartTimeReality(string1,date);
 
         Long time2 = System.currentTimeMillis();
         log.info(time2-time1);
@@ -108,19 +119,32 @@ public class CallBotController {
     }
     @PostMapping("getQuanitiesTickets")
     private  ResponseEntity<Object> getQuanitiesTickets(@RequestParam String tripID,@RequestParam String pointUpID,@RequestParam String pointDownID) throws Exception {
-        Map<String,Object> p = new HashMap<>();
+        Map<String,Object> p;
         Long time = System.currentTimeMillis();
 
         Object data = sanveClient.getTripsTickets(tripID,pointUpID,pointDownID);
         String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        p = (Map<String, Object>) sanveClient.QuantitiesTickets(string);
+        p = (Map<String, Object>) callBotClient.QuantitiesTickets(string);
         Long time1 = System.currentTimeMillis();
         log.info(time1-time);
          log.info(p);
-       // p.put("1",map.setK);
-//        p.put("key",map.equals("temp"));
-//        p.put("ticket_qtt",map.equals("count"));
+
         return new ResponseEntity<>(p,HttpStatus.OK);
+    }
+    @PostMapping("creatTransantionLog")
+    public String creatTransantionLog(@RequestParam String PointUp,@RequestParam String PointDown,@RequestParam String StartTimeReality,@RequestParam Date StartDate,@RequestParam String Route,@RequestParam Integer Status){
+        randomString = new RandomString();
+        TransactionLog transactionLog = new TransactionLog();
+        transactionLog.setId(randomString.randomAlphaNumeric());
+        transactionLog.setPoint_up(PointUp);
+        transactionLog.setPoint_down(PointDown);
+        transactionLog.setStart_time_reality(StartTimeReality);
+        transactionLog.setStart_date(StartDate);
+        transactionLog.setRoute(Route);
+        transactionLog.setStatus(Status);
+        transactionLogRepository.save(transactionLog);
+
+        return  ""+HttpStatus.OK;
     }
 
 
