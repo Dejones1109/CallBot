@@ -17,6 +17,6 @@ import org.springframework.stereotype.Repository;
  * @param <P>
  */
 @Repository
-public interface TransactionLogRepository extends JpaRepository<TransactionLog, String>{
+public interface TransactionLogRepository extends JpaRepository<TransactionLog, Long>{
     
 }

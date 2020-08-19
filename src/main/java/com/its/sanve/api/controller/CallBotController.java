@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Log4j2
@@ -132,14 +133,21 @@ public class CallBotController {
         return new ResponseEntity<>(p,HttpStatus.OK);
     }
     @PostMapping("creatTransantionLog")
-    public String creatTransantionLog(@RequestParam String PointUp,@RequestParam String PointDown,@RequestParam String StartTimeReality,@RequestParam Date StartDate,@RequestParam String Route,@RequestParam Integer Status){
+    public String creatTransantionLog(@RequestParam String Hotline,@RequestParam String Call_Id,@RequestParam String Intent,@RequestParam String PhoneOrder,@RequestParam String Phone,@RequestParam String PointUp,@RequestParam String PointDown,@RequestParam String StartTimeReality,@RequestParam Date StartDate,@RequestParam String Route,@RequestParam Integer Status){
         randomString = new RandomString();
+        LocalDateTime now = LocalDateTime.now();
         TransactionLog transactionLog = new TransactionLog();
-        transactionLog.setId(randomString.randomAlphaNumeric());
+      // transactionLog.setId(randomString.randomAlphaNumeric());
+        transactionLog.setPhone(Phone);
+        transactionLog.setHotlive(Hotline);
+        transactionLog.setCall_ID(Call_Id);
+        transactionLog.setIntent(Intent);
+        transactionLog.setPhone_order(PhoneOrder);
         transactionLog.setPoint_up(PointUp);
         transactionLog.setPoint_down(PointDown);
         transactionLog.setStart_time_reality(StartTimeReality);
         transactionLog.setStart_date(StartDate);
+        transactionLog.setCreated_at(now);
         transactionLog.setRoute(Route);
         transactionLog.setStatus(Status);
         transactionLogRepository.save(transactionLog);

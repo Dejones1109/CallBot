@@ -116,11 +116,19 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("5");
+               // ArrayList<CompanyInfo> companyInfos = objectMapper.readValue(data.getData(), List.class);
+
                 ArrayList<CompanyInfo> companyInfos = new ArrayList<>();
 
                CompanyInfo companyInfo = new CompanyInfo();
                String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
                 log.info(string1);
+                 CompanyInfo[] companyInfos1 = objectMapper.readValue(string1, CompanyInfo[].class);
+//                 for(CompanyInfo company:companyInfos1){
+//                     log.info(company);
+//                 }
+               //  log.info(companyInfos1.iterator().);
+
                 JsonNode jsonNode = objectMapper.readTree(string1);
 
 

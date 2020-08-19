@@ -3,6 +3,7 @@ package com.its.sanve.api.communication.CallBot;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.its.sanve.api.communication.SanVe.Data;
 import com.its.sanve.api.communication.SanVe.SanveClient;
 
@@ -12,10 +13,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Log4j2
 @Component
@@ -51,11 +51,38 @@ public class CallBotClient {
             JsonNode arraynode = arraynodes.get("trips");
             log.info("9");
 
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
+            log.info("currentDay");
+            log.info(now.getHour());
+            log.info(now.getHour()*3600000);
+            log.info(now.getMinute()*60*1000);
+            String currentDay = format.format(now);
+            Integer currentTime =(now.getHour()*3600000+now.getMinute()*60*1000);
+            log.info(currentTime);
+            log.info(currentDay);
+            log.info(date);
+            if(date.equals(currentDay)){
+                if (arraynode.isArray()) {
+                    log.info("So sánh ngày hôm nay");
+                    for (final JsonNode objNode : arraynode) {
+                        if (objNode.get("startDateReality").asText().equals(currentDay)) {
+                            if(objNode.get("startTimeReality").asInt() > currentTime){
+                                listTripId.add(objNode.get("tripId").asText());
+                                listRouteId.add(objNode.get("routeId").asText());
+                                listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+                                log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                            }
+                             log.info("thành công");
 
+                        }
+                    }
+                }
+
+            }else {
             if (arraynode.isArray()) {
-                log.info("So sánh chuỗi");
+                log.info("So sánh ngày khác ngày hôm  nay");
                 for (final JsonNode objNode : arraynode) {
-                    // listTimes.put("routeId")
                     if (objNode.get("startDateReality").asText().equals(date)) {
                         log.info(objNode.get("startTimeReality").asText() + ",");
                         listTripId.add(objNode.get("tripId").asText());
@@ -64,20 +91,23 @@ public class CallBotClient {
 
                         log.info(ConventTimer(objNode.get("startTimeReality").asText()));
                         log.info("thành công");
+
+                    }
                     }
                 }
-                if (listRouteId.isEmpty() && listTripId.isEmpty()) {
-                    valid = 0;
-                } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
-                    valid = 2;
-                } else {
-                    valid = 1;
-                }
-                list.put("valid", valid);
-                list.put("tripId", listTripId);
-                list.put("routeId", listRouteId);
-                list.put("timer", listTimes);
+
             }
+            if (listRouteId.isEmpty() && listTripId.isEmpty()) {
+                valid = 0;
+            } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
+                valid = 2;
+            } else {
+                valid = 1;
+            }
+            list.put("valid", valid);
+            list.put("tripId", listTripId);
+            list.put("routeId", listRouteId);
+            list.put("timer", listTimes);
         } catch (Exception e) {
             log.info(e.getMessage());
 
@@ -95,7 +125,6 @@ public class CallBotClient {
                 timer = "0" + hour + "h00";
             } else {
                 timer = hour + "h00";
-
             }
         } else {
             if (hour < 10) {
@@ -203,5 +232,6 @@ public class CallBotClient {
         }
         return listPoints;
     }
+
 
 }

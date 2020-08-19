@@ -17,5 +17,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TripRepository extends JpaRepository<Trip, String>{
-    Trip findAllBy(String id);
+  //  Trip findAllBy(String id);
 }
