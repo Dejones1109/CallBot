@@ -1,6 +1,8 @@
 package com.its.sanve.api.communication.SanVe;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.its.sanve.api.entities.CompanyInfo;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

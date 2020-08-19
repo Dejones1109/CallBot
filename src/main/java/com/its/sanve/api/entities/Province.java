@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,15 +25,25 @@ import lombok.ToString;
  */
 @Getter
 @Setter
+@Table(name = "province")
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class Province {
+	
+	public Province() {
+		super();
+	}
+	public Province(String id, String name, String unit) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.unit = unit;
+	}
     @Id
     @Column(name = "id")
     String id;
-    @Column(name = "province_name")
+	@Column(name = "province_name")
     @JsonProperty("provinceName")
     String name;
     @Column(name = "unit_name")

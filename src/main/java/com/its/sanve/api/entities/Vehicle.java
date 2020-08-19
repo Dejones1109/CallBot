@@ -7,6 +7,7 @@ package com.its.sanve.api.entities;
 
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -31,11 +32,14 @@ public class Vehicle {
     @Id
     @Column(name = "id")
     String id;
+    
     @Column(name = "number_plate")
     String numberPlate;
+    
     @Column(name = "type")
     int vehicleType;
-        @Column(name = "images")
+    @ElementCollection(targetClass=String.class)
+    @Column(name = "images")
     List<String> listImage;
     
     public static final int GIUONG_NAM =0;

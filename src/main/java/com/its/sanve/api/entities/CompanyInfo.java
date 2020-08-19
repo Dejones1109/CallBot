@@ -5,11 +5,14 @@
  */
 package com.its.sanve.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.logging.log4j.message.Message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,16 +28,29 @@ import lombok.ToString;
 @Setter
 @Table(name = "company_info")
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class CompanyInfo {
-    @Id
+	
+	public CompanyInfo() {
+		super();
+	}
+	public CompanyInfo(String id, String name, String phoneNumber, Double reputation, String logo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.reputation = reputation;
+		this.logo = logo;
+	}
+	@Id
     @JsonProperty("companyId")
     String id;
+	
     @Column(name = "company_name")
     @JsonProperty("companyName")
     String name;
+    
     @Column(name = "phone")
     @JsonProperty("phoneNumber")
     String phoneNumber;
@@ -42,6 +58,7 @@ public class CompanyInfo {
     @Column(name = "reputation")
     @JsonProperty("reputation")
     Double reputation;
+    
     @Column(name = "logo")
     @JsonProperty("companyLogo")
     String logo;

@@ -28,8 +28,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Trip {
     @Id
     @Column(name = "id")
@@ -50,7 +49,7 @@ public class Trip {
     List<UserInfo> drivers;
     @Transient
     List<UserInfo> assistants;
-    @ManyToOne
+    @ManyToOne(targetEntity = Trip.class)
     RouteInfo routeInfo;
     @Transient
     SeatMap seatMap;
@@ -60,4 +59,21 @@ public class Trip {
     List<Point> listPoint;
     @Transient
     CompanyInfo companyInfo;
+    
+    public Trip() {
+		super();
+	}
+	public Trip(String id, Integer status, String startDateReality, Integer startTimeReality, Integer runTimeReality,
+			String note) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.startDateReality = startDateReality;
+		this.startTimeReality = startTimeReality;
+		this.runTimeReality = runTimeReality;
+		this.note = note;
+	}
+
+
+	
 }

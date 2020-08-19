@@ -8,7 +8,9 @@ package com.its.sanve.api.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +22,11 @@ import lombok.ToString;
  *
  * @author quangdt
  */
+@Entity
 @Getter
 @Setter
 @ToString
+@Table(name = "seat")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Seat {

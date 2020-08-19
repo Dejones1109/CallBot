@@ -7,7 +7,10 @@ package com.its.sanve.api.entities;
 
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +25,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Table(name = "point")
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Point {
     /**
      * Thứ tự điểm dừng trong chuyến
@@ -78,7 +83,7 @@ public class Point {
      * Danh sách giá, trong đó giá trị phần tử thứ i là giá từ điểm điểm đang xét đến điểm thứ i.
      * Giá = -1 nghĩa là giữa 2 điểm đó không bán vé
      */
-    
+    @ElementCollection(targetClass=Double.class)
     List<Double> listPrice;
     /**
      * Cho phép đưa đón tận nhà tại diểm đang xét

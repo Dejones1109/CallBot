@@ -5,6 +5,7 @@ import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceR
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceResponse;
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.dto.PaymentRequest;
+import com.its.sanve.api.entities.CompanyInfo;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

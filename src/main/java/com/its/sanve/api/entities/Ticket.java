@@ -7,6 +7,7 @@ package com.its.sanve.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.ToString;
  *
  * @author quangdt
  */
+@Entity
 @Getter
 @Setter
 @ToString

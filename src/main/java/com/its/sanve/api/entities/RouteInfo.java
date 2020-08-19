@@ -8,7 +8,9 @@ package com.its.sanve.api.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,8 +25,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "route_info")
+@Entity
 public class RouteInfo {
     @Id
     @Column(name = "id")
@@ -41,9 +43,25 @@ public class RouteInfo {
     @Transient
     List<String> listImages;
     @Column(name = "children_ticket_ratio")
-    Float childrenTicketRatio;
+    Double childrenTicketRatio;
     @Column(name = "note")
     String note;
     @Transient
     List<Point> listPoint;
+	public RouteInfo(String id, String companyId, String name, String nameShort, Double childrenTicketRatio,
+			String note) {
+		super();
+		this.id = id;
+		this.companyId = companyId;
+		this.name = name;
+		this.nameShort = nameShort;
+		this.childrenTicketRatio = childrenTicketRatio;
+		this.note = note;
+	}
+	public RouteInfo() {
+		super();
+	}
+    
+    
+    
 }

@@ -5,10 +5,13 @@
  */
 package com.its.sanve.api.services;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author quangdt
  */
+@Service
 public class ProvinceService {
     
 }
