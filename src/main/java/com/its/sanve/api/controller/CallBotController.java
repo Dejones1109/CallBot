@@ -139,7 +139,7 @@ public class CallBotController {
         TransactionLog transactionLog = new TransactionLog();
       // transactionLog.setId(randomString.randomAlphaNumeric());
         transactionLog.setPhone(Phone);
-        transactionLog.setHotlive(Hotline);
+        transactionLog.setHotline(Hotline);
         transactionLog.setCall_ID(Call_Id);
         transactionLog.setIntent(Intent);
         transactionLog.setPhone_order(PhoneOrder);

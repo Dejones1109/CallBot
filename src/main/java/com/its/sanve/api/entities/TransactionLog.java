@@ -37,9 +37,9 @@ public class TransactionLog {
     @Column(name = "call_ID")
     @JsonProperty("call_ID")
     String Call_ID;
-    @Column(name = "hotlive")
-    @JsonProperty("hotlive")
-    String Hotlive;
+    @Column(name = "hotline")
+    @JsonProperty("hotline")
+    String Hotline;
     @Column(name = "intent")
     @JsonProperty("intent")
     String Intent;
