@@ -58,7 +58,10 @@ public class CallBotController {
         String endTimeFrom = "";
         log.info("Request chuyến ");
         Long time1 = System.currentTimeMillis();
-        RouteInfo  data1 = routeInfoRepository.searchRouteName(routeName);
+        List<String>  data1 = new ArrayList<>();
+        data1.addAll(routeInfoRepository.searchRouteName(routeName));
+        //routeInfoRepository.searchRouteName(routeName);
+        
         log.info(data1);
         Boolean check = callBotClient.checkRouteName(data1);
         log.info("trả về có chuyến hay không?");

@@ -21,6 +21,6 @@ import java.util.List;
  */
 @Repository
 public interface RouteInfoRepository extends JpaRepository<RouteInfo, String>{
-    @Query("SELECT r.name FROM RouteInfo r WHERE r.name = :routeName")
-    RouteInfo searchRouteName(@Param("routeName") String routeName);
+    @Query("SELECT r.id FROM RouteInfo r WHERE r.name = :routeName")
+    List<String> searchRouteName(@Param("routeName") String routeName);
 }

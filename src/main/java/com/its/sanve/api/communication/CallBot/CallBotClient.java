@@ -23,13 +23,21 @@ public class CallBotClient {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public boolean checkRouteName(RouteInfo routeInfo){
+    public boolean checkRouteName(List<String> routeInfo){
         boolean check = true;
-        if(routeInfo==null){
-            check = false;
-        }else{
-            check = true;
+        for (String obj : routeInfo) {
+        	  if (obj != null) {
+        	    check = true;
+        	    //break;
+        	  }else {
+        		  check = false;
+        	  }
         }
+//        if(routeInfo==null){
+//           //check = false;
+//        }else{
+//           // check = true;
+//        }
         return check;
     }
 //    public int isCheckCity(String data, String route_name) {
