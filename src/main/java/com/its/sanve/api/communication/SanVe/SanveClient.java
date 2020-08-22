@@ -10,6 +10,7 @@ import com.its.sanve.api.communication.SanVeCommunicate;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceResponse;
 
+import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.entities.CompanyInfo;
 import com.its.sanve.api.utils.MessageUtils;
 
@@ -88,7 +89,7 @@ public class SanveClient extends AbstractCommunication {
                 data = response.body();
                 log.info(time2 - time1);
                 log.info(data);
-                //   System.out.println(data.getData());
+
                 log.info("5");
 
             } else {
@@ -116,40 +117,40 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("5");
-               // ArrayList<CompanyInfo> companyInfos = objectMapper.readValue(data.getData(), List.class);
-
-                ArrayList<CompanyInfo> companyInfos = new ArrayList<>();
-
-               CompanyInfo companyInfo = new CompanyInfo();
-               String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-                log.info(string1);
-                 CompanyInfo[] companyInfos1 = objectMapper.readValue(string1, CompanyInfo[].class);
-//                 for(CompanyInfo company:companyInfos1){
-//                     log.info(company);
-//                 }
-               //  log.info(companyInfos1.iterator().);
-
-                JsonNode jsonNode = objectMapper.readTree(string1);
-
-
-                for (JsonNode obj : jsonNode) {
-                    companyInfo.setId(obj.get("companyId").asText());
-                    companyInfos.add(new CompanyInfo(obj.get("companyId").asText()));
-                    log.info("10");
-                   // log.info(obj.get("companyId").asText());
-                    log.info("11");
-                 //   log.info(companyInfo.getId());
-                }
-                log.info("6");
-                log.info(companyInfos);
-              //  for(CompanyInfo  info : C)
-              //  log.info(companyInfos.l);
-                log.info(companyInfo.getId());
-
-                log.info("7");
-
-            } else {
-                log.info("jambalaya");
+             //   List<CompanyInfo> companyInfos = objectMapper.readValue(data.getData(), List.class);
+//
+//                ArrayList<CompanyInfo> companyInfos = new ArrayList<>();
+//
+//               CompanyInfo companyInfo = new CompanyInfo();
+//               String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+//                log.info(string1);
+//                 CompanyInfo[] companyInfos1 = objectMapper.readValue(string1, CompanyInfo[].class);
+////                 for(CompanyInfo company:companyInfos1){
+////                     log.info(company);
+////                 }
+//               //  log.info(companyInfos1.iterator().);
+//
+//                JsonNode jsonNode = objectMapper.readTree(string1);
+//
+//
+//                for (JsonNode obj : jsonNode) {
+//                    companyInfo.setId(obj.get("companyId").asText());
+//                    companyInfos.add(new CompanyInfo(obj.get("companyId").asText()));
+//                    log.info("10");
+//                   // log.info(obj.get("companyId").asText());
+//                    log.info("11");
+//                 //   log.info(companyInfo.getId());
+//                }
+//                log.info("6");
+//                log.info(companyInfos);
+//              //  for(CompanyInfo  info : C)
+//              //  log.info(companyInfos.l);
+//                log.info(companyInfo.getId());
+//
+//                log.info("7");
+//
+//            } else {
+//                log.info("jambalaya");
             }
 
         } catch (Exception e) {
@@ -394,6 +395,19 @@ public class SanveClient extends AbstractCommunication {
             log.info("5");
         }
         return results;
+    }
+    public  Object createOrderTicket(OrderTicketRequest request) throws IOException {
+        SanveResponse data = null;
+        log.info("request");
+        Call<SanveResponse> requests = sanVeCommunicate.orderTicket(request);
+        log.info("response");
+        Response<SanveResponse> response = requests.execute();
+        if(response.isSuccessful()){
+            data = response.body();
+            log.info("success!!!");
+            log.info(data);
+        }
+        return data;
     }
 
 //    public int isCheckCity(String data, String route_name) {

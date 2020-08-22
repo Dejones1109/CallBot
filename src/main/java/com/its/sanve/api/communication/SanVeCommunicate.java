@@ -50,7 +50,7 @@ public interface SanVeCommunicate {
     public Call<CalculatePriceResponse> calculatePrice(@Body CalculatePriceRequest request);
 
     @POST("order/create")
-    public Call orderTicket(@Body OrderTicketRequest request);
+    public Call<SanveResponse> orderTicket(@Body OrderTicketRequest request);
 
     @POST("order/payment")
     public Call paymennt(@Body PaymentRequest request);

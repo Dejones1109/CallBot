@@ -23,13 +23,22 @@ public class CallBotClient {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public int isCheckCity(String data, String route_name) {
-        if (data.toLowerCase().contains(route_name.toLowerCase())) {
-            return 1;
+    public boolean checkRouteName(RouteInfo routeInfo){
+        boolean check = true;
+        if(routeInfo==null){
+            check = false;
+        }else{
+            check = true;
         }
-        return 0;
-
+        return check;
     }
+//    public int isCheckCity(String data, String route_name) {
+//        if (data.toLowerCase().contains(route_name.toLowerCase())) {
+//            return 1;
+//        }
+//        return 0;
+//
+//    }
 
     public Object listStartTimeReality(String data, String date) {
         Map<String, Object> list = new HashMap<>();

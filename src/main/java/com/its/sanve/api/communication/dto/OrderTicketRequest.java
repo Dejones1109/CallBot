@@ -33,7 +33,9 @@ public class OrderTicketRequest extends Request{
     String routeId;
     @JsonProperty("full_name")
     String customerFullname;
+    @JsonProperty("phone")
     String customerPhone;
+    @JsonProperty("gender")
     Integer customerGender;
     @JsonProperty("age")
     Integer customerAge;
