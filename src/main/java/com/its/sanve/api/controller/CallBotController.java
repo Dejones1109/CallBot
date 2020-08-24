@@ -5,7 +5,6 @@ import com.its.sanve.api.communication.CallBot.CallBotClient;
 import com.its.sanve.api.communication.SanVe.SanveClient;
 
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
-import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.entities.TransactionLog;
 import com.its.sanve.api.repositories.RouteInfoRepository;
 import com.its.sanve.api.repositories.TransactionLogRepository;
@@ -14,13 +13,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
-import okhttp3.MultipartBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -41,13 +42,14 @@ public class CallBotController {
 
     @Autowired
     RouteInfoRepository routeInfoRepository;
+
     @PostMapping("StartEndCity")
     @ApiOperation(value = "StartEndCity")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created face register successfully", response = SanveClient.class),
             @ApiResponse(code = 400, message = "Bad Request", response = SanveClient.class),
             @ApiResponse(code = 500, message = "Failure", response = SanveClient.class)})
-    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date) throws Exception {
+    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
         Map<String, Object> p = new HashMap<>();
 
 //        String companiesId = "TC01gWSmr8A9Qx";
@@ -55,34 +57,38 @@ public class CallBotController {
         int size = 0;
         int page = 0;
         String startTimeFrom = "";
-        String endTimeFrom = "";
+        String endTimeTo = "";
         log.info("Request chuyến ");
         Long time1 = System.currentTimeMillis();
-        List<String>  data1 = new ArrayList<>();
-        data1.addAll(routeInfoRepository.searchRouteName(routeName));
+        List<String> data1 = new ArrayList<>();
+        data1.addAll(routeInfoRepository.searchRouteName(routeName, companyId));
         //routeInfoRepository.searchRouteName(routeName);
-        
+
         log.info(data1);
         Boolean check = callBotClient.checkRouteName(data1);
+        Long time2 = System.currentTimeMillis();
+        log.info(time2 - time1);
         log.info("trả về có chuyến hay không?");
         log.info(check);
         if (check == true) {
             log.info("có tuyến rồi check  có chuyến");
-            Object data = sanveClient.getTripsbyPoints(page, size, date, startCity, endCity, startTimeFrom, endTimeFrom);
+            Object data = sanveClient.getTripsbyPoints(page, size, date, startCity, endCity, startTimeFrom, endTimeTo);
             String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-            Object list = callBotClient.listStartTimeReality(string1, date);
+            Object list = callBotClient.listStartTimeRealityforRoute(string1, date);
             if (list != null) {
                 p.put("valid", 1);
             } else {
                 p.put("valid", 2);
             }
+
+
         } else {
 
             p.put("valid", 0);
         }
-        Long time2 = System.currentTimeMillis();
+        Long time3 = System.currentTimeMillis();
         log.info("thành công");
-        log.info(time2 - time1);
+        log.info(time3 - time1);
 
 
         return new ResponseEntity<>(p, HttpStatus.OK);
@@ -105,7 +111,7 @@ public class CallBotController {
 
         long time2 = System.currentTimeMillis();
         ;
-        log.info(time2 - time3);
+        log.info(time2 - time1);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
@@ -142,7 +148,7 @@ public class CallBotController {
     }
 
     @PostMapping("creatTransantionLog")
-    public String creatTransantionLog(@RequestParam String Hotline, @RequestParam String Call_Id, @RequestParam String Intent, @RequestParam String PhoneOrder, @RequestParam String Phone, @RequestParam String PointUp, @RequestParam String PointDown, @RequestParam String StartTimeReality, @RequestParam Date StartDate, @RequestParam String Route, @RequestParam Integer Status) {
+    public String creatTransantionLog(@RequestParam String Hotline, @RequestParam String Call_Id, @RequestParam String Intent, @RequestParam String PhoneOrder, @RequestParam String Phone, @RequestParam String PointUp, @RequestParam String PointDown, @RequestParam String StartTimeReality, @RequestParam String StartDate, @RequestParam String Route, @RequestParam Integer Status) throws ParseException {
         randomString = new RandomString();
         LocalDateTime now = LocalDateTime.now();
         TransactionLog transactionLog = new TransactionLog();
@@ -155,7 +161,7 @@ public class CallBotController {
         transactionLog.setPoint_up(PointUp);
         transactionLog.setPoint_down(PointDown);
         transactionLog.setStart_time_reality(StartTimeReality);
-        transactionLog.setStart_date(StartDate);
+        transactionLog.setStart_date(convertDateTime(StartDate));
         transactionLog.setCreated_at(now);
         transactionLog.setRoute(Route);
         transactionLog.setStatus(Status);
@@ -170,4 +176,13 @@ public class CallBotController {
         return new ResponseEntity("ok", HttpStatus.OK);
     }
 
+
+    private String convertDateTime(String items) throws ParseException {
+        Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(items);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String parsedDate = formatter.format(initDate);
+        System.out.println(parsedDate);
+
+        return parsedDate;
+    }
 }

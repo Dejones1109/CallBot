@@ -24,20 +24,13 @@ public class CallBotClient {
     ObjectMapper objectMapper = new ObjectMapper();
 
     public boolean checkRouteName(List<String> routeInfo){
-        boolean check = true;
-        for (String obj : routeInfo) {
-        	  if (obj != null) {
-        	    check = true;
-        	    //break;
-        	  }else {
-        		  check = false;
-        	  }
+        boolean check = false;
+        if(routeInfo.isEmpty()) {
+            check = false;
+        }else {
+            check = true;
         }
-//        if(routeInfo==null){
-//           //check = false;
-//        }else{
-//           // check = true;
-//        }
+
         return check;
     }
 //    public int isCheckCity(String data, String route_name) {
@@ -47,7 +40,32 @@ public class CallBotClient {
 //        return 0;
 //
 //    }
+   public  Object listStartTimeRealityforRoute(String data, String date) throws JsonProcessingException {
+       JsonNode jsonNode = objectMapper.readTree(data);
+       List<Object> list= new ArrayList<>();
+       //   log.info(jsonNode);
+       log.info("8");
+       JsonNode arraynodes = jsonNode.get("data");
+       JsonNode arraynode = arraynodes.get("trips");
+       log.info("9");
+       if (arraynode.isArray()) {
+           log.info("So sánh ngày khác ngày hôm  nay");
+           for (final JsonNode objNode : arraynode) {
+               if (objNode.get("startDateReality").asText().equals(date)) {
+                   log.info(objNode.get("startTimeReality").asText() + ",");
 
+                   list.add(ConventTimer(objNode.get("startTimeReality").asText()));
+
+                   log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                   log.info("thành công");
+
+               }
+           }
+       }
+
+
+    return  list;
+   }
     public Object listStartTimeReality(String data, String date) {
         Map<String, Object> list = new HashMap<>();
         Integer valid = 0;

@@ -54,7 +54,7 @@ public class TransactionLog {
     String Start_time_reality;
     @Column(name = "start_date")
     @JsonProperty("start_date")
-    Date Start_date;
+    String Start_date;
     @Column(name = "created_at")
     @JsonProperty("created_at")
     LocalDateTime Created_at;
