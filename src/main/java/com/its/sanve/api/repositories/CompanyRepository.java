@@ -22,6 +22,6 @@ import org.springframework.stereotype.Service;
 @Repository
 
 public interface CompanyRepository extends JpaRepository<CompanyInfo, String>{
-    @Query("SELECT c.id, c.name FROM CompanyInfo c WHERE c.phoneNumber = :phone")
+    @Query("SELECT c.id, c.name, c.nameShort FROM CompanyInfo c WHERE c.phoneNumber = :phone")
     Object findPhone(@Param("phone") String phone);
 }

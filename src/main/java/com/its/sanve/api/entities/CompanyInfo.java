@@ -62,4 +62,8 @@ public class CompanyInfo {
     @Column(name = "logo")
     @JsonProperty("companyLogo")
     String logo;
+    
+    @Column(name = "company_shortname")
+    @JsonProperty("name_short")
+    String nameShort;
 }
