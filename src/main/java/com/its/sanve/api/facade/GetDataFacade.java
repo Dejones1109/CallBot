@@ -132,4 +132,9 @@ public class GetDataFacade {
 		routeInfoRepository.saveAll(listRouteInfor);
 		return data;
 	}
+	
+	public Object getInfoCompany(String company_phone) throws Exception{
+		Object data = companyRepository.findPhone(company_phone);
+		return data;
+	}
 }

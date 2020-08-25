@@ -106,6 +106,13 @@ public class SanVeController {
                 .toResponseEntity();
 
     }
+    
+    @GetMapping("getInfoCompany")
+    public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception{
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("1", getDataFacade.getInfoCompany(phone));
+    	return new ResponseEntity<Object>(map.values(), HttpStatus.OK);
+    }
 
 }
 
