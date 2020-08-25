@@ -46,6 +46,7 @@ com\its\sanve\api\repositories\UserInfoRepository.class
 com\its\sanve\api\entities\Agency.class
 com\its\sanve\api\limititer\RequestRateLimiter.class
 com\its\sanve\api\entities\Trip.class
+com\its\sanve\api\facade\GetDataFacade.class
 com\its\sanve\api\config\CorsFilter.class
 com\its\sanve\api\dto\GwResponseDto.class
 com\its\sanve\api\communication\dto\PaymentRequest.class

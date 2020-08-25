@@ -7,7 +7,7 @@ import com.its.sanve.api.communication.SanVe.SanveClient;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.SanVe.Order_Cal_Price.dto.CalculatePriceResponse;
 import com.its.sanve.api.dto.GwResponseDto;
-
+import com.its.sanve.api.facade.GetDataFacade;
 import com.its.sanve.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,10 @@ public class SanVeController {
     private static final int PARAM_MISSING = 1;
     @Autowired
     SanveClient SVClient;
+    
+    @Autowired(required = true)
+    private GetDataFacade getDataFacade;
+    
     @Autowired
     MessageUtils messageUtils;
 
@@ -32,7 +36,9 @@ public class SanVeController {
     @RequestMapping(value = "point/get_province_district", method = RequestMethod.GET)
     public ResponseEntity<Object> getProvinceDistrict() throws Exception {
         Map<String, Object> p = new HashMap<>();
-        p.put("1", SVClient.getProvinceDistrict());
+        
+        p.put("1", getDataFacade.getDataProvinceDistrict());
+        //p.put("1", SVClient.getProvinceDistrict());
 
         log.info(SVClient.getProvinceDistrict());
         return new ResponseEntity<>(p.values(), HttpStatus.OK);
@@ -42,16 +48,19 @@ public class SanVeController {
     public ResponseEntity<Object> get_companies() throws Exception {
 
         Map<String, Object> p = new HashMap<>();
-        p.put("1", SVClient.getCompanies());
+        p.put("1", getDataFacade.getDataCompanies());
+        
+//       p.put("1", SVClient.getCompanies());
 //
 //        log.info(SVClient.getCompanies());
         return new ResponseEntity<>(p.values(), HttpStatus.OK);
     }
 
     @GetMapping("company/routes")
-    public ResponseEntity<Object> get_company_router(@RequestParam String CompanyId) throws Exception {
+    public ResponseEntity<Object> get_company_router(@RequestParam String companyId) throws Exception {
         Map<String, Object> p = new HashMap<>();
-        p.put("1", SVClient.getCompaniesRoutes(CompanyId));
+        p.put("1", getDataFacade.getDataRoutes(companyId));
+//        p.put("1", SVClient.getCompaniesRoutes(CompanyId));
         return new ResponseEntity<>(p.values(), HttpStatus.OK);
     }
 

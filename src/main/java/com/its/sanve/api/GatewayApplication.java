@@ -11,14 +11,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@SpringBootApplication(scanBasePackages = {"com.its.sanve"})
+@SpringBootApplication(scanBasePackages = {"com.its.sanve.*", "com.its.sanve.api.facade"})
 @EnableCaching
 @EnableWebMvc
 //@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 
-@EnableJpaRepositories(basePackages = {"com.its.sanve"})
+@EnableJpaRepositories(basePackages = {"com.its.sanve.*"})
 @EntityScan(basePackages = {"com.its.sanve.*"})
-@ComponentScan(basePackages = {"com.its.sanve.*"})
+@ComponentScan(basePackages = {"com.its.sanve.api.*"})
 public class GatewayApplication {
 
     public static void main(String[] args) {

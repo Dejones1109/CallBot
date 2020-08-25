@@ -106,33 +106,33 @@ public class SanveClient extends AbstractCommunication {
 				log.info(data);
 				// System.out.println(data.getData());
 				log.info("5");
-				List<District> listDistrict = new ArrayList<>();
-				List<Province> listProvinces = new ArrayList<>();
-
-				String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-				log.info(string1);
-				JsonNode jsonProvinces = objectMapper.readTree(string1);
-				log.info(jsonProvinces);
-
-				for (JsonNode provinces : jsonProvinces) {
-					// listDistrict.add(new District(obj.get("districtId").asText(),
-					// obj.get("provinceId").asText(), obj.get("districtName").asText(),
-					// obj.get("unitName").asText()));
-
-					listProvinces.add(new Province(provinces.get("id").asText(), provinces.get("provinceName").asText(),
-							provinces.get("unitName").asText()));
-					JsonNode jsonDistrict = provinces.get("listDistrict");
-					for (JsonNode districts : jsonDistrict) {
-						listDistrict.add(
-								new District(districts.get("districtId").asText(), districts.get("provinceId").asText(),
-										districts.get("districtName").asText(), districts.get("unitName").asText()));
-					}
-					log.info(listProvinces);
-					log.info("10");
-
-				}
-				provinceRepository.saveAll(listProvinces);
-				districRepository.saveAll(listDistrict);
+//				List<District> listDistrict = new ArrayList<>();
+//				List<Province> listProvinces = new ArrayList<>();
+//
+//				String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+//				log.info(string1);
+//				JsonNode jsonProvinces = objectMapper.readTree(string1);
+//				log.info(jsonProvinces);
+//
+//				for (JsonNode provinces : jsonProvinces) {
+//					// listDistrict.add(new District(obj.get("districtId").asText(),
+//					// obj.get("provinceId").asText(), obj.get("districtName").asText(),
+//					// obj.get("unitName").asText()));
+//
+//					listProvinces.add(new Province(provinces.get("id").asText(), provinces.get("provinceName").asText(),
+//							provinces.get("unitName").asText()));
+//					JsonNode jsonDistrict = provinces.get("listDistrict");
+//					for (JsonNode districts : jsonDistrict) {
+//						listDistrict.add(
+//								new District(districts.get("districtId").asText(), districts.get("provinceId").asText(),
+//										districts.get("districtName").asText(), districts.get("unitName").asText()));
+//					}
+//					log.info(listProvinces);
+//					log.info("10");
+//
+//				}
+//				provinceRepository.saveAll(listProvinces);
+//				districRepository.saveAll(listDistrict);
 
 			} else {
 				log.info("jambalaya");
@@ -160,27 +160,27 @@ public class SanveClient extends AbstractCommunication {
 				log.info("4");
 				data = response.body();
 				log.info("5");
-				List<CompanyInfo> companyInfos = new ArrayList<>();
-
-				// CompanyInfo companyInfo = new CompanyInfo(id, name, phoneNumber, reputation,
-				// logo);
-				String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-				log.info(string1);
-				JsonNode jsonNode = objectMapper.readTree(string1);
-
-				for (JsonNode obj : jsonNode) {
-					// companyInfo.setId(obj.get("companyId").asText());
-					companyInfos.add(new CompanyInfo(obj.get("companyId").asText(), obj.get("companyName").asText(),
-							obj.get("telecomPhoneNumber").asText(), obj.get("reputation").asDouble(),
-							obj.get("companyLogo").asText()));
-					log.info("10");
-
-				}
-				log.info("6");
-				log.info(companyInfos);
-				companyRepository.saveAll(companyInfos);
-
-				log.info("7");
+//				List<CompanyInfo> companyInfos = new ArrayList<>();
+//
+//				// CompanyInfo companyInfo = new CompanyInfo(id, name, phoneNumber, reputation,
+//				// logo);
+//				String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
+//				log.info(string1);
+//				JsonNode jsonNode = objectMapper.readTree(string1);
+//
+//				for (JsonNode obj : jsonNode) {
+//					// companyInfo.setId(obj.get("companyId").asText());
+//					companyInfos.add(new CompanyInfo(obj.get("companyId").asText(), obj.get("companyName").asText(),
+//							obj.get("telecomPhoneNumber").asText(), obj.get("reputation").asDouble(),
+//							obj.get("companyLogo").asText()));
+//					log.info("10");
+//
+//				}
+//				log.info("6");
+//				log.info(companyInfos);
+//				companyRepository.saveAll(companyInfos);
+//
+//				log.info("7");
 
 			} else {
 				log.info("jambalaya");
@@ -225,9 +225,9 @@ public class SanveClient extends AbstractCommunication {
 				for (JsonNode obj : routeInfos) {
 					// listTrip.add(new Trip(obj.get(index), status, startDateReality,
 					// startTimeReality, runTimeReality, note));
-					listRouteInfor.add(new RouteInfo(obj.get("routeId").asText(), obj.get("companyId").asText(),
-							obj.get("routeName").asText(), obj.get("routeNameShort").asText(),
-							obj.get("childrenTicketRatio").asDouble(), obj.get("note").asText()));
+//					listRouteInfor.add(new RouteInfo(obj.get("routeId").asText(), obj.get("companyId").asText(),
+//							obj.get("routeName").asText(), obj.get("routeNameShort").asText(),
+//							obj.get("childrenTicketRatio").asDouble(), obj.get("note").asText()));
 					if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
 						log.info("1");
 					}
@@ -259,7 +259,7 @@ public class SanveClient extends AbstractCommunication {
 //
 //                    }
 				}
-				routeInfoRepository.saveAll(listRouteInfor);
+				//routeInfoRepository.saveAll(listRouteInfor);
 				Long time2 = System.currentTimeMillis();
 				log.info(time2 - time1);
 			} catch (Exception e) {
