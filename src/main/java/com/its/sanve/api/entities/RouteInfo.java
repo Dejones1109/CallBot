@@ -24,8 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 public class RouteInfo {
     @Id
@@ -48,4 +47,7 @@ public class RouteInfo {
     String note;
     @Transient
     List<Point> listPoint;
+
+    public RouteInfo(String routeId, String companyId, String routeName, String routeNameShort, double childrenTicketRatio, String note) {
+    }
 }

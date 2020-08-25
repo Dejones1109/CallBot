@@ -25,8 +25,6 @@ import lombok.ToString;
 @Setter
 @Table(name = "company_info")
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class CompanyInfo {
     public  CompanyInfo(String id){
@@ -48,4 +46,10 @@ public class CompanyInfo {
     @Column(name = "logo")
     @JsonProperty("companyLogo")
     String logo;
+    @Column(name = "company_shortname")
+    @JsonProperty("name_short")
+    String nameShort;
+
+    public CompanyInfo(String companyId, String companyName, String telecomPhoneNumber, double reputation, String companyLogo) {
+    }
 }

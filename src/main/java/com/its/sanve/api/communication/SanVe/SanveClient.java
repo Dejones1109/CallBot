@@ -319,8 +319,7 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("data trả về thành công");
-//                String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-//                log.info(string);
+
 
             } else {
                 log.info("failed");
@@ -349,27 +348,6 @@ public class SanveClient extends AbstractCommunication {
                 log.info("4");
                 data = response.body();
                 log.info("gọi data thành công về");
-//                String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-//                log.info(string);
-//                log.info("5");
-//                JsonNode node = objectMapper.readTree(string);
-//                JsonNode tickets = node.get("tickets");
-//                log.info(tickets);
-//                log.info("6");
-//                int count = 0;
-//                if (tickets.isArray()) {
-//                    log.info("7");
-//                    for (JsonNode ticket : tickets) {
-//                        if (ticket.get("ticketStatus").asText().equals("7")) {
-//                            count++;
-//                            log.info(ticket.get("originalTicketPrice") + "");
-//
-//                        }
-//                    }
-//                }
-//
-//                log.info(count);
-
             } else {
                 log.info("jambalaya");
             }

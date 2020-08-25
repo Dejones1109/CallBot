@@ -41,4 +41,9 @@ public class Province {
     String unit;
     @Transient
     List<District> listDistrict;
+    public  Province(String id,String name,String unitName){
+        this.id= id;
+        this.name= name;
+        this.unit= unitName;
+    }
 }

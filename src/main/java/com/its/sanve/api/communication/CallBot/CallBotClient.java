@@ -23,113 +23,124 @@ public class CallBotClient {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public boolean checkRouteName(List<String> routeInfo){
+    public boolean checkRouteName(String routeInfo) {
         boolean check = false;
-        if(routeInfo.isEmpty()) {
+        if (routeInfo.isEmpty()) {
             check = false;
-        }else {
+        } else {
             check = true;
         }
 
         return check;
     }
-//    public int isCheckCity(String data, String route_name) {
+
+    //    public int isCheckCity(String data, String route_name) {
 //        if (data.toLowerCase().contains(route_name.toLowerCase())) {
 //            return 1;
 //        }
 //        return 0;
 //
 //    }
-   public  Object listStartTimeRealityforRoute(String data, String date) throws JsonProcessingException {
-       JsonNode jsonNode = objectMapper.readTree(data);
-       List<Object> list= new ArrayList<>();
-       //   log.info(jsonNode);
-       log.info("8");
-       JsonNode arraynodes = jsonNode.get("data");
-       JsonNode arraynode = arraynodes.get("trips");
-       log.info("9");
-       if (arraynode.isArray()) {
-           log.info("So sánh ngày khác ngày hôm  nay");
-           for (final JsonNode objNode : arraynode) {
-               if (objNode.get("startDateReality").asText().equals(date)) {
-                   log.info(objNode.get("startTimeReality").asText() + ",");
+    public Object listStartTimeRealityforRoute(String data, String date) throws JsonProcessingException {
+        JsonNode jsonNode = objectMapper.readTree(data);
+        List<Object> list = new ArrayList<>();
+        //   log.info(jsonNode);
+        log.info("8");
+        JsonNode arraynodes = jsonNode.get("data");
+        JsonNode arraynode = arraynodes.get("trips");
+        log.info("9");
+        if (arraynode.isArray()) {
+            log.info("So sánh ngày khác ngày hôm  nay");
+            for (final JsonNode objNode : arraynode) {
+                if (objNode.get("startDateReality").asText().equals(date)) {
+                    log.info(objNode.get("startTimeReality").asText() + ",");
 
-                   list.add(ConventTimer(objNode.get("startTimeReality").asText()));
+                    list.add(ConventTimer(objNode.get("startTimeReality").asText()));
 
-                   log.info(ConventTimer(objNode.get("startTimeReality").asText()));
-                   log.info("thành công");
+                    log.info(ConventTimer(objNode.get("startTimeReality").asText()));
+                    log.info("thành công");
 
-               }
-           }
-       }
+                }
+            }
+        }
 
 
-    return  list;
-   }
-    public Object listStartTimeReality(String data, String date) {
+        return list;
+    }
+
+    public Object listStartTimeReality(String data, String date, String companyId) {
         Map<String, Object> list = new HashMap<>();
         Integer valid = 0;
-        List listTripId = new ArrayList();
-        List listRouteId = new ArrayList();
-        List listTimes = new ArrayList();
+        List<String> listTripId = new ArrayList();
+        List<String> listRouteId = new ArrayList();
+        List<String> listTimes = new ArrayList();
 
 
         log.info("cắt chuyễn Json");
 
 
         try {
-            log.info("7");
+
             JsonNode jsonNode = objectMapper.readTree(data);
-            //   log.info(jsonNode);
-            log.info("8");
+
+
             JsonNode arraynodes = jsonNode.get("data");
             JsonNode arraynode = arraynodes.get("trips");
-            log.info("9");
+
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
             log.info("currentDay");
-            log.info(now.getHour());
-            log.info(now.getHour()*3600000);
-            log.info(now.getMinute()*60*1000);
+
             String currentDay = format.format(now);
-            Integer currentTime =(now.getHour()*3600000+now.getMinute()*60*1000);
-            log.info(currentTime);
-            log.info(currentDay);
-            log.info(date);
-            if(date.equals(currentDay)){
+            Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
+
+            if (date.equals(currentDay)) {
                 if (arraynode.isArray()) {
                     log.info("So sánh ngày hôm nay");
+
                     for (final JsonNode objNode : arraynode) {
-                        if (objNode.get("startDateReality").asText().equals(currentDay)) {
-                            if(objNode.get("startTimeReality").asInt() > currentTime){
+                        if (objNode.get("startDateReality").asText().equals(currentDay) && objNode.get("startDateReality").asText().equals(companyId)) {
+                            if (objNode.get("startTimeReality").asInt() > currentTime) {
                                 listTripId.add(objNode.get("tripId").asText());
                                 listRouteId.add(objNode.get("routeId").asText());
                                 listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
-                                log.info(ConventTimer(objNode.get("startTimeReality").asText()));
                             }
-                             log.info("thành công");
+                            log.info("thành công");
 
                         }
                     }
                 }
 
-            }else {
-            if (arraynode.isArray()) {
-                log.info("So sánh ngày khác ngày hôm  nay");
-                for (final JsonNode objNode : arraynode) {
-                    if (objNode.get("startDateReality").asText().equals(date)) {
-                        log.info(objNode.get("startTimeReality").asText() + ",");
-                        listTripId.add(objNode.get("tripId").asText());
-                        listRouteId.add(objNode.get("routeId").asText());
-                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+            } else {
+                if (arraynode.isArray()) {
+                    log.info("So sánh ngày khác ngày hôm  nay");
+                    Long time = System.currentTimeMillis();
+                    for (final JsonNode objNode : arraynode) {
 
-                        log.info(ConventTimer(objNode.get("startTimeReality").asText()));
-                        log.info("thành công");
 
-                    }
+                        if (objNode.get("startDateReality").asText().equals(date) && objNode.get("companyId").asText().equals(companyId)) {
+                            log.info(objNode.get("startTimeReality").asText() + ",");
+//                            if(listRouteId.isEmpty()){
+                            listTripId.add(objNode.get("tripId").asText());
+                            listRouteId.add(objNode.get("routeId").asText());
+                            listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+//                            }else {
+//                                if (!(listTimes.contains(ConventTimer(objNode.get("startTimeReality").asText())))) {
+//                                    listTripId.add(objNode.get("tripId").asText());
+//                                    listRouteId.add(objNode.get("routeId").asText());
+//                                    listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
+//                                    log.info("thành công");
+//                                }
+//                            }
+
+                        }
+
+                        Long time1 = System.currentTimeMillis();
+                        log.info("chạy 1 routeId :" + (time1 - time));
                     }
                 }
+
 
             }
             if (listRouteId.isEmpty() && listTripId.isEmpty()) {
@@ -225,41 +236,41 @@ public class CallBotClient {
             log.info("So sánh chuyến");
             log.info(Routes.isArray());
 
-                for (JsonNode obj : Routes) {
-                    if (obj.get("routeId").asText().equals(RouteId)) {
-                        if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
-                            JsonNode listPoint = obj.get("listPoint");
-                            if (listPoint.isArray()) {
-                                for (JsonNode arr : listPoint) {
-                                    log.info("vào vòng for");
-                                    if (arr.get("province").asText().toLowerCase().equals(StartCity.toLowerCase())) {
+            for (JsonNode obj : Routes) {
+                if (obj.get("routeId").asText().equals(RouteId)) {
+                    if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
+                        JsonNode listPoint = obj.get("listPoint");
+                        if (listPoint.isArray()) {
+                            for (JsonNode arr : listPoint) {
+                                log.info("vào vòng for");
+                                if (arr.get("province").asText().toLowerCase().equals(StartCity.toLowerCase())) {
 
-                                        PointUp.add(arr.get("id").asText());
-                                        log.info(PointUp);
-                                        PointUpId.add(arr.get("name").asText());
-                                        log.info(PointUpId);
+                                    PointUp.add(arr.get("id").asText());
+                                    log.info(PointUp);
+                                    PointUpId.add(arr.get("name").asText());
+                                    log.info(PointUpId);
 
-                                    }
-                                    if (arr.get("province").asText().toLowerCase().equals(EndCity.toLowerCase())) {
-
-                                        PointDown.add(arr.get("id").asText());
-                                        log.info(PointDown);
-                                        PointDownID.add(arr.get("name").asText());
-                                        log.info(PointDownID);
-
-                                    }
                                 }
+                                if (arr.get("province").asText().toLowerCase().equals(EndCity.toLowerCase())) {
 
+                                    PointDown.add(arr.get("id").asText());
+                                    log.info(PointDown);
+                                    PointDownID.add(arr.get("name").asText());
+                                    log.info(PointDownID);
+
+                                }
                             }
-                            listPoints.put("PointUpID", PointUp);
-                            listPoints.put("PointUp", PointUpId);
-                            listPoints.put("PointDownID", PointDown);
-                            listPoints.put("PointDown", PointDownID);
 
                         }
+                        listPoints.put("PointUpID", PointUp);
+                        listPoints.put("PointUp", PointUpId);
+                        listPoints.put("PointDownID", PointDown);
+                        listPoints.put("PointDown", PointDownID);
 
                     }
+
                 }
+            }
 
             log.info("thành công");
         } catch (Exception e) {

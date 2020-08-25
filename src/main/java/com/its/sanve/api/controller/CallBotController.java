@@ -8,10 +8,8 @@ import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.entities.TransactionLog;
 import com.its.sanve.api.repositories.RouteInfoRepository;
 import com.its.sanve.api.repositories.TransactionLogRepository;
-import com.its.sanve.api.utils.RandomString;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -35,74 +32,71 @@ public class CallBotController {
     SanveClient sanveClient;
     @Autowired
     CallBotClient callBotClient;
-    @Autowired
-    RandomString randomString;
+
     @Autowired
     TransactionLogRepository transactionLogRepository;
 
     @Autowired
     RouteInfoRepository routeInfoRepository;
-
-    @PostMapping("StartEndCity")
-    @ApiOperation(value = "StartEndCity")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Created face register successfully", response = SanveClient.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = SanveClient.class),
-            @ApiResponse(code = 500, message = "Failure", response = SanveClient.class)})
-    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
-        Map<String, Object> p = new HashMap<>();
-
-//        String companiesId = "TC01gWSmr8A9Qx";
-        String routeName = startCity + " - " + endCity;
-        int size = 0;
-        int page = 0;
-        String startTimeFrom = "";
-        String endTimeTo = "";
-        log.info("Request chuyến ");
-        Long time1 = System.currentTimeMillis();
-        List<String> data1 = new ArrayList<>();
-        data1.addAll(routeInfoRepository.searchRouteName(routeName, companyId));
-        //routeInfoRepository.searchRouteName(routeName);
-
-        log.info(data1);
-        Boolean check = callBotClient.checkRouteName(data1);
-        Long time2 = System.currentTimeMillis();
-        log.info(time2 - time1);
-        log.info("trả về có chuyến hay không?");
-        log.info(check);
-        if (check == true) {
-            log.info("có tuyến rồi check  có chuyến");
-            Object data = sanveClient.getTripsbyPoints(page, size, date, startCity, endCity, startTimeFrom, endTimeTo);
-            String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-            Object list = callBotClient.listStartTimeRealityforRoute(string1, date);
-            if (list != null) {
-                p.put("valid", 1);
-            } else {
-                p.put("valid", 2);
-            }
-
-
-        } else {
-
-            p.put("valid", 0);
-        }
-        Long time3 = System.currentTimeMillis();
-        log.info("thành công");
-        log.info(time3 - time1);
-
-
-        return new ResponseEntity<>(p, HttpStatus.OK);
-    }
+    @Autowired
+    com.its.sanve.api.facede.GetDataFacade getDataFacade;
+//
+//    @PostMapping("StartEndCity")
+//    @ApiOperation(value = "StartEndCity")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Created face register successfully", response = SanveClient.class),
+//            @ApiResponse(code = 400, message = "Bad Request", response = SanveClient.class),
+//            @ApiResponse(code = 500, message = "Failure", response = SanveClient.class)})
+//    public ResponseEntity<Object> getStartEndCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
+//        Map<String, Object> p = new HashMap<>();
+//
+////        String companiesId = "TC01gWSmr8A9Qx";
+//        String routeName = startCity + " - " + endCity;
+//        int size = 0;
+//        int page = 0;
+//        String startTimeFrom = "";
+//        String endTimeTo = "";
+//        log.info("Request chuyến ");
+//        Long time1 = System.currentTimeMillis();
+//
+//        String List = routeInfoRepository.searchRouteName(routeName, companyId);
+//        Boolean check = callBotClient.checkRouteName(List);
+//        Long time2 = System.currentTimeMillis();
+//        log.info(time2 - time1);
+//        log.info("trả về có chuyến hay không?");
+//        log.info(check);
+//        if (check == true) {
+//            log.info("có tuyến rồi check  có chuyến");
+//            Object data = sanveClient.getTripsbyPoints(page, size, date, startCity, endCity, startTimeFrom, endTimeTo);
+//            String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+//            Object list = callBotClient.listStartTimeRealityforRoute(string1, date);
+//            if (list != null) {
+//                p.put("valid", 1);
+//            } else {
+//                p.put("valid", 2);
+//            }
+//
+//
+//        } else {
+//
+//            p.put("valid", 0);
+//        }
+//        Long time3 = System.currentTimeMillis();
+//        log.info("thành công");
+//        log.info(time3 - time1);
+//
+//
+//        return new ResponseEntity<>(p, HttpStatus.OK);
+//    }
 
     @PostMapping("getListPointCity")
 
-    public ResponseEntity<Object> getListPointCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeID) throws Exception {
+    public ResponseEntity<Object> getListPointCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeID, @RequestParam String companyId) throws Exception {
         Map<String, Object> p = new HashMap<>();
 
         String route_name = startCity + " - " + endCity;
-        String CompanyId = "TC01gWSmr8A9Qx";
         long time1 = System.currentTimeMillis();
-        Object data = sanveClient.getCompaniesRoutes(CompanyId);
+        Object data = sanveClient.getCompaniesRoutes(companyId);
         long time3 = System.currentTimeMillis();
         String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         // log.info(string1);
@@ -110,25 +104,36 @@ public class CallBotController {
 
 
         long time2 = System.currentTimeMillis();
-        ;
+
         log.info(time2 - time1);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
     @PostMapping("getListStartTimer")
-    public ResponseEntity<Object> getListStartTimerOrDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date) throws Exception {
+    public ResponseEntity<Object> getListStartTimerOrDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date,@RequestParam String companyId) throws Exception {
         Map<String, Object> p = new HashMap<>();
         int size = 0;
         int page = 0;
+
+        String routeName = startCity + " - " + endCity;
         String startTimeFrom = "";
         String endTimeFrom = "";
         Long time1 = System.currentTimeMillis();
-        Object data = sanveClient.getTripsbyPoints(page, size, date, startCity, endCity, startTimeFrom, endTimeFrom);
-        String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-        p = (Map<String, Object>) callBotClient.listStartTimeReality(string1, date);
-
+        List<String> routeId = routeInfoRepository.searchRouteName(routeName, companyId);
+        log.info(routeId);
         Long time2 = System.currentTimeMillis();
-        log.info(time2 - time1);
+        log.info("search Database to RouteId"+(time2-time1));
+        if(routeId.isEmpty()){
+            p.put("valid",0);
+        } else {
+
+                Object data = sanveClient.getTripsbyPoints(page, size, date,startCity,endCity,startTimeFrom,endTimeFrom);
+                String string1 = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+                p = (Map<String, Object>) callBotClient.listStartTimeReality(string1, date,companyId);
+
+        }
+        Long time3 = System.currentTimeMillis();
+        log.info("gọi Api TripbyRouteID:"+(time3 - time2));
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
@@ -149,7 +154,7 @@ public class CallBotController {
 
     @PostMapping("creatTransantionLog")
     public String creatTransantionLog(@RequestParam String Hotline, @RequestParam String Call_Id, @RequestParam String Intent, @RequestParam String PhoneOrder, @RequestParam String Phone, @RequestParam String PointUp, @RequestParam String PointDown, @RequestParam String StartTimeReality, @RequestParam String StartDate, @RequestParam String Route, @RequestParam Integer Status) throws ParseException {
-        randomString = new RandomString();
+
         LocalDateTime now = LocalDateTime.now();
         TransactionLog transactionLog = new TransactionLog();
         // transactionLog.setId(randomString.randomAlphaNumeric());
@@ -175,7 +180,12 @@ public class CallBotController {
 //
         return new ResponseEntity("ok", HttpStatus.OK);
     }
-
+    @GetMapping("getInfoCompany")
+    public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception{
+        Map<String, Object> map = (Map<String, Object>) getDataFacade.getInfoCompany(phone);
+        log.info(map);
+        return new ResponseEntity<Object>(map, HttpStatus.OK);
+    }
 
     private String convertDateTime(String items) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(items);

@@ -36,6 +36,7 @@ C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\config\WebMvcConfigurerAdapter.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\DistrictRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\dto\PaymentRequest.java
+C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\facede\GetDataFacade.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\PointRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\VehicleRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\exceptions\AuthenException.java
@@ -56,7 +57,6 @@ C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\CallBot\CallBotClient.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\config\GwConfig.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\controller\CallBotController.java
-C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\utils\RandomString.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\entities\CompanyInfo.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\entities\Agency.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\entities\Ticket.java

@@ -48,10 +48,10 @@ com\its\sanve\api\limititer\RequestRateLimiter.class
 com\its\sanve\api\entities\Trip.class
 com\its\sanve\api\config\CorsFilter.class
 com\its\sanve\api\dto\GwResponseDto.class
-com\its\sanve\api\utils\RandomString.class
 com\its\sanve\api\communication\dto\PaymentRequest.class
 com\its\sanve\api\entities\Vehicle.class
 com\its\sanve\api\repositories\TransactionLogRepository.class
+com\its\sanve\api\facede\GetDataFacade.class
 com\its\sanve\api\entities\Point.class
 com\its\sanve\api\entities\TransactionLog.class
 com\its\sanve\api\repositories\VehicleRepository.class
