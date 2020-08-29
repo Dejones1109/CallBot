@@ -5,11 +5,11 @@
  */
 package com.its.sanve.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +23,13 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@Table(name = "company_info")
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CompanyInfo {
-    public  CompanyInfo(String id){
-        this.id = id;
-    }
+
     @Id
     @JsonProperty("companyId")
     String id;
@@ -49,7 +49,4 @@ public class CompanyInfo {
     @Column(name = "company_shortname")
     @JsonProperty("name_short")
     String nameShort;
-
-    public CompanyInfo(String companyId, String companyName, String telecomPhoneNumber, double reputation, String companyLogo) {
-    }
 }

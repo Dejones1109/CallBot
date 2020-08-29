@@ -6,6 +6,7 @@ import com.its.sanve.api.aop.MonitorAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Scope;
 
 
 @Configuration

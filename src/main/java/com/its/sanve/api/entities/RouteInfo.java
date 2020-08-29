@@ -5,6 +5,7 @@
  */
 package com.its.sanve.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
@@ -24,8 +25,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteInfo {
     @Id
     @Column(name = "id")
@@ -48,6 +51,5 @@ public class RouteInfo {
     @Transient
     List<Point> listPoint;
 
-    public RouteInfo(String routeId, String companyId, String routeName, String routeNameShort, double childrenTicketRatio, String note) {
-    }
+
 }
