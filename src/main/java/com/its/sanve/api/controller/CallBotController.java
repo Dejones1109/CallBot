@@ -1,11 +1,12 @@
 package com.its.sanve.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.callbot.CallBotClient;
 import com.its.sanve.api.communication.sanve.SanveClient;
 
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
+import com.its.sanve.api.entities.CompanyInfo;
 import com.its.sanve.api.entities.Ticket;
 import com.its.sanve.api.entities.TransactionLog;
 import com.its.sanve.api.repositories.RouteInfoRepository;
@@ -34,6 +35,8 @@ public class CallBotController {
     ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     SanveClient sanveClient;
+    @Autowired
+    SanveClient svClient;
     @Autowired
     CallBotClient callBotClient;
 
@@ -91,7 +94,11 @@ public class CallBotController {
     private ResponseEntity<Map<String,String>> getQualitiesTickets(@RequestParam String tripID, @RequestParam String pointUpID, @RequestParam String pointDownID){
         Map<String, String> qualitiesTickets = new HashMap<>();
         Map<String, List<Ticket>> data;
-        log.info("initialization!!");
+        Map<String, CompanyInfo> m = svClient.getCompanies();
+        if(m == null){
+            log.info("data null!!");
+        }
+        log.info("initialization!!,{}", m);
            try{
                log.info("tripId:{},pointUpId:{},pointDownId:{}",tripID,pointUpID,pointDownID);
                log.info("request API An Vui!,{}",sanveClient.getTripsTickets(tripID, pointUpID, pointDownID));

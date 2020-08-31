@@ -88,6 +88,11 @@ public class SanveClient extends AbstractCommunication {
                 log.info("response successfully!!!");
                 SanveResponse<List<Province>> data = response.body();
                 log.info("Successfully!!! {}", data.getData());
+                for (Province  province:data.getData()){
+                     List<District> listDistrict =  province.getListDistrict();
+                     log.info("listDistrict,{}",listDistrict);
+                }
+
                 return data.getData();
 
             } else {
@@ -162,8 +167,11 @@ public class SanveClient extends AbstractCommunication {
         String end = URLDecoder.decode(endPoint, StandardCharsets.UTF_8.toString());
         log.info("-2");
         log.info(end);
+        String startTime = URLDecoder.decode(startTimeTo, StandardCharsets.UTF_8.toString());
+        log.info("-2");
+        log.info(startTime);
         try {
-            Call<SanveResponse<Map<String, List<Trip>>>> request = sanVeCommunicate.getTripsByPoint(apiKey.trim(), secretKey.trim(), page, size, date.trim(), start, end, startTimeFrom.trim(), startTimeTo.trim());
+            Call<SanveResponse<Map<String, List<Trip>>>> request = sanVeCommunicate.getTripsByPoint(apiKey.trim(), secretKey.trim(), page, size, date.trim(), start, end, startTimeFrom, startTimeTo);
             log.debug("request,{}", request);
             Response<SanveResponse<Map<String, List<Trip>>>> response = request.execute();
             log.debug("response,{}", response);
