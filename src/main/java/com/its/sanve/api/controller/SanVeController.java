@@ -3,7 +3,7 @@ package com.its.sanve.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.callbot.CallBotClient;
-import com.its.sanve.api.communication.sanve.SanveClient;
+import com.its.sanve.api.communication.sanve.SanVeClient;
 
 
 import com.its.sanve.api.communication.dto.CalculatePriceRequest;
@@ -11,6 +11,7 @@ import com.its.sanve.api.communication.dto.CalculatePriceResponse;
 import com.its.sanve.api.dto.GwResponseDto;
 
 import com.its.sanve.api.entities.*;
+import com.its.sanve.api.facede.GetDataFacade;
 import com.its.sanve.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,35 +20,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @RestController
 @Log4j2
 public class SanVeController {
 
-    private static final int PARAM_MISSING = 1;
+
     @Autowired
-    SanveClient SVClient;
+    SanVeClient SVClient;
     @Autowired
     MessageUtils messageUtils;
     @Autowired
     CallBotClient callBotClient;
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    GetDataFacade getDataFacade;
 
-
+    @RequestMapping(value = "saveDbProvinceDistrict", method = RequestMethod.GET)
+    public ResponseEntity<String> saveProvinceDistrict() {
+        return new ResponseEntity<>(getDataFacade.getDataProvinceDistrict(), HttpStatus.OK);
+    }
     @RequestMapping(value = "point/get_province_district", method = RequestMethod.GET)
-    public ResponseEntity<Object> getProvinceDistrict() {
+    public ResponseEntity<List<Province>> getProvinceDistrict() {
 
-        List<Province> provinceList = SVClient.getProvinceDistrict();
-
+       List<Province> provinceList = SVClient.getProvinceDistrict();
         log.info("data get successful!!");
         return new ResponseEntity<>(provinceList, HttpStatus.OK);
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<Object> get_companies() {
+    public ResponseEntity<Map<String, CompanyInfo>> get_companies() {
 
         Map<String, CompanyInfo> listCompany = SVClient.getCompanies();
         log.info("data get successful!!");
@@ -55,7 +59,7 @@ public class SanVeController {
     }
 
     @GetMapping("company/routes")
-    public ResponseEntity<Object> get_company_router(@RequestParam String companyId) {
+    public ResponseEntity<Map<String, RouteInfo>> get_company_router(@RequestParam String companyId) {
         Map<String, RouteInfo> listRouteInfo = SVClient.getCompaniesRoutes(companyId);
         log.info("data get successful!!");
         return new ResponseEntity<>(listRouteInfo, HttpStatus.OK);
@@ -63,7 +67,7 @@ public class SanVeController {
 
     @GetMapping("tripsPoint")
 
-    public ResponseEntity<Object> getTripsPoint(@RequestParam int page, @RequestParam int size, @RequestParam String date, @RequestParam
+    public ResponseEntity< Map<String, List<Trip>>> getTripsPoint(@RequestParam int page, @RequestParam int size, @RequestParam String date, @RequestParam
             String startPoint, @RequestParam String endPoint, @RequestParam String startTimeFrom, @RequestParam String startTimeTo) throws Exception {
         Map<String, List<Trip>> listTrips = SVClient.getTripByPoints(page, size, date, startPoint, endPoint, startTimeFrom, startTimeTo);
         log.info("data get successful!!");
@@ -100,7 +104,6 @@ public class SanVeController {
                 .toResponseEntity();
 
     }
-
 }
 
 

@@ -37,13 +37,15 @@ public class Trip {
     @Column(name = "id")
     @JsonProperty("tripId")
     String id;
+    @JsonProperty("routeId")
+    String routeId;
     @Column(name = "status")
     @JsonProperty("tripStatus")
     Integer status;
     @Column(name = "start_date_reality")
     String startDateReality;
     @Column(name = "start_time_reality")
-    Integer startTimeReality;
+    String startTimeReality;
     @Column(name = "run_time_reality")
     Integer runTimeReality;
     @Transient

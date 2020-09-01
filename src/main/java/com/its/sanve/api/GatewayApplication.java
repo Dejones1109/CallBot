@@ -15,8 +15,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 //@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableJpaRepositories(basePackages = {"com.its.sanve"})
-@EntityScan(basePackages = {"com.its.sanve.*"})
-@ComponentScan(basePackages = {"com.its.sanve.*"})
+@EntityScan(basePackages = {"com.its.sanve"})
+@ComponentScan(basePackages = {"com.its.sanve"})
 public class GatewayApplication {
 
     public static void main(String[] args) {

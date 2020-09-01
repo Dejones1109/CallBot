@@ -4,10 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.its.sanve.api.entities.Ticket;
+import com.its.sanve.api.entities.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,70 +20,15 @@ public class CallBotClient {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public boolean checkRouteName(String routeInfo) {
-        boolean check = false;
-        if (routeInfo.isEmpty()) {
-            check = false;
-        } else {
-            check = true;
-        }
 
-        return check;
-    }
-
-    //    public int isCheckCity(String data, String route_name) {
-//        if (data.toLowerCase().contains(route_name.toLowerCase())) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
-    public Object listStartTimeRealityforRoute(String data, String date) throws JsonProcessingException {
-        JsonNode jsonNode = objectMapper.readTree(data);
-        List<Object> list = new ArrayList<>();
-        //   log.info(jsonNode);
-        log.info("8");
-        JsonNode arraynodes = jsonNode.get("data");
-        JsonNode arraynode = arraynodes.get("trips");
-        log.info("9");
-        if (arraynode.isArray()) {
-            log.info("So sánh ngày khác ngày hôm  nay");
-            for (final JsonNode objNode : arraynode) {
-                if (objNode.get("startDateReality").asText().equals(date)) {
-                    log.info(objNode.get("startTimeReality").asText() + ",");
-
-                    list.add(ConventTimer(objNode.get("startTimeReality").asText()));
-
-                    log.info(ConventTimer(objNode.get("startTimeReality").asText()));
-                    log.info("thành công");
-
-                }
-            }
-        }
-
-
-        return list;
-    }
-
-    public Object listStartTimeReality(String data, String date, String companyId) {
+    public Map<String, Object> listStartTimeReality(Map<String, List<Trip>> data, String date, String companyId) {
         Map<String, Object> list = new HashMap<>();
-        Integer valid = 0;
+        int valid = 0;
         List<String> listTripId = new ArrayList();
         List<String> listRouteId = new ArrayList();
         List<String> listTimes = new ArrayList();
 
-
-        log.info("cắt chuyễn Json");
-
-
         try {
-
-            JsonNode jsonNode = objectMapper.readTree(data);
-
-
-            JsonNode arraynodes = jsonNode.get("data");
-            JsonNode arraynode = arraynodes.get("trips");
-
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -90,55 +36,41 @@ public class CallBotClient {
 
             String currentDay = format.format(now);
             Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
-
+            List<Trip> trips = data.get("trips");
+            log.debug("List Trips:{}", trips);
             if (date.equals(currentDay)) {
-                if (arraynode.isArray()) {
-                    log.info("So sánh ngày hôm nay");
-
-                    for (final JsonNode objNode : arraynode) {
-                        if (objNode.get("startDateReality").asText().equals(currentDay) && objNode.get("startDateReality").asText().equals(companyId)) {
-                            if (objNode.get("startTimeReality").asInt() > currentTime) {
-                                listTripId.add(objNode.get("tripId").asText());
-                                listRouteId.add(objNode.get("routeId").asText());
-                                listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
-                            }
-                            log.info("thành công");
-
+                for (Trip trip : trips) {
+                    CompanyInfo companyInfo = trip.getCompanyInfo();
+                    if (trip.getStartDateReality().equals(date) && companyInfo.getId().equals(companyId)) {
+                        int timer = Integer.parseInt(trip.getStartTimeReality());
+                        if (timer > currentTime) {
+                            log.info("StartRealitiesTimer!!!");
+                            listTripId.add(trip.getId());
+                            log.info("TripId : {}", trip.getId());
+                            listRouteId.add(trip.getRouteId());
+                            log.info("RouteId : {}", trip.getRouteId());
+                            listTimes.add(ConventTimer(trip.getStartTimeReality()));
+                            log.info("StartTimeReality : {}", trip.getStartTimeReality());
                         }
                     }
-                }
 
+                }
             } else {
-                if (arraynode.isArray()) {
-                    log.info("So sánh ngày khác ngày hôm  nay");
-                    Long time = System.currentTimeMillis();
-                    for (final JsonNode objNode : arraynode) {
-
-
-                        if (objNode.get("startDateReality").asText().equals(date) && objNode.get("companyId").asText().equals(companyId)) {
-                         //   log.info(objNode.get("startTimeReality").asText() + ",");
-//                            if(listRouteId.isEmpty()){
-                            listTripId.add(objNode.get("tripId").asText());
-                            listRouteId.add(objNode.get("routeId").asText());
-                            listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
-//                            }else {
-//                                if (!(listTimes.contains(ConventTimer(objNode.get("startTimeReality").asText())))) {
-//                                    listTripId.add(objNode.get("tripId").asText());
-//                                    listRouteId.add(objNode.get("routeId").asText());
-//                                    listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
-//                                    log.info("thành công");
-//                                }
-//                            }
-
-                        }
-
-                        Long time1 = System.currentTimeMillis();
-                      //  log.info("chạy 1 routeId :" + (time1 - time));
+                for (Trip trip : trips) {
+                    CompanyInfo companyInfo = trip.getCompanyInfo();
+                    if (trip.getStartDateReality().equals(date) && companyInfo.getId().equals(companyId)) {
+                        log.info("StartRealityTimer!!!");
+                        listTripId.add(trip.getId());
+                        log.info("TripId : {}", trip.getId());
+                        listRouteId.add(trip.getRouteId());
+                        log.info("RouteId : {}", trip.getRouteId());
+                        listTimes.add(ConventTimer(trip.getStartTimeReality()));
+                        log.info("StartTimeReality : {}", trip.getStartTimeReality());
                     }
+
                 }
-
-
             }
+
             if (listRouteId.isEmpty() && listTripId.isEmpty()) {
                 valid = 0;
             } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
@@ -180,85 +112,80 @@ public class CallBotClient {
         return timer;
     }
 
-    public Map<String,String> QuantitiesTickets(Map<String,List<Ticket>> data) throws JsonProcessingException {
-        Map<String,String> quantitys = new HashMap<>();
+    public Map<String, String> QuantitiesTickets(Map<String, List<Ticket>> data) throws JsonProcessingException {
+        Map<String, String> quantitys = new HashMap<>();
         List<Ticket> listTickets = data.get("tickets");
         int count = 0;
-        double temp =0;
+        double temp = 0;
         for (Ticket ticket : listTickets) {
 
             if (ticket.getStatus() != null) {
                 count++;
-                Double code = ticket.getOriginalTicketPrice();
+                Double originalTicketPrice = ticket.getOriginalTicketPrice();
                 if (temp == 0) {
-                    temp = code;
-                } else if (code < temp) {
-                    temp = code;
+                    temp = originalTicketPrice;
+                } else if (originalTicketPrice < temp) {
+                    temp = originalTicketPrice;
                 }
             }
         }
-        log.info("the number of seats available,{}",count);
-        log.info("the quatity of ticket,{}",temp);
+        log.info("the number of seats available,{}", count);
+        log.info("the quatity of ticket,{}", temp);
 
-            quantitys.put("ticket_qtt", Integer.toString(count));
+        quantitys.put("ticket_qtt", Integer.toString(count));
 
-            quantitys.put("price", Double.toString(temp));
+        quantitys.put("price", Double.toString(temp));
 
 
         return quantitys;
     }
 
-    public Object listRoutes(String data, String StartCity, String EndCity, String routeName, String RouteId) throws JsonProcessingException {
+    public Map<String, List> listRoutes(Map<String, RouteInfo> data, String startCity, String endCity, String routeName, String routeId) throws JsonProcessingException {
 
-        Map<String, Object> listPoints = new HashMap<>();
-        List PointUp = new ArrayList();
-        List PointUpId = new ArrayList();
-        List PointDown = new ArrayList();
-        List PointDownID = new ArrayList();
+        Map<String, List> listPoints = new HashMap<>();
+        List pointUp = new ArrayList();
+        List pointUpId = new ArrayList();
+        List pointDown = new ArrayList();
+        List pointDownId = new ArrayList();
+        List addressPointUp = new ArrayList();
+        List addressPointDown = new ArrayList();
         try {
-            log.info("Chuyển Json thành java Object");
-            JsonNode routeInfos = objectMapper.readTree(data);
-            //   log.info(routeInfos);
-            JsonNode Routes = routeInfos.get("data");
-            log.info(Routes);
-            log.info("So sánh chuyến");
-            log.info(Routes.isArray());
-            for (JsonNode obj : Routes) {
-                if (obj.get("routeId").asText().equals(RouteId)) {
-                    JsonNode listPoint = obj.get("listPoint");
-                    if (listPoint.isArray()) {
-                        for (JsonNode arr : listPoint) {
-                            log.info("vào vòng for");
-                            if (arr.get("province").asText().toLowerCase().equals(StartCity.toLowerCase())) {
-
-                                PointUp.add(arr.get("id").asText());
-                                log.info(PointUp);
-                                PointUpId.add(arr.get("name").asText());
-                                log.info(PointUpId);
-
-                            }
-                            if (arr.get("province").asText().toLowerCase().equals(EndCity.toLowerCase())) {
-
-                                PointDown.add(arr.get("id").asText());
-                                log.info(PointDown);
-                                PointDownID.add(arr.get("name").asText());
-                                log.info(PointDownID);
-
-                            }
+            for (String key : data.keySet()) {
+                if (key.equals(routeId)) {
+                    RouteInfo routeInfo = data.get(key);
+                    List<Point> listPoint = routeInfo.getListPoint();
+                    for (Point point : listPoint) {
+                        if (point.getProvince().equals(startCity)) {
+                            log.info("List Point Up");
+                            pointUp.add(point.getName());
+                            log.info("point UP:{}", point.getName());
+                            pointUpId.add(point.getId());
+                            log.info("point up id:{}", point.getId());
+                            addressPointUp.add(point.getAddress().replace(",", "-"));
+                            log.info(" address point up :{}", point.getAddress().replace(",", "-"));
+                        }
+                        if (point.getProvince().equals(endCity)) {
+                            log.info("List Point Down:");
+                            pointDown.add(point.getName());
+                            log.info("point down:{}", point.getName());
+                            pointDownId.add(point.getId());
+                            log.info("point down id:{}", point.getId());
+                            addressPointDown.add(point.getAddress().replace(",", "-"));
+                            log.info(" address point down :{}", point.getAddress().replace(",", "-"));
                         }
 
                     }
-                    listPoints.put("PointUpID", PointUp);
-                    listPoints.put("PointUp", PointUpId);
-                    listPoints.put("PointDownID", PointDown);
-                    listPoints.put("PointDown", PointDownID);
-
                 }
 
+
             }
+            listPoints.put("pointUpId", pointUp);
+            listPoints.put("pointUp", pointUpId);
+            listPoints.put("pointDownID", pointDown);
+            listPoints.put("pointDown", pointDownId);
+            listPoints.put("addressPointDown", addressPointDown);
+            listPoints.put("addressPointUp", addressPointUp);
 
-
-            log.info("thành công");
         } catch (Exception e) {
             log.info(e.getMessage());
         }
