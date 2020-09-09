@@ -13,12 +13,7 @@ public class CallBotCommunication extends AbstractCommunication {
 
     @Value("${sanve.endpoint}")
     private String baseUrl;
-
     private SanVeCommunicate botCommunicate;
-
-//    @Autowired
-//    private ObjectMapper objectMapper;
-
     @PostConstruct
     public void intConnection() {
         this.botCommunicate = buildSetting();

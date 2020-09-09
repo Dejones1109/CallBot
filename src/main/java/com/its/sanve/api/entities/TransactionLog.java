@@ -34,8 +34,8 @@ public class TransactionLog {
     @Column(name = "phone_order")
     @JsonProperty("phone_order")
     String phoneOrder;
-    @Column(name = "call_ID")
-    @JsonProperty("call_ID")
+    @Column(name = "call_Id")
+    @JsonProperty("callId")
     String callId;
     @Column(name = "hotline")
     @JsonProperty("hotline")

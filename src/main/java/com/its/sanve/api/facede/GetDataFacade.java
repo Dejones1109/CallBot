@@ -1,15 +1,13 @@
 package com.its.sanve.api.facede;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.its.sanve.api.communication.sanve.SanVeClient;
+import com.its.sanve.api.entities.CompanyInfo;
 import com.its.sanve.api.entities.District;
 import com.its.sanve.api.entities.Province;
+import com.its.sanve.api.entities.RouteInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
@@ -65,8 +63,8 @@ public class GetDataFacade {
                 List<District> listDistrict = province.getListDistrict();
                 districRepository.saveAll(listDistrict);
             }
-            log.info("save db");
-            return "data ok";
+            log.info("save database Province!");
+            return "get list data province - district successfully!";
 
         } catch (Exception e) {
 
@@ -76,61 +74,32 @@ public class GetDataFacade {
 
 
     }
-//
-//    public Object getDataCompanies() throws Exception {
-//        SanveResponse data = (SanveResponse) sanveClient.getCompanies();
-//        List<CompanyInfo> companyInfos = new ArrayList<>();
-//
-//// CompanyInfo companyInfo = new CompanyInfo(id, name, phoneNumber, reputation,
-//// logo);
-//        String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-//// log.info(string1);
-//        JsonNode jsonNodeCompanies = objectMapper.readTree(string);
-//
-//        for (JsonNode obj : jsonNodeCompanies) {
-//// companyInfo.setId(obj.get("companyId").asText());
-//            companyInfos.add(new CompanyInfo(obj.get("companyId").asText(), obj.get("companyName").asText(), obj.get("telecomPhoneNumber").asText(), obj.get("reputation").asDouble(), obj.get("companyLogo").asText()));
-//// log.info("10");
-//
-//        }
-//// log.info("6");
-//// log.info(companyInfos);
-//        companyRepository.saveAll(companyInfos);
-//
-//// log.info("7");
-//        return data;
-//    }
-//
-//    public Object getDataRoutes(String companyId) throws Exception {
-//        SanveResponse<Map<String,RouteInfo>> data = (SanveResponse<Map<String, RouteInfo>>) sanveClient.getCompaniesRoutes(companyId);
-////        String string = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data.getData());
-////// log.info(string1);
-////        JsonNode jsonNodeRoute = objectMapper.readTree(string);
-////        List<RouteInfo> listRouteInfor = new ArrayList<>();
-////        for (JsonNode obj : jsonNodeRoute) {
-////// listTrip.add(new Trip(obj.get(index), status, startDateReality,
-////// startTimeReality, runTimeReality, note));
-////            listRouteInfor.add(new RouteInfo(obj.get("routeId").asText(), obj.get("companyId").asText(),
-////                    obj.get("routeName").asText(), obj.get("routeNameShort").asText(),
-////                    obj.get("childrenTicketRatio").asDouble(), obj.get("note").asText()));
-////
-////        }
-//       // routeInfoRepository.saveAll(data.getData());
-//        return data;
-//    }
+    public  String getRouteInfo(String CompanyId){
+        try {
+          Map<String, RouteInfo> routeInfoMap = sanVeClient.getCompaniesRoutes(CompanyId);
+          Set<String> keys = routeInfoMap.keySet();
+          for(String key : keys){
+              RouteInfo routeInfo = routeInfoMap.get(key);
+              routeInfoRepository.save(routeInfo);
+
+          }
+            log.info("save database RouteInfo ");
+             return "get list routeInfo successfully!";
+        }catch (Exception e){
+            log.error(e);
+            return null;
+        }
+    }
 
     public Map<String, Object> getCompanyInfo(String company_phone) throws Exception {
         Map<String, Object> p = new HashMap<>();
-
         String data = companyRepository.findPhone(company_phone);
         log.info(data);
-//        log.info(data);
         String sub[] = data.split(",");
-//        for(int i=0;i<data.length;i++){
         p.put("companyId", sub[0]);
         p.put("companyName", sub[1]);
         p.put("companyShortName", sub[2]);
-//        }
+
 
         return p;
     }

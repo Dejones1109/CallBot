@@ -35,6 +35,7 @@ public class WebMvcConfigurerAdapter implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor).addPathPatterns("/sanve/api/**");
         registry.addInterceptor(interceptor).addPathPatterns("/sanve/callbot/**");
+        registry.addInterceptor(interceptor).addPathPatterns("/sanve/v1/api/**");
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.its.sanve.api.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.callbot.CallBotClient;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 
 
 import com.its.sanve.api.communication.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.dto.CalculatePriceResponse;
+import com.its.sanve.api.communication.sanve.SanVeClientV1;
 import com.its.sanve.api.dto.GwResponseDto;
 
 import com.its.sanve.api.entities.*;
@@ -34,44 +34,44 @@ public class SanVeController {
     @Autowired
     CallBotClient callBotClient;
     @Autowired
-    ObjectMapper objectMapper = new ObjectMapper();
+    SanVeClientV1 svClient;
     @Autowired
     GetDataFacade getDataFacade;
 
     @RequestMapping(value = "saveDbProvinceDistrict", method = RequestMethod.GET)
-    public ResponseEntity<String> saveProvinceDistrict() {
-        return new ResponseEntity<>(getDataFacade.getDataProvinceDistrict(), HttpStatus.OK);
+    public String saveProvinceDistrict() {
+        return getDataFacade.getDataProvinceDistrict();
     }
     @RequestMapping(value = "point/get_province_district", method = RequestMethod.GET)
     public ResponseEntity<List<Province>> getProvinceDistrict() {
-
-       List<Province> provinceList = SVClient.getProvinceDistrict();
         log.info("data get successful!!");
-        return new ResponseEntity<>(provinceList, HttpStatus.OK);
+        return new ResponseEntity<>( SVClient.getProvinceDistrict(), HttpStatus.OK);
     }
 
     @GetMapping("/companies")
     public ResponseEntity<Map<String, CompanyInfo>> get_companies() {
-
-        Map<String, CompanyInfo> listCompany = SVClient.getCompanies();
         log.info("data get successful!!");
-        return new ResponseEntity<>(listCompany, HttpStatus.OK);
+        return new ResponseEntity<>(SVClient.getCompanies(), HttpStatus.OK);
     }
 
     @GetMapping("company/routes")
     public ResponseEntity<Map<String, RouteInfo>> get_company_router(@RequestParam String companyId) {
-        Map<String, RouteInfo> listRouteInfo = SVClient.getCompaniesRoutes(companyId);
         log.info("data get successful!!");
-        return new ResponseEntity<>(listRouteInfo, HttpStatus.OK);
+        return new ResponseEntity<>(SVClient.getCompaniesRoutes(companyId), HttpStatus.OK);
+    }
+    @GetMapping("saveDbRouteInfo")
+    public String saveDbRouteInfo(@RequestParam String companyId) {
+        log.info("data get successful!!");
+        return getDataFacade.getRouteInfo(companyId);
     }
 
     @GetMapping("tripsPoint")
 
     public ResponseEntity< Map<String, List<Trip>>> getTripsPoint(@RequestParam int page, @RequestParam int size, @RequestParam String date, @RequestParam
             String startPoint, @RequestParam String endPoint, @RequestParam String startTimeFrom, @RequestParam String startTimeTo) throws Exception {
-        Map<String, List<Trip>> listTrips = SVClient.getTripByPoints(page, size, date, startPoint, endPoint, startTimeFrom, startTimeTo);
+
         log.info("data get successful!!");
-        return new ResponseEntity<>(listTrips, HttpStatus.OK);
+        return new ResponseEntity<>(SVClient.getTripByPoints(page, size, date, startPoint, endPoint, startTimeFrom, startTimeTo), HttpStatus.OK);
     }
 
 //    @GetMapping("tripsRoute")
@@ -87,11 +87,11 @@ public class SanVeController {
 //    }
 
     @GetMapping("trip/tickets")
-    public ResponseEntity<Object> get_trip_tickets(@RequestParam String tripId, @RequestParam String pointUpId, @RequestParam String pointDownId) throws Exception {
+    public ResponseEntity get_trip_tickets(@RequestParam String tripId, @RequestParam String pointUpId, @RequestParam String pointDownId) throws Exception {
 
-        Map<String, List<Ticket>> tripsTickets = SVClient.getTripsTickets(tripId, pointUpId, pointDownId);
+
         log.info("data get successful!!");
-        return new ResponseEntity<>(tripsTickets.values(), HttpStatus.OK);
+        return new ResponseEntity<>( SVClient.getTripsTickets(tripId, pointUpId, pointDownId), HttpStatus.OK);
     }
 
     @PostMapping("order/calc_price")
@@ -103,6 +103,11 @@ public class SanVeController {
                 .withMessage("Success")
                 .toResponseEntity();
 
+    }
+    @GetMapping("getListPoint")
+    public ResponseEntity<String> getListPoint() {
+        log.info("data get successful!!");
+        return new ResponseEntity<>( svClient.getListPoint(), HttpStatus.OK);
     }
 }
 

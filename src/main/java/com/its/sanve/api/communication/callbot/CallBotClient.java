@@ -32,13 +32,14 @@ public class CallBotClient {
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
-            log.info("currentDay");
+
 
             String currentDay = format.format(now);
             Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
             List<Trip> trips = data.get("trips");
             log.debug("List Trips:{}", trips);
             if (date.equals(currentDay)) {
+                log.info("currentDay");
                 for (Trip trip : trips) {
                     CompanyInfo companyInfo = trip.getCompanyInfo();
                     if (trip.getStartDateReality().equals(date) && companyInfo.getId().equals(companyId)) {
@@ -57,6 +58,7 @@ public class CallBotClient {
                 }
             } else {
                 for (Trip trip : trips) {
+                    log.info("otherDay!!");
                     CompanyInfo companyInfo = trip.getCompanyInfo();
                     if (trip.getStartDateReality().equals(date) && companyInfo.getId().equals(companyId)) {
                         log.info("StartRealityTimer!!!");
@@ -132,7 +134,7 @@ public class CallBotClient {
         log.info("the number of seats available,{}", count);
         log.info("the quatity of ticket,{}", temp);
 
-        quantitys.put("ticket_qtt", Integer.toString(count));
+        quantitys.put("ticketQuantity", Integer.toString(count));
 
         quantitys.put("price", Double.toString(temp));
 
@@ -140,7 +142,7 @@ public class CallBotClient {
         return quantitys;
     }
 
-    public Map<String, List> listRoutes(Map<String, RouteInfo> data, String startCity, String endCity, String routeName, String routeId) throws JsonProcessingException {
+    public Map<String, List> listRoutes(Map<String, RouteInfo> data, String startCity, String endCity, String routeId) throws JsonProcessingException {
 
         Map<String, List> listPoints = new HashMap<>();
         List pointUp = new ArrayList();
@@ -159,19 +161,23 @@ public class CallBotClient {
                             log.info("List Point Up");
                             pointUp.add(point.getName());
                             log.info("point UP:{}", point.getName());
+
                             pointUpId.add(point.getId());
                             log.info("point up id:{}", point.getId());
-                            addressPointUp.add(point.getAddress().replace(",", "-"));
-                            log.info(" address point up :{}", point.getAddress().replace(",", "-"));
+
+                            addressPointUp.add(getAddressPoint(point.getAddress()));
+                            log.info(" address point up :{}", getAddressPoint(point.getAddress()));
                         }
                         if (point.getProvince().equals(endCity)) {
                             log.info("List Point Down:");
                             pointDown.add(point.getName());
                             log.info("point down:{}", point.getName());
+
                             pointDownId.add(point.getId());
                             log.info("point down id:{}", point.getId());
-                            addressPointDown.add(point.getAddress().replace(",", "-"));
-                            log.info(" address point down :{}", point.getAddress().replace(",", "-"));
+
+                            addressPointDown.add(getAddressPoint(point.getAddress()));
+                            log.info(" address point down :{}", getAddressPoint(point.getAddress()));
                         }
 
                     }
@@ -179,10 +185,10 @@ public class CallBotClient {
 
 
             }
-            listPoints.put("pointUpId", pointUp);
-            listPoints.put("pointUp", pointUpId);
-            listPoints.put("pointDownID", pointDown);
-            listPoints.put("pointDown", pointDownId);
+            listPoints.put("pointUpId", pointUpId);
+            listPoints.put("pointUp", pointUp);
+            listPoints.put("pointDownID", pointDownId);
+            listPoints.put("pointDown", pointDown);
             listPoints.put("addressPointDown", addressPointDown);
             listPoints.put("addressPointUp", addressPointUp);
 
@@ -192,5 +198,13 @@ public class CallBotClient {
         return listPoints;
     }
 
-
+    public String getAddressPoint(String addressPoint) {
+        String[] address = null;
+        if (addressPoint.contains(",")) {
+            address = addressPoint.split(",");
+        } else {
+            address = addressPoint.split("-");
+        }
+        return address[0];
+    }
 }

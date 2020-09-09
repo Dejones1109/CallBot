@@ -15,6 +15,7 @@ com\its\sanve\api\communication\sanve\SanVeResponse.class
 com\its\sanve\api\utils\Client.class
 com\its\sanve\api\entities\District.class
 com\its\sanve\api\repositories\TripRepository.class
+com\its\sanve\api\communication\SanVeCommunicateV1.class
 com\its\sanve\api\entities\CompanyInfo.class
 com\its\sanve\api\utils\MessageUtils.class
 com\its\sanve\api\entities\UserInfo.class
@@ -35,6 +36,7 @@ com\its\sanve\api\controller\SanVeController.class
 com\its\sanve\api\communication\dto\PaymentRequest$PaymentRequestBuilder.class
 com\its\sanve\api\repositories\SeatMapRepository.class
 com\its\sanve\api\config\WebMvcConfigurerAdapter.class
+com\its\sanve\api\entities\PointV1.class
 com\its\sanve\api\utils\GwJwtTokenFactory.class
 com\its\sanve\api\interceptors\LoginInterceptor.class
 com\its\sanve\api\exceptions\AuthenException.class
@@ -46,6 +48,7 @@ com\its\sanve\api\repositories\UserInfoRepository.class
 com\its\sanve\api\communication\dto\CalculatePriceRequest.class
 com\its\sanve\api\entities\Agency.class
 com\its\sanve\api\limititer\RequestRateLimiter.class
+com\its\sanve\api\communication\sanve\SanVeClientV1.class
 com\its\sanve\api\entities\Trip.class
 com\its\sanve\api\config\CorsFilter.class
 com\its\sanve\api\dto\GwResponseDto.class
