@@ -1,7 +1,6 @@
 package com.its.sanve.api.communication.callbot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.its.sanve.api.entities.*;
@@ -197,7 +196,15 @@ public class CallBotClient {
         }
         return listPoints;
     }
-
+    public Map<String,String> listRoutesByDB(List<list_point> data, String routeId){
+        Map<String,String> listRoutes = new HashMap<>();
+        for(list_point pointV1: data){
+//            if(pointV1.getRouteId().equals(routeId)){
+//
+//            }
+        }
+        return  null;
+    }
     public String getAddressPoint(String addressPoint) {
         String[] address = null;
         if (addressPoint.contains(",")) {

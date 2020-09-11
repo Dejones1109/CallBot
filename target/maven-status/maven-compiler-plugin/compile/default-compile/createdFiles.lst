@@ -36,8 +36,8 @@ com\its\sanve\api\controller\SanVeController.class
 com\its\sanve\api\communication\dto\PaymentRequest$PaymentRequestBuilder.class
 com\its\sanve\api\repositories\SeatMapRepository.class
 com\its\sanve\api\config\WebMvcConfigurerAdapter.class
-com\its\sanve\api\entities\PointV1.class
 com\its\sanve\api\utils\GwJwtTokenFactory.class
+com\its\sanve\api\entities\list_point.class
 com\its\sanve\api\interceptors\LoginInterceptor.class
 com\its\sanve\api\exceptions\AuthenException.class
 com\its\sanve\api\communication\dto\CalculatePriceResponse.class
@@ -61,6 +61,7 @@ com\its\sanve\api\entities\TransactionLog.class
 com\its\sanve\api\repositories\VehicleRepository.class
 com\its\sanve\api\entities\SeatMap.class
 com\its\sanve\api\entities\Ticket.class
+com\its\sanve\api\repositories\PointV1Repository.class
 com\its\sanve\api\repositories\TicketRepository.class
 com\its\sanve\api\communication\dto\OrderTicketRequest$OrderTicketRequestBuilder.class
 com\its\sanve\api\exceptions\ProcessErrorException.class

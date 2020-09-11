@@ -7,12 +7,13 @@ import retrofit2.http.Query;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 
 public interface SanVeCommunicateV1 {
     @GET("get-list-point")
-    public Call<String> getListPoint(
+    public Call<Object> getListPoint(
             @Query("api_key" ) String apiKey,
             @Query(value = "secret_key",encoded = true) String secretKey);
 }

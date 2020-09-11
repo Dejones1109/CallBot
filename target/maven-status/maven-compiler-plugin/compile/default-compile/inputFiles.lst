@@ -3,6 +3,7 @@ C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\RouteInfoRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\interceptors\LoginInterceptor.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\TripRepository.java
+C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\PointV1Repository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\aop\MonitorAspect.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\sanve\SanVeClient.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\utils\GwJwtTokenFactory.java
@@ -31,6 +32,7 @@ C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\CallBotCommunication.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\exceptions\handlers\CommonExceptionHandler.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\SeatMapRepository.java
+C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\entities\list_point.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\config\WebMvcConfigurerAdapter.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\DistrictRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\dto\PaymentRequest.java

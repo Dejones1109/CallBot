@@ -105,7 +105,7 @@ public class SanVeController {
 
     }
     @GetMapping("getListPoint")
-    public ResponseEntity<String> getListPoint() {
+    public ResponseEntity<Object> getListPoint() {
         log.info("data get successful!!");
         return new ResponseEntity<>( svClient.getListPoint(), HttpStatus.OK);
     }

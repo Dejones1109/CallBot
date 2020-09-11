@@ -3,23 +3,19 @@ package com.its.sanve.api.facede;
 
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.its.sanve.api.communication.sanve.SanVeClient;
-import com.its.sanve.api.entities.CompanyInfo;
-import com.its.sanve.api.entities.District;
-import com.its.sanve.api.entities.Province;
-import com.its.sanve.api.entities.RouteInfo;
+import com.its.sanve.api.entities.*;
+import com.its.sanve.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.SanVeCommunicate;
 
-import com.its.sanve.api.repositories.CompanyRepository;
-import com.its.sanve.api.repositories.DistrictRepository;
-import com.its.sanve.api.repositories.ProvinceRepository;
-import com.its.sanve.api.repositories.RouteInfoRepository;
 import com.its.sanve.api.utils.MessageUtils;
 
 import lombok.extern.log4j.Log4j2;
@@ -45,12 +41,10 @@ public class GetDataFacade {
 
     @Autowired
     private RouteInfoRepository routeInfoRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     SanVeClient sanVeClient;
-
+    @Autowired
+    PointV1Repository pointV1Repository;
 
 // public
 
@@ -99,9 +93,19 @@ public class GetDataFacade {
         p.put("companyId", sub[0]);
         p.put("companyName", sub[1]);
         p.put("companyShortName", sub[2]);
-
-
         return p;
+    }
+    public  List<list_point> getListAllRoute(int limit,String companyId) throws JsonProcessingException {
+        List<list_point> list_points = new ArrayList<>();
+        if(companyId.isEmpty()){
+            list_points = pointV1Repository.getPointAll(limit);
+        }else {
+            list_points = pointV1Repository.findByCompanyId(companyId);
+        }
+
+    
+
+        return list_points;
     }
 
 }

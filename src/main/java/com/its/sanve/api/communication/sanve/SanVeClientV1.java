@@ -1,5 +1,6 @@
 package com.its.sanve.api.communication.sanve;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.AbstractCommunication;
 import com.its.sanve.api.communication.SanVeCommunicate;
 
@@ -20,6 +21,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import springfox.documentation.spring.web.json.Json;
+
 @Component
 @Log4j2
 @NoArgsConstructor
@@ -54,20 +57,22 @@ public class SanVeClientV1 extends AbstractCommunication {
 
         return  retrofit.create(SanVeCommunicateV1.class);
     }
-    public String getListPoint() {
+    public Object getListPoint() {
 
         try {
-            Call<String> request = sanVeCommunicateV1.getListPoint(apiKey, secretKey);
-            log.debug("request:,{}", request);
 
-            Response<String> response = request.execute();
-            log.debug("response: ,{}", response);
+            Call<Object> request = sanVeCommunicateV1.getListPoint(apiKey, secretKey);
+            log.info("request:,{}", request);
 
+            Response<Object> response = request.execute();
+            log.info("response: ,{}", response);
 
             if (response.isSuccessful()) {
                 log.info("response successfully!!!");
-               String data = response.message();
+                Object data =  response.body();
                 log.info("Successfully!!! {}", data);
+
+
 
                 return data;
 

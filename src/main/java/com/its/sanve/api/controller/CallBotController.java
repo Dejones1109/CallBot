@@ -57,7 +57,12 @@ public class CallBotController {
         Map<String, RouteInfo> data = sanveClient.getCompaniesRoutes(companyId);
         return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeID), HttpStatus.OK);
     }
+    @PostMapping("getListPointCityByDB")
 
+    public ResponseEntity<Map<String, List>> getListPointCityByDB(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeID, @RequestParam String companyId) throws Exception {
+        Map<String, RouteInfo> data = sanveClient.getCompaniesRoutes(companyId);
+        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeID), HttpStatus.OK);
+    }
     @PostMapping("getListStartTimer")
     public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
 
@@ -112,7 +117,10 @@ public class CallBotController {
     public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception {
         return new ResponseEntity<>(getDataFacade.getCompanyInfo(phone), HttpStatus.OK);
     }
-
+    @GetMapping("getListRouteByDB")
+    public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit,@RequestParam String companyId) throws Exception {
+        return new ResponseEntity<>(getDataFacade.getListAllRoute(limit,companyId),HttpStatus.OK);
+    }
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
