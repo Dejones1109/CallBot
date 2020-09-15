@@ -7,10 +7,7 @@ package com.its.sanve.api.communication.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  *
@@ -20,6 +17,8 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderTicketRequest extends Request{
     // đặt vé

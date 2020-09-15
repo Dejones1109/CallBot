@@ -79,16 +79,23 @@ public class CallBotController {
     }
 
     @GetMapping("getQualitiesTickets")
-    public ResponseEntity<Map<String, String>> getQualitiesTickets(@RequestParam String tripID, @RequestParam String pointUpID, @RequestParam String pointDownID) throws JsonProcessingException {
-                  log.info("tripId:{},pointUpId:{},pointDownId:{}", tripID, pointUpID, pointDownID);
-            log.info("request API An Vui!,{}", sanveClient.getTripsTickets(tripID, pointUpID, pointDownID));
-            Map<String, List<Ticket>> data = sanveClient.getTripsTickets(tripID, pointUpID, pointDownID);
-            log.info("Get qualities of Tickets,{}", data);
-
-        return new ResponseEntity<>(callBotClient.QuantitiesTickets(data), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getQualitiesTickets(@RequestParam String tripID, @RequestParam String pointUpID, @RequestParam String pointDownID,@RequestParam String startPoint,@RequestParam String endPoint,@RequestParam String date) throws Exception {
+        log.info("tripId:{},pointUpId:{},pointDownId:{}", tripID, pointUpID, pointDownID);
+        log.info("request API An Vui!,{}", sanveClient.getTripsTickets(tripID, pointUpID, pointDownID));
+        Long requestAPI= System.currentTimeMillis();
+        Map<String, List<Ticket>> tickets = sanveClient.getTripsTickets(tripID, pointUpID, pointDownID);
+        log.info("Get qualities of Tickets,{}", tickets);
+        int page = 0;
+        int size = 0;
+        String startTimeFrom="";
+        String startTimeTo="";
+        Map<String, List<Trip>> trips = sanveClient.getTripByPoints(page,size,convertDateTime(date),startPoint,endPoint,startTimeFrom,startTimeTo);
+        Long responseAPI= System.currentTimeMillis();
+        log.info("time of call API:{}",(responseAPI-requestAPI));
+        return new ResponseEntity<>(callBotClient.QuantitiesTickets(tickets,trips,tripID), HttpStatus.OK);
     }
 
-    @PostMapping("creatTransactionLog")
+    @PostMapping(value = "creatTransactionLog",consumes = {"multipart/form-data"})
     public String creatTransactionLog(@RequestParam String hotLine, @RequestParam String callId, @RequestParam String intent, @RequestParam String phoneOrder, @RequestParam String phone, @RequestParam String pointUp, @RequestParam String pointDown, @RequestParam String startTimeReality, @RequestParam String startDate, @RequestParam String route, @RequestParam Integer status) throws ParseException {
 
         TransactionLog transactionLog = new TransactionLog();
@@ -105,6 +112,7 @@ public class CallBotController {
         transactionLog.setStartTimeReality(startTimeReality);
         transactionLog.setStatus(status);
         transactionLogRepository.save(transactionLog);
+       //  sanveClient.createOrderTicket()
         return "saveToTransaction!!";
     }
 
@@ -118,7 +126,7 @@ public class CallBotController {
         return new ResponseEntity<>(getDataFacade.getCompanyInfo(phone), HttpStatus.OK);
     }
     @GetMapping("getListRouteByDB")
-    public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit,@RequestParam String companyId) throws Exception {
+    public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit,@RequestParam String companyId)  {
         return new ResponseEntity<>(getDataFacade.getListAllRoute(limit,companyId),HttpStatus.OK);
     }
     private String convertDateTime(String date) throws ParseException {

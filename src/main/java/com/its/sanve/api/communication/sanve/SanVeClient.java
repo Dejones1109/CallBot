@@ -171,6 +171,9 @@ public class SanVeClient extends AbstractCommunication {
 
                 SanVeResponse<Map<String, List<Trip>>> data = response.body();
                 log.info("Successfully!!! {}", data.getData());
+                Map<String, List<Trip>> mapTrip = data.getData();
+                log.info("mapTrip:{}",mapTrip);
+
                 return data.getData();
             } else {
                 log.warn("response failed!!!");

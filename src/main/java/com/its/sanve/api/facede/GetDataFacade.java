@@ -3,9 +3,6 @@ package com.its.sanve.api.facede;
 
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 import com.its.sanve.api.entities.*;
 import com.its.sanve.api.repositories.*;
@@ -44,7 +41,7 @@ public class GetDataFacade {
     @Autowired
     SanVeClient sanVeClient;
     @Autowired
-    PointV1Repository pointV1Repository;
+    ListPointRepository listPointRepository;
 
 // public
 
@@ -95,17 +92,27 @@ public class GetDataFacade {
         p.put("companyShortName", sub[2]);
         return p;
     }
-    public  List<list_point> getListAllRoute(int limit,String companyId) throws JsonProcessingException {
-        List<list_point> list_points = new ArrayList<>();
+    public  List<ListPoint> getListAllRoute(int limit, String companyId)  {
+        List<ListPoint> listPoints;
+
+        log.debug("getListAllRoute");
         if(companyId.isEmpty()){
-            list_points = pointV1Repository.getPointAll(limit);
+            listPoints = listPointRepository.getPointAll((long) limit);
         }else {
-            list_points = pointV1Repository.findByCompanyId(companyId);
+            listPoints = listPointRepository.getPointByCompanyId(companyId);
         }
+        log.info("listPoints: {}",listPoints);
+//        log.debug("list_points: {}",list_points);
+//        for(list_point point : list_points){
+//            log.debug("point:{}",point);
+//            type.put("entityType","diem_len_xuong");
+//            type.put("keyword", point.getDefaultName());
+//            type.put("address",point.getAddress());
+//            type.put("status",point.getStatus());
+//        }
 
-    
-
-        return list_points;
+        return listPoints;
     }
+
 
 }

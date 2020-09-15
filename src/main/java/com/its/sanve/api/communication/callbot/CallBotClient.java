@@ -3,6 +3,7 @@ package com.its.sanve.api.communication.callbot;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.its.sanve.api.communication.sanve.SanVeClient;
 import com.its.sanve.api.entities.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import java.util.*;
 public class CallBotClient {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
-
+    @Autowired
+    SanVeClient sanVeClient;
 
     public Map<String, Object> listStartTimeReality(Map<String, List<Trip>> data, String date, String companyId) {
         Map<String, Object> list = new HashMap<>();
@@ -113,15 +115,38 @@ public class CallBotClient {
         return timer;
     }
 
-    public Map<String, String> QuantitiesTickets(Map<String, List<Ticket>> data) throws JsonProcessingException {
-        Map<String, String> quantitys = new HashMap<>();
-        List<Ticket> listTickets = data.get("tickets");
-        int count = 0;
-        double temp = 0;
-        for (Ticket ticket : listTickets) {
+    public Map<String, Object> QuantitiesTickets(Map<String, List<Ticket>> tickets,Map<String, List<Trip>> trips,String tripId) throws JsonProcessingException {
+        Map<String, Object> quantitys = new HashMap<>();
+        List<Ticket> listTickets = tickets.get("tickets");
+        List listSeatsEmpty = new ArrayList();
+        log.info("count:{}",listTickets.size());
 
+        double temp = 0;
+        List<Trip> listTrips = trips.get("trips");
+
+
+        log.info("listTrips:{}",listTrips);
+        for (Trip trip : listTrips){
+            if(trip.getId().equals(tripId)){
+                SeatMap seatMap = trip.getSeatMap();
+                List<Seat> listSeat = seatMap.getSeatList();
+                for(Seat seat:listSeat){
+                    if(seat.getType()==3||seat.getType()==4||seat.getType()==0){
+                        listSeatsEmpty.add(seat.getId());
+
+                    }
+
+                }
+
+            }
+
+        }
+        log.info("list seat defaults:{}",listSeatsEmpty);
+        for (Ticket ticket : listTickets) {
+             Seat seat = ticket.getSeat();
+             log.info("seatType:{}",seat.getId());
+            listSeatsEmpty.remove(seat.getId());
             if (ticket.getStatus() != null) {
-                count++;
                 Double originalTicketPrice = ticket.getOriginalTicketPrice();
                 if (temp == 0) {
                     temp = originalTicketPrice;
@@ -130,14 +155,12 @@ public class CallBotClient {
                 }
             }
         }
-        log.info("the number of seats available,{}", count);
-        log.info("the quatity of ticket,{}", temp);
-
-        quantitys.put("ticketQuantity", Integer.toString(count));
-
+        log.info("the number of seats available,{}", listSeatsEmpty.size());
+        log.info("the qualities of ticket,{}", temp);
+        log.info("the list seat empty: {}",listSeatsEmpty);
+        quantitys.put("ticketQuantity", Integer.toString(listSeatsEmpty.size()));
         quantitys.put("price", Double.toString(temp));
-
-
+        quantitys.put("listSeatsEmpty",listSeatsEmpty);
         return quantitys;
     }
 
@@ -196,9 +219,9 @@ public class CallBotClient {
         }
         return listPoints;
     }
-    public Map<String,String> listRoutesByDB(List<list_point> data, String routeId){
+    public Map<String,String> listRoutesByDB(List<ListPoint> data, String routeId){
         Map<String,String> listRoutes = new HashMap<>();
-        for(list_point pointV1: data){
+        for(ListPoint pointV1: data){
 //            if(pointV1.getRouteId().equals(routeId)){
 //
 //            }
