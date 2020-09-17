@@ -40,6 +40,9 @@ public class RouteInfo {
     @Column(name = "route_name_short")
     @JsonProperty("routeNameShort")
     String nameShort;
+
+    @JsonProperty("displayPrice")
+    double displayPrice;
     @Transient
     List<String> listImages;
     @Column(name = "children_ticket_ratio")

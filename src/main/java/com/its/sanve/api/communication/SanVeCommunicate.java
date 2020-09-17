@@ -7,11 +7,9 @@ import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.dto.PaymentRequest;
 
 import com.its.sanve.api.entities.*;
+import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 import java.util.List;
 import java.util.Map;
@@ -53,7 +51,11 @@ public interface SanVeCommunicate {
     public Call<CalculatePriceResponse> calculatePrice(@Body CalculatePriceRequest request);
 
     @POST("order/create")
-    public Call<SanVeResponse> orderTicket(@Body OrderTicketRequest request);
+    public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
+                                           @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,
+                                           @Part("point_selected") RequestBody pointSelected, @Part("route_id") RequestBody routeId,
+                                           @Part("trip_id") RequestBody tripId, @Part("full_name") RequestBody fullName,
+                                           @Part("phone") RequestBody phone, @Part("company_id") RequestBody companyId);
 
     @POST("order/payment")
     public Call paymennt(@Body PaymentRequest request);

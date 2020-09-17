@@ -11,6 +11,7 @@ com\its\sanve\api\config\GwConfig.class
 com\its\sanve\api\utils\ClientManager.class
 com\its\sanve\api\communication\sanve\SanVeClient.class
 com\its\sanve\api\repositories\SeatRepository.class
+com\its\sanve\api\facede\CallBotFacade.class
 com\its\sanve\api\communication\sanve\SanVeResponse.class
 com\its\sanve\api\utils\Client.class
 com\its\sanve\api\entities\District.class
@@ -27,6 +28,7 @@ com\its\sanve\api\communication\SanVeCommunicate.class
 com\its\sanve\api\GatewayApplication.class
 com\its\sanve\api\repositories\CompanyRepository.class
 com\its\sanve\api\repositories\ListPointRepository.class
+com\its\sanve\api\dto\TransactionRequest.class
 com\its\sanve\api\entities\ListPoint.class
 com\its\sanve\api\repositories\PointRepository.class
 com\its\sanve\api\repositories\RouteInfoRepository.class

@@ -7,6 +7,7 @@ import com.its.sanve.api.communication.SanVeCommunicate;
 import com.its.sanve.api.communication.dto.CalculatePriceRequest;
 import com.its.sanve.api.communication.dto.CalculatePriceResponse;
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
+import com.its.sanve.api.dto.TransactionRequest;
 import com.its.sanve.api.entities.*;
 import com.its.sanve.api.utils.MessageUtils;
 
@@ -33,6 +34,8 @@ import java.io.IOException;
 import java.net.URLDecoder;
 
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Log4j2
@@ -280,173 +283,7 @@ public class SanVeClient extends AbstractCommunication {
         return results;
     }
 
-    public Object createOrderTicket(OrderTicketRequest request) throws IOException {
-        SanVeResponse data = null;
-        log.info("request");
-        Call<SanVeResponse> requests = sanVeCommunicate.orderTicket(request);
-        log.info("response");
-        Response<SanVeResponse> response = requests.execute();
-        if (response.isSuccessful()) {
-            data = response.body();
-            log.info("success!!!");
-            log.info(data);
-        }
-        return data;
-    }
 
-//    public int isCheckCity(String data, String route_name) {
-//        if (data.toLowerCase().contains(route_name.toLowerCase())) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
-//
-//    public Object listRoutes(String data, String City, String routeName, String RouteId) throws JsonProcessingException {
-//
-//        Map<Integer, String> listPoints = new HashMap<>();
-//
-//        try {
-//            log.info("Chuyển Json thành java Object");
-//            JsonNode routeInfos = objectMapper.readTree(data);
-//            log.info(routeInfos);
-//            JsonNode Routes = routeInfos.get("data");
-//            log.info(Routes);
-//            log.info("So sánh chuyến");
-//            for (JsonNode obj : Routes) {
-//                if (obj.get("routeId").asText().equals(RouteId)) {
-//                    if (obj.get("routeName").asText().toLowerCase().equals(routeName.toLowerCase())) {
-//                        JsonNode listPoint = obj.get("listPoint");
-//                        if (listPoint.isArray()) {
-//                            for (JsonNode arr : listPoint) {
-//                                                 if (arr.get("province").asText().toLowerCase().equals(City.toLowerCase())) {
-//                                    listPoints.put(1, arr.get("name").asText());
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            log.info("thành công");
-//        } catch (Exception e) {
-//            log.info(e.getMessage());
-//        }
-//        return listPoints.values();
-//    }
-//
-//    public Object listStartTimeReality(String data, String date) {
-//        Map<String, Object> list = new HashMap<>();
-//        Integer valid = 0;
-//        List listTripId = new ArrayList();
-//        List listRouteId = new ArrayList();
-//        List listTimes = new ArrayList();
-//
-//
-//        log.info("cắt chuyễn Json");
-//
-//
-//        try {
-//            log.info("7");
-//            JsonNode jsonNode = objectMapper.readTree(data);
-//            //   log.info(jsonNode);
-//            log.info("8");
-//            JsonNode arraynodes = jsonNode.get("data");
-//            JsonNode arraynode = arraynodes.get("trips");
-//            log.info("9");
-//
-//
-//            if (arraynode.isArray()) {
-//                log.info("So sánh chuỗi");
-//                for (final JsonNode objNode : arraynode) {
-//                    // listTimes.put("routeId")
-//                    if (objNode.get("startDateReality").asText().equals(date)) {
-//                        log.info(objNode.get("startTimeReality").asText() + ",");
-//                        listTripId.add(objNode.get("tripId").asText());
-//                        listRouteId.add(objNode.get("routeId").asText());
-//                        listTimes.add(ConventTimer(objNode.get("startTimeReality").asText()));
-//
-//                        log.info(ConventTimer(objNode.get("startTimeReality").asText()));
-//                        log.info("thành công");
-//                    }
-//                }
-//                if (listRouteId.isEmpty() && listTripId.isEmpty()) {
-//                    valid = 0;
-//                } else if (!listRouteId.isEmpty() && listTripId.isEmpty()) {
-//                    valid = 2;
-//                } else {
-//                    valid = 1;
-//                }
-//                list.put("valid", valid);
-//                list.put("tripId", listTripId);
-//                list.put("routeId", listRouteId);
-//                list.put("timer", listTimes);
-//            }
-//        } catch (Exception e) {
-//            log.info(e.getMessage());
-//
-//        }
-//        return list;
-//    }
-//
-//    private String ConventTimer(String startTimeReality) {
-//        String timer;
-//        double Time = Double.parseDouble(startTimeReality);
-//        double number = Time / 3600000;
-//        int hour = (int) Math.floor(number);
-//        if (number == hour) {
-//            if (hour < 10) {
-//                timer = "0" + hour + "h00";
-//            } else {
-//                timer = hour + "h00";
-//
-//            }
-//        } else {
-//            if (hour < 10) {
-//                timer = "0" + hour + "h" + Math.round((number - hour) * 60);
-//            } else {
-//                timer = hour + "h" + Math.round((number - hour) * 60);
-//
-//            }
-//
-//        }
-//        return timer;
-//    }
-//
-//    public Object QuantitiesTickets(String data) throws JsonProcessingException {
-//        Map<String, Object> quantitys = new HashMap<>();
-//        JsonNode node = objectMapper.readTree(data);
-//        JsonNode tickets = node.get("data");
-//        JsonNode ti = tickets.get("tickets");
-//
-//        log.info(ti);
-//        log.info("6");
-//        int count = 0;
-//        if (ti.isArray()) {
-//            log.info("7");
-//
-//            int temp = 0;
-//            for (JsonNode ticket : ti) {
-//                if (ticket.get("ticketStatus").asInt() == 7) {
-//                    count++;
-//                    log.info(ticket.get("originalTicketPrice").asInt());
-//                    int code = ticket.get("originalTicketPrice").asInt();
-//                    if (temp == 0) {
-//                        temp = code;
-//                    } else if (code < temp) {
-//                        temp = code;
-//                    }
-//                }
-//            }
-//            log.info(count);
-//            quantitys.put("ticket_qtt", count);
-//            log.info(temp);
-//            quantitys.put("price", temp);
-//
-//        }
-//
-//        log.info(count);
-//        return quantitys;
-//    }
 }
 
 

@@ -1,16 +1,15 @@
 package com.its.sanve.api.controller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.callbot.CallBotClient;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
+import com.its.sanve.api.dto.TransactionRequest;
 import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.entities.Ticket;
 import com.its.sanve.api.entities.TransactionLog;
 import com.its.sanve.api.entities.Trip;
+import com.its.sanve.api.facede.CallBotFacade;
 import com.its.sanve.api.facede.GetDataFacade;
 import com.its.sanve.api.repositories.RouteInfoRepository;
 import com.its.sanve.api.repositories.TransactionLogRepository;
@@ -34,19 +33,16 @@ import java.util.*;
 @Log4j2
 @RequestMapping("/callBot")
 public class CallBotController {
-    @Autowired
-    ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     SanVeClient sanveClient;
 
     @Autowired
     CallBotClient callBotClient;
 
-    @Autowired
-    TransactionLogRepository transactionLogRepository;
 
     @Autowired
-    RouteInfoRepository routeInfoRepository;
+    CallBotFacade callBotFacade;
 
     @Autowired
     GetDataFacade getDataFacade;
@@ -95,31 +91,20 @@ public class CallBotController {
         return new ResponseEntity<>(callBotClient.QuantitiesTickets(tickets,trips,tripID), HttpStatus.OK);
     }
 
-    @PostMapping(value = "creatTransactionLog",consumes = {"multipart/form-data"})
-    public String creatTransactionLog(@RequestParam String hotLine, @RequestParam String callId, @RequestParam String intent, @RequestParam String phoneOrder, @RequestParam String phone, @RequestParam String pointUp, @RequestParam String pointDown, @RequestParam String startTimeReality, @RequestParam String startDate, @RequestParam String route, @RequestParam Integer status) throws ParseException {
+    @PostMapping("orderTicket")
+    public ResponseEntity<String> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
+                                              @RequestBody TransactionRequest transaction) throws ParseException {
 
-        TransactionLog transactionLog = new TransactionLog();
-        transactionLog.setPhone(phone);
-        transactionLog.setIntent(intent);
-        transactionLog.setRoute(route);
-        transactionLog.setCreatedAt(LocalDateTime.now());
-        transactionLog.setHotLine(hotLine);
-        transactionLog.setStartDate(convertDateTime(startDate));
-        transactionLog.setCallId(callId);
-        transactionLog.setPointDown(pointDown);
-        transactionLog.setPointUp(pointUp);
-        transactionLog.setPhoneOrder(phoneOrder);
-        transactionLog.setStartTimeReality(startTimeReality);
-        transactionLog.setStatus(status);
-        transactionLogRepository.save(transactionLog);
-       //  sanveClient.createOrderTicket()
-        return "saveToTransaction!!";
+        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
+            return new ResponseEntity<>("data successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("data false", HttpStatus.BAD_REQUEST);
+        }
+
+//		return (ResponseEntity<Object>) callBotFacade.orderTicket(secretKey, apiKey, transaction);
+
     }
 
-    @PostMapping("createOrderTicket")
-    public ResponseEntity createOrderTicket(@RequestBody OrderTicketRequest request){
-        return new ResponseEntity("ok", HttpStatus.OK);
-    }
 
         @GetMapping("getCompanyInfo")
     public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception {

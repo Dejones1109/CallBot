@@ -1,7 +1,7 @@
 package com.its.sanve.api.communication.callbot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import com.its.sanve.api.communication.sanve.SanVeClient;
 import com.its.sanve.api.entities.*;
@@ -17,8 +17,7 @@ import java.util.*;
 @Log4j2
 @Component
 public class CallBotClient {
-    @Autowired
-    ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     SanVeClient sanVeClient;
 
@@ -33,7 +32,6 @@ public class CallBotClient {
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
-
 
             String currentDay = format.format(now);
             Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
@@ -137,6 +135,8 @@ public class CallBotClient {
                     }
 
                 }
+                RouteInfo routeInfo = trip.getRouteInfo();
+                temp =routeInfo.getDisplayPrice();
 
             }
 
@@ -146,14 +146,14 @@ public class CallBotClient {
              Seat seat = ticket.getSeat();
              log.info("seatType:{}",seat.getId());
             listSeatsEmpty.remove(seat.getId());
-            if (ticket.getStatus() != null) {
-                Double originalTicketPrice = ticket.getOriginalTicketPrice();
-                if (temp == 0) {
-                    temp = originalTicketPrice;
-                } else if (originalTicketPrice < temp) {
-                    temp = originalTicketPrice;
-                }
-            }
+//            if (ticket.getStatus() != null) {
+//                Double originalTicketPrice = ticket.getOriginalTicketPrice();
+//                if (temp == 0) {
+//                    temp = originalTicketPrice;
+//                } else if (originalTicketPrice < temp) {
+//                    temp = originalTicketPrice;
+//                }
+//            }
         }
         log.info("the number of seats available,{}", listSeatsEmpty.size());
         log.info("the qualities of ticket,{}", temp);
@@ -229,7 +229,7 @@ public class CallBotClient {
         return  null;
     }
     public String getAddressPoint(String addressPoint) {
-        String[] address = null;
+        String[] address;
         if (addressPoint.contains(",")) {
             address = addressPoint.split(",");
         } else {

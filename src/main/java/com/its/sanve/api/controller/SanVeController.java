@@ -2,6 +2,7 @@ package com.its.sanve.api.controller;
 
 
 import com.its.sanve.api.communication.callbot.CallBotClient;
+import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 
 
@@ -18,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Multipart;
 
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -95,13 +98,9 @@ public class SanVeController {
     }
 
     @PostMapping("order/calc_price")
-    public ResponseEntity get_order_calc_price(@RequestBody CalculatePriceRequest request) throws Exception {
-        CalculatePriceResponse response = SVClient.calculatePrice(request);
-        return GwResponseDto.build().withHttpStatus(HttpStatus.OK)
-                .withCode(HttpStatus.OK)
-                .withData(response)
-                .withMessage("Success")
-                .toResponseEntity();
+    public ResponseEntity get_order_calc_price(@ModelAttribute CalculatePriceRequest request) throws Exception {
+      //  CalculatePriceResponse response = SVClient.calculatePrice(request);
+        return new ResponseEntity(SVClient.calculatePrice(request),HttpStatus.OK);
 
     }
     @GetMapping("getListPoint")
@@ -109,6 +108,10 @@ public class SanVeController {
         log.info("data get successful!!");
         return new ResponseEntity<>( svClient.getListPoint(), HttpStatus.OK);
     }
+//    @RequestMapping(value = "order/create",method = RequestMethod.POST,consumes = {"multipart/form-data"})
+//    public ResponseEntity creatOrderTicket(@RequestPart  OrderTicketRequest request) throws IOException {
+//        return  new ResponseEntity(SVClient.createOrderTicket(request),HttpStatus.OK);
+//    }
 }
 
 
