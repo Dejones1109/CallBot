@@ -47,18 +47,25 @@ public class CallBotController {
     @Autowired
     GetDataFacade getDataFacade;
 
+    @GetMapping("isCheckRoute")
+    public Boolean isCheckRoute(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String companyId) {
+        return callBotClient.isCheckRoute(sanveClient.getCompaniesRoutes(companyId), startCity, endCity);
+    }
+
     @PostMapping("getListPointCity")
 
-    public ResponseEntity<Map<String, List>> getListPointCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeID, @RequestParam String companyId) throws Exception {
+    public ResponseEntity<Map<String, List>> getListPointCity(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeId, @RequestParam String companyId) throws Exception {
         Map<String, RouteInfo> data = sanveClient.getCompaniesRoutes(companyId);
-        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeID), HttpStatus.OK);
+        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
     }
+
     @PostMapping("getListPointCityByDB")
 
-    public ResponseEntity<Map<String, List>> getListPointCityByDB(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeID, @RequestParam String companyId) throws Exception {
+    public ResponseEntity<Map<String, List>> getListPointCityByDB(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeId, @RequestParam String companyId) throws Exception {
         Map<String, RouteInfo> data = sanveClient.getCompaniesRoutes(companyId);
-        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeID), HttpStatus.OK);
+        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
     }
+
     @PostMapping("getListStartTimer")
     public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
 
@@ -67,28 +74,28 @@ public class CallBotController {
         String startTimeFrom = "";
         String endTimeFrom = "";
         Long requestAPI = System.currentTimeMillis();
-        Map<String,List<Trip>> data = sanveClient.getTripByPoints(page, size, convertDateTime(date), startCity, endCity, startTimeFrom, endTimeFrom);
+        Map<String, List<Trip>> data = sanveClient.getTripByPoints(page, size, convertDateTime(date), startCity, endCity, startTimeFrom, endTimeFrom);
         Long responseAPI = System.currentTimeMillis();
-        log.info("Response data by SanVe : {}",responseAPI-requestAPI);
-        log.info("date:{},parseDate:{}",date,convertDateTime(date));
+        log.info("Response data by SanVe : {}", responseAPI - requestAPI);
+        log.info("date:{},parseDate:{}", date, convertDateTime(date));
         return new ResponseEntity<>(callBotClient.listStartTimeReality(data, convertDateTime(date), companyId), HttpStatus.OK);
     }
 
     @GetMapping("getQualitiesTickets")
-    public ResponseEntity<Map<String, Object>> getQualitiesTickets(@RequestParam String tripID, @RequestParam String pointUpID, @RequestParam String pointDownID,@RequestParam String startPoint,@RequestParam String endPoint,@RequestParam String date) throws Exception {
+    public ResponseEntity<Map<String, Object>> getQualitiesTickets(@RequestParam String tripID, @RequestParam String pointUpID, @RequestParam String pointDownID, @RequestParam String startPoint, @RequestParam String endPoint, @RequestParam String date) throws Exception {
         log.info("tripId:{},pointUpId:{},pointDownId:{}", tripID, pointUpID, pointDownID);
         log.info("request API An Vui!,{}", sanveClient.getTripsTickets(tripID, pointUpID, pointDownID));
-        Long requestAPI= System.currentTimeMillis();
+        Long requestAPI = System.currentTimeMillis();
         Map<String, List<Ticket>> tickets = sanveClient.getTripsTickets(tripID, pointUpID, pointDownID);
         log.info("Get qualities of Tickets,{}", tickets);
         int page = 0;
         int size = 0;
-        String startTimeFrom="";
-        String startTimeTo="";
-        Map<String, List<Trip>> trips = sanveClient.getTripByPoints(page,size,convertDateTime(date),startPoint,endPoint,startTimeFrom,startTimeTo);
-        Long responseAPI= System.currentTimeMillis();
-        log.info("time of call API:{}",(responseAPI-requestAPI));
-        return new ResponseEntity<>(callBotClient.QuantitiesTickets(tickets,trips,tripID), HttpStatus.OK);
+        String startTimeFrom = "";
+        String startTimeTo = "";
+        Map<String, List<Trip>> trips = sanveClient.getTripByPoints(page, size, convertDateTime(date), startPoint, endPoint, startTimeFrom, startTimeTo);
+        Long responseAPI = System.currentTimeMillis();
+        log.info("time of call API:{}", (responseAPI - requestAPI));
+        return new ResponseEntity<>(callBotClient.QuantitiesTickets(tickets, trips, tripID), HttpStatus.OK);
     }
 
     @PostMapping("orderTicket")
@@ -106,14 +113,16 @@ public class CallBotController {
     }
 
 
-        @GetMapping("getCompanyInfo")
+    @GetMapping("getCompanyInfo")
     public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception {
         return new ResponseEntity<>(getDataFacade.getCompanyInfo(phone), HttpStatus.OK);
     }
+
     @GetMapping("getListRouteByDB")
-    public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit,@RequestParam String companyId)  {
-        return new ResponseEntity<>(getDataFacade.getListAllRoute(limit,companyId),HttpStatus.OK);
+    public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit, @RequestParam String companyId) {
+        return new ResponseEntity<>(getDataFacade.getListAllRoute(limit, companyId), HttpStatus.OK);
     }
+
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

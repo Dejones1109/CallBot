@@ -22,9 +22,9 @@ import java.util.List;
  */
 @Repository
 public interface ListPointRepository extends JpaRepository<ListPoint,String>{
-   @Query(value="select new ListPoint(u.entityType,u.keyword,u.address,u.status) from ListPoint u where u.id <= :limit")
+   @Query(value="select new ListPoint(u.entityType,u.keyword,u.address,u.synonyms,u.status) from ListPoint u where u.id <= :limit")
    List<ListPoint> getPointAll(@Param("limit") Long limit);
-   @Query(value="select new ListPoint(u.entityType,u.keyword,u.address,u.status) from ListPoint u where u.companyId = :companyId")
+   @Query(value="select new ListPoint(u.entityType,u.keyword,u.address,u.synonyms,u.status) from ListPoint u where u.companyId = :companyId")
    List<ListPoint> getPointByCompanyId( @Param("companyId") String companyId);
 
 }

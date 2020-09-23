@@ -20,7 +20,34 @@ public class CallBotClient {
 
     @Autowired
     SanVeClient sanVeClient;
+public Boolean isCheckRoute(Map<String,RouteInfo> routeInfoMap,String startCity,String endCity){
+    for(String key : routeInfoMap.keySet()){
+        RouteInfo routeInfo = routeInfoMap.get(key);
+        log.info("routeInfo:{}",routeInfo);
+        List<Point> listPoints= routeInfo.getListPoint();
+        List<String> listProvinces = new ArrayList<>();
+        for(Point point :listPoints){
+            log.info("province:{}",point.getProvince());
+            String temp =null;
+            if(point.getProvince().equals("Hồ Chí Minh")){
+             temp =   point.getProvince().replace("Hồ Chí Minh","Sài Gòn");
+            }else {
+                temp = point.getProvince();
+            }
+            listProvinces.add(temp.toLowerCase());
 
+        }
+        log.info("listProvinces:{}",listProvinces);
+       for(int i =0;i<listProvinces.size()-1;i++){
+        //   listProvinces.get(i).replace("Hồ Chí Minh","Sài Gòn");
+
+           if(listProvinces.get(0).equals(startCity.toLowerCase())&&listProvinces.get(i+1).equals(endCity.toLowerCase())){
+               return true;
+           }
+       }
+    }
+    return false;
+}
     public Map<String, Object> listStartTimeReality(Map<String, List<Trip>> data, String date, String companyId) {
         Map<String, Object> list = new HashMap<>();
         int valid = 0;

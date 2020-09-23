@@ -34,8 +34,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.time.LocalDateTime;
+
 import java.util.*;
 
 @Log4j2
@@ -145,6 +144,10 @@ public class SanVeClient extends AbstractCommunication {
                 log.info("response successfully");
                 SanVeResponse<Map<String, RouteInfo>> data = response.body();
                 log.info("Successfully!!! {}", data.getData());
+                String startCity = "Hà Nội";
+                String endCity ="Nam Định";
+               Map<String,RouteInfo> routeInfoMap = data.getData();
+               log.info("keySet:{}",routeInfoMap.keySet());
 
                 return data.getData();
             } else {

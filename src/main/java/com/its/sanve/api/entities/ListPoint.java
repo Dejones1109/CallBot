@@ -54,10 +54,13 @@ public class ListPoint {
     String status;
     @Column(name="entity_type")
     String entityType;
-    public ListPoint( String entityType, String keyword, String address, String status){
+    @Column(name="synonyms")
+    String synonyms;
+    public ListPoint( String entityType, String keyword, String address,String synonyms, String status){
         this.keyword =keyword;
         this.entityType = entityType;
         this.address = address;
+        this.synonyms =synonyms;
         this.status = status;
     }
 }
