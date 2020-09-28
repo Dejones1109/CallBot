@@ -4,6 +4,7 @@ import com.its.sanve.api.communication.callbot.CallBotClient;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
+import com.its.sanve.api.communication.sanve.SanVeClientV1;
 import com.its.sanve.api.dto.TransactionRequest;
 import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.entities.Ticket;
@@ -39,7 +40,8 @@ public class CallBotController {
 
     @Autowired
     CallBotClient callBotClient;
-
+    @Autowired
+    SanVeClientV1 sanVeClientV1;
 
     @Autowired
     CallBotFacade callBotFacade;
@@ -48,7 +50,7 @@ public class CallBotController {
     GetDataFacade getDataFacade;
 
     @GetMapping("isCheckRoute")
-    public Boolean isCheckRoute(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String companyId) {
+    public Object isCheckRoute(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String companyId) {
         return callBotClient.isCheckRoute(sanveClient.getCompaniesRoutes(companyId), startCity, endCity);
     }
 
@@ -66,19 +68,27 @@ public class CallBotController {
         return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
     }
 
+    //    @PostMapping("getListStartTimer")
+//    public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
+//
+//        int size = 0;
+//        int page = 0;
+//        String startTimeFrom = "";
+//        String endTimeFrom = "";
+//        Long requestAPI = System.currentTimeMillis();
+//        Map<String, List<Trip>> data = sanveClient.getTripByPoints(page, size, convertDateTime(date), startCity, endCity, startTimeFrom, endTimeFrom);
+//        Long responseAPI = System.currentTimeMillis();
+//        log.info("Response data by SanVe : {}", responseAPI - requestAPI);
+//        log.info("date:{},parseDate:{}", date, convertDateTime(date));
+//        return new ResponseEntity<>(callBotClient.listStartTimeReality(data, convertDateTime(date), companyId), HttpStatus.OK);
+//    }
     @PostMapping("getListStartTimer")
-    public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
-
-        int size = 0;
-        int page = 0;
-        String startTimeFrom = "";
-        String endTimeFrom = "";
+    public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String pointUp, @RequestParam String pointDown, @RequestParam String date, @RequestParam int numberTicket, @RequestParam String companyId, @RequestParam String startTime) throws Exception {
         Long requestAPI = System.currentTimeMillis();
-        Map<String, List<Trip>> data = sanveClient.getTripByPoints(page, size, convertDateTime(date), startCity, endCity, startTimeFrom, endTimeFrom);
+        List<Trip> listTrips = sanVeClientV1.getListTripByNumber(pointUp, pointDown, convertDateTime(date), companyId, numberTicket);
         Long responseAPI = System.currentTimeMillis();
         log.info("Response data by SanVe : {}", responseAPI - requestAPI);
-        log.info("date:{},parseDate:{}", date, convertDateTime(date));
-        return new ResponseEntity<>(callBotClient.listStartTimeReality(data, convertDateTime(date), companyId), HttpStatus.OK);
+        return new ResponseEntity<>(callBotClient.listStartTimeRealityV1(listTrips, convertDateTime(date), convertStartTime(startTime)), HttpStatus.OK);
     }
 
     @GetMapping("getQualitiesTickets")
@@ -131,4 +141,10 @@ public class CallBotController {
         return parsedDate;
     }
 
+    private String convertStartTime(String startTime) {
+        int time = 0;
+        String[] number = startTime.split("h");
+        time = Integer.parseInt(number[0]) * 3600000 + Integer.parseInt(number[1]) * 60000;
+        return String.valueOf(time);
+    }
 }

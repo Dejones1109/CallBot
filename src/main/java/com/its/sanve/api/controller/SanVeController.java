@@ -37,7 +37,7 @@ public class SanVeController {
     @Autowired
     CallBotClient callBotClient;
     @Autowired
-    SanVeClientV1 svClient;
+    SanVeClientV1 svClientV1;
     @Autowired
     GetDataFacade getDataFacade;
 
@@ -106,7 +106,12 @@ public class SanVeController {
     @GetMapping("getListPoint")
     public ResponseEntity<Object> getListPoint() {
         log.info("data get successful!!");
-        return new ResponseEntity<>( svClient.getListPoint(), HttpStatus.OK);
+        return new ResponseEntity<>( svClientV1.getListPoint(), HttpStatus.OK);
+    }
+    @GetMapping("getListTripsByNumber")
+    public ResponseEntity<Object> getListTripsByNumber(@RequestParam String pointUp,@RequestParam String pointDown,@RequestParam String startDay,@RequestParam String companyId,@RequestParam int numberTicket) {
+        log.info("data get successful!!");
+        return new ResponseEntity<>( svClientV1.getListTripByNumber(pointUp,pointDown,startDay,companyId,numberTicket), HttpStatus.OK);
     }
 //    @RequestMapping(value = "order/create",method = RequestMethod.POST,consumes = {"multipart/form-data"})
 //    public ResponseEntity creatOrderTicket(@RequestPart  OrderTicketRequest request) throws IOException {

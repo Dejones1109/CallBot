@@ -6,14 +6,11 @@
 package com.its.sanve.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +29,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Trip {
     @Id
     @Column(name = "id")
@@ -42,6 +40,9 @@ public class Trip {
     @Column(name = "status")
     @JsonProperty("tripStatus")
     Integer status;
+    @Column(name = "allowPickingAndDroppingAtHome")
+    @JsonProperty("allowPickingAndDroppingAtHome")
+    Boolean allowPickingAndDroppingAtHome;
     @Column(name = "start_date_reality")
     String startDateReality;
     @Column(name = "start_time_reality")
@@ -64,4 +65,10 @@ public class Trip {
     List<Point> listPoint;
     @Transient
     CompanyInfo companyInfo;
+    @Transient
+    @JsonProperty("pointUp")
+    Point pointUp;
+    @Transient
+    @JsonProperty("pointDown")
+    Point pointDown;
 }

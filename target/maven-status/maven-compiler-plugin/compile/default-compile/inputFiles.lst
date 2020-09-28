@@ -7,6 +7,7 @@ C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\aop\MonitorAspect.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\sanve\SanVeClient.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\utils\GwJwtTokenFactory.java
+C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\communication\sanve\SanVeV1Response.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\limititer\RequestRateLimiter.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\repositories\AgencyRepository.java
 C:\Users\tranv\Desktop\ITS\callbot\Sanve\CallBot\src\main\java\com\its\sanve\api\entities\UserInfo.java

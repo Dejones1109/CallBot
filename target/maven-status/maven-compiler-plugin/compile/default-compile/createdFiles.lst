@@ -68,3 +68,4 @@ com\its\sanve\api\repositories\TicketRepository.class
 com\its\sanve\api\communication\dto\OrderTicketRequest$OrderTicketRequestBuilder.class
 com\its\sanve\api\exceptions\ProcessErrorException.class
 com\its\sanve\api\interceptors\GwInterceptor.class
+com\its\sanve\api\communication\sanve\SanVeV1Response.class

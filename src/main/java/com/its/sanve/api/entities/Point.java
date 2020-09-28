@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Point {
     /**
      * Thứ tự điểm dừng trong chuyến
@@ -85,7 +87,7 @@ public class Point {
     /**
      * Cho phép đưa đón tận nhà tại diểm đang xét
      */
-    @Column(name = "allow_pickup_home")
+    @Column(name = "allowPickingAndDroppingAtHome")
     Boolean allowPickingAndDroppingAtHome;
     @Transient
     List listTransshipmentPoint;
