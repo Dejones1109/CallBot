@@ -49,7 +49,8 @@ public interface SanVeCommunicate {
 
     @POST("order/calc_price")
     public Call<CalculatePriceResponse> calculatePrice(@Body CalculatePriceRequest request);
-
+    @Multipart
+    @FormUrlEncoded
     @POST("order/create")
     public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
                                            @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,

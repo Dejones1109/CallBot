@@ -81,7 +81,7 @@ public class TransactionLog {
 
     @Column(name = "ticket")
     @JsonProperty("ticket")
-    int ticket;
+    String ticket;
 
     @Column(name = "trips_id")
     @JsonProperty("trip_id")

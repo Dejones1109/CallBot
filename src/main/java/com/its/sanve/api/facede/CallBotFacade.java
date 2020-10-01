@@ -39,18 +39,13 @@ public class CallBotFacade {
 	public boolean orderTicket(String secretKey, String apiKey, TransactionRequest transactionRequest) throws ParseException {
 		try {
 
-			String seat = "";
 
-			for (int j = 0; j < transactionRequest.getTicket(); j++) {
-				seat += transactionRequest.getSeatId().get(j) + ",";
-
-			}		
 			log.debug(transactionRequest.getSeatId());
-			log.debug(seat);
+
 			OrderTicketRequest orderTicketRequest = new OrderTicketRequest();
 			orderTicketRequest.setSecretKey(secretKey);
 			orderTicketRequest.setApiKey(apiKey);
-			orderTicketRequest.setSeat(seat);
+			orderTicketRequest.setSeat(transactionRequest.getSeatId().toString());
 			orderTicketRequest.setPoint(transactionRequest.getPointSelected());
 			orderTicketRequest.setTripId(transactionRequest.getTripId());
 			orderTicketRequest.setRouteId(transactionRequest.getRoute());
@@ -60,39 +55,43 @@ public class CallBotFacade {
 
 			log.info(orderTicketRequest);
 			boolean result = true;
-			SanVeResponse sanVeResponse =  callBotCommunication.orderTicket(orderTicketRequest);
-			if(sanVeResponse == null) {
-				result = false;
-			}else {
+			int sanVeResponse = callBotCommunication.orderTicket(orderTicketRequest);
+
+
+			if(sanVeResponse == 1) {
 				result = true;
+			}else {
+				result = false;
 			}
 			log.debug(sanVeResponse);
+//      return sanVeResponse;
 			return result;
-
 		} catch (Exception e) {
 			log.error("Order Ticket Failed", e);
 			return false;
 		} finally {
+			String seat = transactionRequest.getSeatId().toString().replace("[","").replace("]","");
 			TransactionLog transactionLog = new TransactionLog();
 			transactionLog.setPhone(transactionRequest.getPhone());
 			transactionLog.setIntent(transactionRequest.getIntent());
 			transactionLog.setRoute(transactionRequest.getRoute());
 			transactionLog.setCreatedAt(LocalDateTime.now());
 			transactionLog.setHotLine(transactionRequest.getHotLine());
-			transactionLog.setStartDate(this.convertDateTime(transactionRequest.getStartDate().toString()));
+			transactionLog.setStartDate(transactionRequest.getStartDate());
 			transactionLog.setCallId(transactionRequest.getCallId());
 			transactionLog.setPointDown(transactionRequest.getPointDown());
 			transactionLog.setPointUp(transactionRequest.getPointUp());
 			transactionLog.setPhoneOrder(transactionRequest.getPhoneOrder());
 			transactionLog.setStartTimeReality(transactionRequest.getStartTimeReality());
 			transactionLog.setStatus(transactionRequest.getStatus());
-			transactionLog.setTicket(transactionRequest.getTicket());
+            transactionLog.setTicket(seat);
 			transactionLog.setTripId(transactionRequest.getTripId());
 			transactionLog.setCompanyId(transactionRequest.getCompanyId());
 			transactionLog.setPointSelected(transactionRequest.getPointSelected());
 			transactionLogRepository.save(transactionLog);
-//			transactionLogRepository.save(transaction);
+//      transactionLogRepository.save(transaction);
 		}
+
 
 	}
 

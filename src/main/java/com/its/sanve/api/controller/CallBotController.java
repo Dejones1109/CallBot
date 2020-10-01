@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ import java.util.*;
 @RestController
 @Log4j2
 @RequestMapping("/callBot")
+
 public class CallBotController {
 
     @Autowired
@@ -45,6 +47,7 @@ public class CallBotController {
 
     @Autowired
     GetDataFacade getDataFacade;
+
 
     @GetMapping("isCheckRoute")
     public Object isCheckRoute(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String companyId) {
@@ -101,20 +104,6 @@ public class CallBotController {
         return new ResponseEntity<>(callBotClient.QuantitiesTickets(tickets, trips, tripID), HttpStatus.OK);
     }
 
-    @PostMapping("orderTicket")
-    public ResponseEntity<String> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
-                                              @RequestBody TransactionRequest transaction) throws ParseException {
-
-        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
-            return new ResponseEntity<>("data successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("data false", HttpStatus.BAD_REQUEST);
-        }
-
-//		return (ResponseEntity<Object>) callBotFacade.orderTicket(secretKey, apiKey, transaction);
-
-    }
-
 
     @GetMapping("getCompanyInfo")
     public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception {
@@ -125,7 +114,19 @@ public class CallBotController {
     public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit, @RequestParam String companyId) {
         return new ResponseEntity<>(getDataFacade.getListAllRoute(limit, companyId), HttpStatus.OK);
     }
+    @PostMapping("orderTicket")
 
+    public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
+                                                           @RequestBody TransactionRequest transaction) throws ParseException {
+        Map<String, String> orderTicket = new HashMap<>();
+        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
+            orderTicket.put("data", "true");
+            return new ResponseEntity<>(orderTicket, HttpStatus.OK);
+
+        } else {
+            orderTicket.put("data", "false");
+            return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
+        }}
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

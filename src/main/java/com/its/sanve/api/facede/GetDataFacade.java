@@ -42,6 +42,8 @@ public class GetDataFacade {
     SanVeClient sanVeClient;
     @Autowired
     ListPointRepository listPointRepository;
+    @Autowired
+    OrderTicketRepository orderTicketRepository;
 
 // public
 
@@ -121,5 +123,7 @@ public class GetDataFacade {
         return listPoints;
     }
 
-
+    public  void creatOrderTicket(OrderTicket orderTicket){
+        orderTicketRepository.save(orderTicket);
+    }
 }

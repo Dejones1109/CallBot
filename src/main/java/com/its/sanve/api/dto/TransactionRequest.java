@@ -54,10 +54,7 @@ public class TransactionRequest {
 	    
 	    @JsonProperty("status")
 	    Integer status;
-	    
-	    @JsonProperty("ticket")
-	    int ticket;
-	    
+
 	    @JsonProperty("seat_id")
 	    List<String> seatId;
 	    
@@ -69,5 +66,6 @@ public class TransactionRequest {
 	    
 	    @JsonProperty("point_selected")
 	    String pointSelected;
+
 
 }

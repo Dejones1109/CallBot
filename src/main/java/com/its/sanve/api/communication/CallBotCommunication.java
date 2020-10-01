@@ -3,15 +3,16 @@ package com.its.sanve.api.communication;
 import java.io.File;
 
 import javax.annotation.PostConstruct;
-
 import lombok.extern.log4j.Log4j2;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.sanve.SanVeResponse;
 
@@ -28,6 +29,8 @@ public class CallBotCommunication extends AbstractCommunication {
     private String baseUrl;
     private SanVeCommunicate botCommunicate;
 
+    @Autowired
+    private ObjectMapper objectMapper;
     @PostConstruct
     public void intConnection() {
         this.botCommunicate = buildSetting();
@@ -44,36 +47,37 @@ public class CallBotCommunication extends AbstractCommunication {
         return retrofit.create(SanVeCommunicate.class);
     }
 
-    public SanVeResponse orderTicket(OrderTicketRequest orderTicketRequest) {
+    public int orderTicket(OrderTicketRequest orderTicketRequest) {
         try {
-            RequestBody secretPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSecretKey());
-            RequestBody apiPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getApiKey());
-            RequestBody seatPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSeat());
-            RequestBody pointPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getPoint());
-            RequestBody tripIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getTripId());
-            RequestBody routeIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getRouteId());
-            RequestBody fullNamePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerFullname());
-            RequestBody phonePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerPhone());
-            RequestBody companyIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCompanyId());
+            RequestBody secretPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSecretKey().toString());
+            RequestBody apiPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getApiKey().toString());
+            RequestBody seatPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSeat().toString());
+            RequestBody pointPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getPoint().toString());
+            RequestBody tripIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getTripId().toString());
+            RequestBody routeIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getRouteId().toString());
+            RequestBody fullNamePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerFullname().toString());
+            RequestBody phonePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerPhone().toString());
+            RequestBody companyIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCompanyId().toString());
 
             Call<SanVeResponse> request = botCommunicate.orderTicket(secretPart, apiPart, seatPart, pointPart, routeIdPart, tripIdPart, fullNamePart, phonePart, companyIdPart);
-            log.debug("request,{}", request);
+            log.info(request);
             Response<SanVeResponse> response = request.execute();
-            log.debug("response,{}", response);
-
-            if (response.isSuccessful()) {
-                log.info("response successfully");
+            log.info("response", response);
+            log.debug("response {}", response);
+            if(response.isSuccessful()) {
                 SanVeResponse data = response.body();
-                log.info("Successfully!!! {}", data);
-                return data;
-            } else {
-                log.warn("response failed!!!");
-                return null;
+                log.info("Call api anvui success");
+                return data.getStatus();
+            }else {
+
+                log.info("Call order ticket failed");
+                return 0;
             }
 
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return null;
+            // TODO: handle exception
+            log.debug(e);
+            return 0;
         }
     }
 

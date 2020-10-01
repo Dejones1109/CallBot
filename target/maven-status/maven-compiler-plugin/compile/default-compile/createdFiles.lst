@@ -7,6 +7,7 @@ com\its\sanve\api\entities\RouteInfo.class
 com\its\sanve\api\repositories\ProvinceRepository.class
 com\its\sanve\api\communication\AbstractCommunication.class
 com\its\sanve\api\communication\callbot\CallBotClient.class
+com\its\sanve\api\entities\OrderTicket.class
 com\its\sanve\api\config\GwConfig.class
 com\its\sanve\api\utils\ClientManager.class
 com\its\sanve\api\communication\sanve\SanVeClient.class
@@ -55,6 +56,7 @@ com\its\sanve\api\communication\sanve\SanVeClientV1.class
 com\its\sanve\api\entities\Trip.class
 com\its\sanve\api\config\CorsFilter.class
 com\its\sanve\api\dto\GwResponseDto.class
+com\its\sanve\api\repositories\OrderTicketRepository.class
 com\its\sanve\api\communication\dto\PaymentRequest.class
 com\its\sanve\api\entities\Vehicle.class
 com\its\sanve\api\repositories\TransactionLogRepository.class

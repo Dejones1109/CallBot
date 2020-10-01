@@ -46,4 +46,16 @@ public class OrderTicketRequest extends Request{
     String pointUp;
     @JsonProperty("addr_point_down")
     String pointDown;
+    @JsonProperty("start_time_reality")
+    String startTimeReality;
+    @JsonProperty("start_date")
+    String startDate;
+    @JsonProperty("hot_line")
+    String hotLine;
+    @JsonProperty("call_id")
+    String callId;
+    @JsonProperty("intent")
+    String intent;
+
+
 }
