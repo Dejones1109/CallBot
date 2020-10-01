@@ -26,5 +26,7 @@ public interface ListPointRepository extends JpaRepository<ListPoint,String>{
    List<ListPoint> getPointAll(@Param("limit") Long limit);
    @Query(value="select new ListPoint(u.entityType,u.keyword,u.address,u.synonyms,u.status) from ListPoint u where u.companyId = :companyId")
    List<ListPoint> getPointByCompanyId( @Param("companyId") String companyId);
+   @Query(value="select u.keyword from ListPoint u where u.pointId = :pointId")
+   String getPointByPointId(@Param("pointId") String pointId);
 
 }

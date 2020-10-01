@@ -55,7 +55,8 @@ public class Trip {
     List<UserInfo> drivers;
     @Transient
     List<UserInfo> assistants;
-    @ManyToOne
+
+    @Transient
     RouteInfo routeInfo;
     @Transient
     SeatMap seatMap;
@@ -71,4 +72,8 @@ public class Trip {
     @Transient
     @JsonProperty("pointDown")
     Point pointDown;
+    @JsonProperty("price")
+   Double price;
+    @JsonProperty("totalEmptySeat")
+    Integer totalEmptySeat;
 }

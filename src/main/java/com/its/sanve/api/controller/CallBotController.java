@@ -6,10 +6,7 @@ import com.its.sanve.api.communication.sanve.SanVeClient;
 import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.sanve.SanVeClientV1;
 import com.its.sanve.api.dto.TransactionRequest;
-import com.its.sanve.api.entities.RouteInfo;
-import com.its.sanve.api.entities.Ticket;
-import com.its.sanve.api.entities.TransactionLog;
-import com.its.sanve.api.entities.Trip;
+import com.its.sanve.api.entities.*;
 import com.its.sanve.api.facede.CallBotFacade;
 import com.its.sanve.api.facede.GetDataFacade;
 import com.its.sanve.api.repositories.RouteInfoRepository;
@@ -61,12 +58,8 @@ public class CallBotController {
         return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
     }
 
-    @PostMapping("getListPointCityByDB")
 
-    public ResponseEntity<Map<String, List>> getListPointCityByDB(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String routeId, @RequestParam String companyId) throws Exception {
-        Map<String, RouteInfo> data = sanveClient.getCompaniesRoutes(companyId);
-        return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
-    }
+
 
     //    @PostMapping("getListStartTimer")
 //    public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
@@ -88,7 +81,7 @@ public class CallBotController {
         List<Trip> listTrips = sanVeClientV1.getListTripByNumber(pointUp, pointDown, convertDateTime(date), companyId, numberTicket);
         Long responseAPI = System.currentTimeMillis();
         log.info("Response data by SanVe : {}", responseAPI - requestAPI);
-        return new ResponseEntity<>(callBotClient.listStartTimeRealityV1(listTrips, convertDateTime(date), convertStartTime(startTime)), HttpStatus.OK);
+        return new ResponseEntity<>(callBotClient.listStartTimeRealityV1(listTrips, convertDateTime(date), convertStartTime(startTime),numberTicket), HttpStatus.OK);
     }
 
     @GetMapping("getQualitiesTickets")

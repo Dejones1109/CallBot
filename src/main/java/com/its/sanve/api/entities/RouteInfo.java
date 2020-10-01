@@ -6,6 +6,7 @@
 package com.its.sanve.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.*;
@@ -27,6 +28,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RouteInfo {
     @Id
     @Column(name = "id")

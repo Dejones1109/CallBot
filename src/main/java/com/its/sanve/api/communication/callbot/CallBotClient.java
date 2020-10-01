@@ -5,6 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.its.sanve.api.communication.sanve.SanVeClient;
 import com.its.sanve.api.entities.*;
+
+import com.its.sanve.api.facede.GetDataFacade;
+import com.its.sanve.api.repositories.ListPointRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,81 +23,168 @@ public class CallBotClient {
 
     @Autowired
     SanVeClient sanVeClient;
-public Map<Boolean,List> isCheckRoute(Map<String,RouteInfo> routeInfoMap,String startCity,String endCity){
-    Map<Boolean,List>  map = new HashMap<>();
-    for(String key : routeInfoMap.keySet()){
-        RouteInfo routeInfo = routeInfoMap.get(key);
-        log.info("routeInfo:{}",routeInfo);
-        List<Point> listPoints= routeInfo.getListPoint();
-        List<String> listProvinces = new ArrayList<>();
-        for(Point point :listPoints){
-            log.info("province:{}",point.getProvince());
-            String temp =null;
-            if(point.getProvince().equals("Hồ Chí Minh")){
-             temp =   point.getProvince().replace("Hồ Chí Minh","Sài Gòn");
-            }else {
-                temp = point.getProvince();
-            }
-            if(!listProvinces.contains(temp)){
-                listProvinces.add(temp);
+    @Autowired
+    GetDataFacade getDataFacade;
+    @Autowired
+    ListPointRepository listPointRepository;
+
+    public Map<String, Object> isCheckRoute(Map<String, RouteInfo> routeInfoMap, String startCity, String endCity) {
+        Map<String, Object> map = new HashMap<>();
+        for (String key : routeInfoMap.keySet()) {
+            RouteInfo routeInfo = routeInfoMap.get(key);
+            log.info("routeInfo:{}", routeInfo);
+            List<Point> listPoints = routeInfo.getListPoint();
+            List<String> listProvinces = new ArrayList<>();
+            Boolean isCheck = false;
+            for (Point point : listPoints) {
+                log.info("province:{}", point.getProvince());
+                String temp = null;
+                if (point.getProvince().equals("Hồ Chí Minh")) {
+                    temp = point.getProvince().replace("Hồ Chí Minh", "Sài Gòn");
+                } else {
+                    temp = point.getProvince();
+                }
+                if (!listProvinces.contains(temp.toLowerCase())) {
+                    listProvinces.add(temp.toLowerCase());
+                }
+
             }
 
+            log.info("listProvinces:{}", listProvinces);
+
+
+            if (!startCity.contains(endCity)) {
+                if (listProvinces.contains(startCity.toLowerCase()) && listProvinces.contains(endCity.toLowerCase())) {
+                    isCheck = true;
+                } else {
+                    isCheck = false;
+                }
+            }
+
+
+            map.put("status", isCheck);
+            if (isCheck == false) {
+                map.put("route", listProvinces);
+            }
         }
-        Boolean check = false;
-        log.info("listProvinces:{}",listProvinces);
-        int count = listProvinces.size()-1;
-       for(int i =0;i<count;i++){
-           for(int j =i+1;j<count;j++){
-               if(listProvinces.get(i).toLowerCase().equals(startCity.toLowerCase())&&listProvinces.get(j).toLowerCase().equals(endCity.toLowerCase())){
-                   log.info("provinces i:{}",listProvinces.get(i));
-                   log.info("provinces j:{}",listProvinces.get(j));
-                   map.put(true,listProvinces);
-                   return map;
-               }else {
-                   log.info("provinces i:{}",listProvinces.get(i));
-                   log.info("provinces j:{}",listProvinces.get(j));
-                   map.put(false,listProvinces);
-               }
-           }
 
 
-       }
+        return map;
     }
-    return map;
-}
-public  Map<String,Object> listStartTimeRealityV1(List<Trip> data, String date,String startTime){
-    Map<String, Object> map = new HashMap<>();
-    int valid = 0;
-    ArrayList<String> listTripID = new ArrayList();
-    ArrayList<String> listTripName = new ArrayList();
-    ArrayList<Boolean> listPickingAtHome = new ArrayList<>();
-    ArrayList<Boolean> listDroppingAtHome = new ArrayList<>();
 
-    int numberAbove = 0;
-    int numberBelow = 0;
-    boolean req = false;
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
+    public Map<String, Object> listStartTimeRealityV1(List<Trip> data, String date, String startTime, int numberTicket) {
+        Map<String, Object> map = new HashMap<>();
+        int valid = 0;
+        ArrayList<String> listTripID = new ArrayList();
+        ArrayList<String> listTripName = new ArrayList();
+        ArrayList<Boolean> listPickingAtHome = new ArrayList<>();
+        ArrayList<Boolean> listDroppingAtHome = new ArrayList<>();
+        ArrayList<String> listRouteId = new ArrayList<>();
+        ArrayList<Double> listPrice = new ArrayList<>();
+        ArrayList<String> listEmptySeat = new ArrayList<>();
+        String TotalEmptySeat = null;
+        int count1 =0;
+        int numberAbove = 0;
+        int numberBelow = 0;
+        boolean req = false;
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    String currentDay = format.format(now);
-    Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
+        String currentDay = format.format(now);
+        Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
 
-    if (data.isEmpty()) {
-        valid = 0;
-    } else {
-        ArrayList<Integer> listStartTimeReality = new ArrayList();
-        for (Trip trip : data) {
-            Point pUp = trip.getPointUp();
-            Point pDown = trip.getPointDown();
-            log.info("startTimeReality:{}", trip.getStartTimeReality());
-            if(date.equals(currentDay)){
-                if(Integer.parseInt(trip.getStartTimeReality())>=currentTime){
+        if (data.isEmpty()) {
+            valid = 0;
+        } else {
+            ArrayList<Integer> listStartTimeReality = new ArrayList();
+            for (Trip trip : data) {
+                Point pUp = trip.getPointUp();
+                Point pDown = trip.getPointDown();
+                SeatMap seatMap = trip.getSeatMap();
+                List<Seat> listSeat = seatMap.getSeatList();
+
+                log.info("totalSeatEmpty:{}", trip.getTotalEmptySeat());
+                log.info("startTimeReality:{}", trip.getStartTimeReality());
+                if (date.equals(currentDay)) {
+                    if (Integer.parseInt(trip.getStartTimeReality()) >= currentTime) {
+                        if (trip.getStartTimeReality().equals(startTime)) {
+                            valid = 1;
+                            for (Seat seat : listSeat) {
+                                if(count1>=numberTicket){
+                                    break;
+                                }
+                                if (seat.getType() == 3) {
+                                    count1++;
+                                    if(count1==1){
+                                        TotalEmptySeat=seat.getId();
+                                    }else {
+                                        TotalEmptySeat+=","+ seat.getId();
+                                    }
+                                }
+
+                            }
+
+                            listEmptySeat.add(TotalEmptySeat);
+                            if (!listTripName.contains(ConventTimer(trip.getStartTimeReality()))) {
+                                listTripID.add(trip.getId());
+                                listRouteId.add(pUp.getRouteId());
+                                listTripName.add(ConventTimer(trip.getStartTimeReality()));
+                                listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
+                                listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
+                                listPrice.add(trip.getPrice());
+                                for (Seat seat : listSeat) {
+                                    if(count1>=numberTicket){
+                                        break;
+                                    }
+                                    if (seat.getType() == 3) {
+                                        count1++;
+                                        if(count1==1){
+                                            TotalEmptySeat=seat.getId();
+                                        }else {
+                                            TotalEmptySeat+=","+ seat.getId();
+                                        }
+                                    }
+
+                                }
+
+                                listEmptySeat.add(TotalEmptySeat);
+                            }
+                            req = true;
+                            break;
+                        } else {
+                            valid = 2;
+                            listStartTimeReality.add(Integer.parseInt(trip.getStartTimeReality()));
+                        }
+                    }
+
+                } else {
                     if (trip.getStartTimeReality().equals(startTime)) {
                         valid = 1;
-                        listTripID.add(trip.getId());
-                        listTripName.add(ConventTimer(trip.getStartTimeReality()));
-                        listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
-                        listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
+
+                        if (!listTripName.contains(ConventTimer(trip.getStartTimeReality()))) {
+                            listTripID.add(trip.getId());
+                            listRouteId.add(pUp.getRouteId());
+                            listTripName.add(ConventTimer(trip.getStartTimeReality()));
+                            listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
+                            listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
+                            listPrice.add(trip.getPrice());
+                            for (Seat seat : listSeat) {
+                                if(count1>=numberTicket){
+                                    break;
+                                }
+                                if (seat.getType() == 3) {
+                                    count1++;
+                                    if(count1==1){
+                                        TotalEmptySeat=seat.getId();
+                                    }else {
+                                        TotalEmptySeat+=","+ seat.getId();
+                                    }
+                                }
+
+                            }
+
+                            listEmptySeat.add(TotalEmptySeat);
+                        }
                         req = true;
                         break;
                     } else {
@@ -103,66 +193,78 @@ public  Map<String,Object> listStartTimeRealityV1(List<Trip> data, String date,S
                     }
                 }
 
-            }else {
-                if (trip.getStartTimeReality().equals(startTime)) {
-                    valid = 1;
-                    listTripID.add(trip.getId());
-                    listTripName.add(ConventTimer(trip.getStartTimeReality()));
-                    listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
-                    listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
-                    req = true;
-                    break;
-                } else {
-                    valid = 2;
-                    listStartTimeReality.add(Integer.parseInt(trip.getStartTimeReality()));
-                }
             }
+            log.info("listStartReality:{}", listStartTimeReality);
+            if (req == false) {
+                log.info("listTripID:{}", listTripID);
+                log.info("listTripName:{}", listTripName);
+                int count = listStartTimeReality.size() - 1;
+                int temp = Integer.parseInt(startTime);
+                if (temp < listStartTimeReality.get(0)) {
+                    numberAbove = listStartTimeReality.get(0);
+                } else if (temp > listStartTimeReality.get(count)) {
+                    numberBelow = listStartTimeReality.get(count);
+                } else {
+                    for (int i = 0; i <= count; i++) {
+                        if (listStartTimeReality.get(i) > temp && req == false) {
+                            numberAbove = listStartTimeReality.get(i);
+                            numberBelow = listStartTimeReality.get(i - 1);
+                            break;
+                        }
+                    }
+                }
 
-        }
-        log.info("listStartReality:{}", listStartTimeReality);
-        if (req == false) {
-            log.info("listTripID:{}",listTripID);
-            log.info("listTripName:{}",listTripName);
-            int count = listStartTimeReality.size() - 1;
-            int temp = Integer.parseInt(startTime);
-            if (temp < listStartTimeReality.get(0)) {
-                numberAbove = listStartTimeReality.get(0);
-            } else if (temp > listStartTimeReality.get(count)) {
-                numberBelow = listStartTimeReality.get(count);
-            } else {
-                for (int i = 0; i < count; i++) {
-                    if (listStartTimeReality.get(i) > temp&&req==false) {
-                        numberAbove = listStartTimeReality.get(i);
-                        numberBelow = listStartTimeReality.get(i - 1);
-                        break;
+                log.info("numberAbove:{}", numberAbove);
+                log.info("numberBelow:{}", numberBelow);
+
+            }
+            for (Trip trip : data) {
+                Point pUp = trip.getPointUp();
+                Point pDown = trip.getPointDown();
+                SeatMap seatMap = trip.getSeatMap();
+                List<Seat> listSeat = seatMap.getSeatList();
+                if (trip.getStartTimeReality().equals(String.valueOf(numberAbove)) || trip.getStartTimeReality().equals(String.valueOf(numberBelow))) {
+
+                    if (!listTripName.contains(ConventTimer(trip.getStartTimeReality()))) {
+                        listTripID.add(trip.getId());
+                        listRouteId.add(pUp.getRouteId());
+                        listTripName.add(ConventTimer(trip.getStartTimeReality()));
+                        listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
+                        listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
+                        listPrice.add(trip.getPrice());
+                        for (Seat seat : listSeat) {
+                            if(count1>=numberTicket){
+                                break;
+                            }
+                            if (seat.getType() == 3) {
+                                count1++;
+                                if(count1==1){
+                                    TotalEmptySeat=seat.getId();
+                                }else {
+                                    TotalEmptySeat+=","+ seat.getId();
+                                }
+                            }
+
+                        }
+
+                        listEmptySeat.add(TotalEmptySeat);
                     }
                 }
             }
-
-            log.info("numberAbove:{}", numberAbove);
-            log.info("numberBelow:{}", numberBelow);
-
         }
-        for (Trip trip : data) {
-            Point pUp = trip.getPointUp();
-            Point pDown = trip.getPointDown();
-            if (trip.getStartTimeReality().equals(String.valueOf(numberAbove)) || trip.getStartTimeReality().equals(String.valueOf(numberBelow))) {
-                listTripID.add(trip.getId());
-                listTripName.add(ConventTimer(trip.getStartTimeReality()));
-                listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
-                listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
-            }
-        }
+
+        map.put("valid", valid);
+        map.put("listTripId", listTripID);
+        map.put("listTripName", listTripName);
+        map.put("pickingAtHome", listPickingAtHome);
+        map.put("droppingAtHome", listDroppingAtHome);
+        map.put("listRouteId", listRouteId);
+        map.put("listPrice", listPrice);
+        map.put("listSeatEmpty",listEmptySeat);
+        log.info("map:{}", map);
+        return map;
     }
 
-    map.put("valid", valid);
-    map.put("listTripId", listTripID);
-    map.put("listTripName", listTripName);
-    map.put("pickingAtHome",listPickingAtHome);
-    map.put("droppingAtHome",listDroppingAtHome);
-    log.info("map:{}", map);
-    return  map;
-}
     public Map<String, Object> listStartTimeReality(Map<String, List<Trip>> data, String date, String companyId) {
         Map<String, Object> list = new HashMap<>();
         int valid = 0;
@@ -255,38 +357,38 @@ public  Map<String,Object> listStartTimeRealityV1(List<Trip> data, String date,S
         return timer;
     }
 
-    public Map<String, Object> QuantitiesTickets(Map<String, List<Ticket>> tickets,Map<String, List<Trip>> trips,String tripId) throws JsonProcessingException {
+    public Map<String, Object> QuantitiesTickets(Map<String, List<Ticket>> tickets, Map<String, List<Trip>> trips, String tripId) throws JsonProcessingException {
         Map<String, Object> quantitys = new HashMap<>();
         List<Ticket> listTickets = tickets.get("tickets");
         List listSeatsEmpty = new ArrayList();
-        log.info("count:{}",listTickets.size());
+        log.info("count:{}", listTickets.size());
 
         double temp = 0;
         List<Trip> listTrips = trips.get("trips");
 
 
-        log.info("listTrips:{}",listTrips);
-        for (Trip trip : listTrips){
-            if(trip.getId().equals(tripId)){
+        log.info("listTrips:{}", listTrips);
+        for (Trip trip : listTrips) {
+            if (trip.getId().equals(tripId)) {
                 SeatMap seatMap = trip.getSeatMap();
                 List<Seat> listSeat = seatMap.getSeatList();
-                for(Seat seat:listSeat){
-                    if(seat.getType()==3||seat.getType()==4||seat.getType()==0){
+                for (Seat seat : listSeat) {
+                    if (seat.getType() == 3 || seat.getType() == 4 || seat.getType() == 0) {
                         listSeatsEmpty.add(seat.getId());
 
                     }
 
                 }
                 RouteInfo routeInfo = trip.getRouteInfo();
-                temp =routeInfo.getDisplayPrice();
+                temp = routeInfo.getDisplayPrice();
 
             }
 
         }
-        log.info("list seat defaults:{}",listSeatsEmpty);
+        log.info("list seat defaults:{}", listSeatsEmpty);
         for (Ticket ticket : listTickets) {
-             Seat seat = ticket.getSeat();
-             log.info("seatType:{}",seat.getId());
+            Seat seat = ticket.getSeat();
+            log.info("seatType:{}", seat.getId());
             listSeatsEmpty.remove(seat.getId());
 //            if (ticket.getStatus() != null) {
 //                Double originalTicketPrice = ticket.getOriginalTicketPrice();
@@ -299,22 +401,21 @@ public  Map<String,Object> listStartTimeRealityV1(List<Trip> data, String date,S
         }
         log.info("the number of seats available,{}", listSeatsEmpty.size());
         log.info("the qualities of ticket,{}", temp);
-        log.info("the list seat empty: {}",listSeatsEmpty);
+        log.info("the list seat empty: {}", listSeatsEmpty);
         quantitys.put("ticketQuantity", Integer.toString(listSeatsEmpty.size()));
         quantitys.put("price", Double.toString(temp));
-        quantitys.put("listSeatsEmpty",listSeatsEmpty);
+        quantitys.put("listSeatsEmpty", listSeatsEmpty);
         return quantitys;
     }
 
-    public Map<String, List> listRoutes(Map<String, RouteInfo> data, String startCity, String endCity, String routeId) throws JsonProcessingException {
+    public Map<String, List> listRoutes(Map<String, RouteInfo> data, String startCity, String endCity, String routeId) {
 
         Map<String, List> listPoints = new HashMap<>();
         List pointUp = new ArrayList();
         List pointUpId = new ArrayList();
         List pointDown = new ArrayList();
         List pointDownId = new ArrayList();
-        List addressPointUp = new ArrayList();
-        List addressPointDown = new ArrayList();
+
         try {
             for (String key : data.keySet()) {
                 if (key.equals(routeId)) {
@@ -323,53 +424,51 @@ public  Map<String,Object> listStartTimeRealityV1(List<Trip> data, String date,S
                     for (Point point : listPoint) {
                         if (point.getProvince().equals(startCity)) {
                             log.info("List Point Up");
-                            pointUp.add(point.getName());
-                            log.info("point UP:{}", point.getName());
+                            pointUp.add(listPointRepository.getPointByPointId(point.getId()));
+                            log.info("point UP:{}", listPointRepository.getPointByPointId(point.getId()));
 
                             pointUpId.add(point.getId());
                             log.info("point up id:{}", point.getId());
 
-                            addressPointUp.add(getAddressPoint(point.getAddress()));
-                            log.info(" address point up :{}", getAddressPoint(point.getAddress()));
                         }
                         if (point.getProvince().equals(endCity)) {
                             log.info("List Point Down:");
-                            pointDown.add(point.getName());
-                            log.info("point down:{}", point.getName());
-
+                            pointDown.add(listPointRepository.getPointByPointId(point.getId()));
+                            log.info("point down:{}", listPointRepository.getPointByPointId(point.getId()));
                             pointDownId.add(point.getId());
                             log.info("point down id:{}", point.getId());
-
-                            addressPointDown.add(getAddressPoint(point.getAddress()));
-                            log.info(" address point down :{}", getAddressPoint(point.getAddress()));
                         }
 
                     }
+
                 }
-
-
+//                pointUp = getDataFacade.getListRoute(pointUpId);
+//                log.info("listPointUp:{}",pointUp);
+//                pointDown = getDataFacade.getListRoute(pointDownId);
+//                log.info("listPointDown:{}",pointDown);
             }
             listPoints.put("pointUpId", pointUpId);
             listPoints.put("pointUp", pointUp);
             listPoints.put("pointDownID", pointDownId);
             listPoints.put("pointDown", pointDown);
-            listPoints.put("addressPointDown", addressPointDown);
-            listPoints.put("addressPointUp", addressPointUp);
+
 
         } catch (Exception e) {
             log.info(e.getMessage());
         }
         return listPoints;
     }
-    public Map<String,String> listRoutesByDB(List<ListPoint> data, String routeId){
-        Map<String,String> listRoutes = new HashMap<>();
-        for(ListPoint pointV1: data){
+
+    public Map<String, String> listRoutesByDB(List<ListPoint> data, String routeId) {
+        Map<String, String> listRoutes = new HashMap<>();
+        for (ListPoint pointV1 : data) {
 //            if(pointV1.getRouteId().equals(routeId)){
 //
 //            }
         }
-        return  null;
+        return null;
     }
+
     public String getAddressPoint(String addressPoint) {
         String[] address;
         if (addressPoint.contains(",")) {

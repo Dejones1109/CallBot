@@ -113,6 +113,13 @@ public class GetDataFacade {
 
         return listPoints;
     }
+    public  List<String> getListRoute(List<String> listPointId)  {
+        List<String> listPoints = null;
+        for(String pointId : listPointId){
+            listPoints.add(listPointRepository.getPointByPointId(pointId));
+        }
+        return listPoints;
+    }
 
 
 }

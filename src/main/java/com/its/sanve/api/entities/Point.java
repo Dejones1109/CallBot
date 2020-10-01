@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,7 +58,7 @@ public class Point {
      */
     @Column(name = "district")
     String district;
-    
+
     /**
      * Kinh độ
      */
@@ -73,6 +74,8 @@ public class Point {
      */
     @Column(name = "point_name_acronym")
     String pointNameAcronym;
+    @Column(name = "routeId")
+    String routeId;
     /**
      * Thời gian đi từ điểm đầu tiên của tuyến đến điểm đang xét (tình theo milisecond)
      */
