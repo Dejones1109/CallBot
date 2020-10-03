@@ -84,8 +84,8 @@ public class CallBotClient {
         ArrayList<String> listEmptySeat = new ArrayList<>();
         String TotalEmptySeat = null;
         int count1 =0;
-        int numberAbove = 0;
-        int numberBelow = 0;
+        int[] numberAbove = new int[2];
+        int[] numberBelow = new int[2];
         boolean req = false;
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -195,23 +195,43 @@ public class CallBotClient {
 
             }
             log.info("listStartReality:{}", listStartTimeReality);
+            log.info("number of route:{}",listStartTimeReality.size());
             if (req == false) {
                 log.info("listTripID:{}", listTripID);
                 log.info("listTripName:{}", listTripName);
                 int count = listStartTimeReality.size() - 1;
                 int temp = Integer.parseInt(startTime);
+
                 if (temp < listStartTimeReality.get(0)) {
-                    numberAbove = listStartTimeReality.get(0);
+                    numberAbove[0] = listStartTimeReality.get(0);
+                    for(int i=0;i<count;i++){
+                        if(numberAbove[0]!=listStartTimeReality.get(i)){
+                            numberAbove[1] =  listStartTimeReality.get(i);
+                            break;
+                        }
+
+                    }
+
                 } else if (temp > listStartTimeReality.get(count)) {
-                    numberBelow = listStartTimeReality.get(count);
+                    for(int i=count-1;i>=0;i--){
+                        numberBelow[0] = listStartTimeReality.get(count);
+                        if(numberBelow[0]!=listStartTimeReality.get(i)){
+                            numberBelow[1] =  listStartTimeReality.get(i);
+                            break;
+                        }
+
+                    }
+
                 } else {
-                    for (int i = 0; i <= count; i++) {
+                    for(int i=0;i<count;i++){
                         if (listStartTimeReality.get(i) > temp && req == false) {
-                            numberAbove = listStartTimeReality.get(i);
-                            numberBelow = listStartTimeReality.get(i - 1);
+                            numberAbove[0] = listStartTimeReality.get(i);
+                            numberBelow[0] = listStartTimeReality.get(i - 1);
                             break;
                         }
                     }
+
+
                 }
 
                 log.info("numberAbove:{}", numberAbove);
@@ -223,7 +243,8 @@ public class CallBotClient {
                 Point pDown = trip.getPointDown();
                 SeatMap seatMap = trip.getSeatMap();
                 List<Seat> listSeat = seatMap.getSeatList();
-                if (trip.getStartTimeReality().equals(String.valueOf(numberAbove)) || trip.getStartTimeReality().equals(String.valueOf(numberBelow))) {
+                if (trip.getStartTimeReality().equals(String.valueOf(numberAbove[0])) || trip.getStartTimeReality().equals(String.valueOf(numberBelow[0]))||
+                        trip.getStartTimeReality().equals(String.valueOf(numberAbove[1])) || trip.getStartTimeReality().equals(String.valueOf(numberBelow[1]))) {
 
                     if (!listTripName.contains(ConventTimer(trip.getStartTimeReality()))) {
                         listTripID.add(trip.getId());
@@ -261,6 +282,7 @@ public class CallBotClient {
         map.put("listRouteId", listRouteId);
         map.put("listPrice", listPrice);
         map.put("listSeatEmpty",listEmptySeat);
+
         log.info("map:{}", map);
         return map;
     }

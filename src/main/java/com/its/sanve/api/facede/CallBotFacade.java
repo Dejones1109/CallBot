@@ -89,7 +89,7 @@ public class CallBotFacade {
 			transactionLog.setCompanyId(transactionRequest.getCompanyId());
 			transactionLog.setPointSelected(transactionRequest.getPointSelected());
 			transactionLogRepository.save(transactionLog);
-//      transactionLogRepository.save(transaction);
+
 		}
 
 
