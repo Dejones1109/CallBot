@@ -39,9 +39,6 @@ public class CallBotFacade {
 	public boolean orderTicket(String secretKey, String apiKey, TransactionRequest transactionRequest) throws ParseException {
 		try {
 
-
-			log.debug(transactionRequest.getSeatId());
-
 			OrderTicketRequest orderTicketRequest = new OrderTicketRequest();
 			orderTicketRequest.setSecretKey(secretKey);
 			orderTicketRequest.setApiKey(apiKey);
@@ -52,6 +49,7 @@ public class CallBotFacade {
 			orderTicketRequest.setCustomerFullname(transactionRequest.getPhone());
 			orderTicketRequest.setCustomerPhone(transactionRequest.getPhoneOrder());
 			orderTicketRequest.setCompanyId(transactionRequest.getCompanyId());
+
 
 			log.info(orderTicketRequest);
 			boolean result = true;

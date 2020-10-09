@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Component
@@ -82,8 +83,12 @@ public class CallBotClient {
         ArrayList<String> listRouteId = new ArrayList<>();
         ArrayList<Double> listPrice = new ArrayList<>();
         ArrayList<String> listEmptySeat = new ArrayList<>();
+
+        ArrayList<String> fullTrip = new ArrayList<>();
+        ArrayList<String> fullTripId = new ArrayList<>();
+        ArrayList<String> fullRouteId = new ArrayList<>();
         String TotalEmptySeat = null;
-        int count1 =0;
+        int count1 = 0;
         int[] numberAbove = new int[2];
         int[] numberBelow = new int[2];
         boolean req = false;
@@ -92,12 +97,22 @@ public class CallBotClient {
 
         String currentDay = format.format(now);
         Integer currentTime = (now.getHour() * 3600000 + now.getMinute() * 60 * 1000);
+        for (Trip trip : data) {
 
+            Point pUp = trip.getPointUp();
+            if (!fullTrip.contains(ConventTimer(trip.getStartTimeReality()))) {
+                fullTrip.add(ConventTimer(trip.getStartTimeReality()));
+                fullTripId.add(trip.getId());
+                listPrice.add(trip.getPrice());
+                fullRouteId.add(pUp.getRouteId());
+            }
+        }
         if (data.isEmpty()) {
             valid = 0;
         } else {
-            ArrayList<Integer> listStartTimeReality = new ArrayList();
+            List<Integer> listStartTimeReality = new ArrayList();
             for (Trip trip : data) {
+
                 Point pUp = trip.getPointUp();
                 Point pDown = trip.getPointDown();
                 SeatMap seatMap = trip.getSeatMap();
@@ -105,20 +120,26 @@ public class CallBotClient {
 
                 log.info("totalSeatEmpty:{}", trip.getTotalEmptySeat());
                 log.info("startTimeReality:{}", trip.getStartTimeReality());
+//                if (!fullTrip.contains(ConventTimer(trip.getStartTimeReality()))) {
+//                    fullTrip.add(ConventTimer(trip.getStartTimeReality()));
+//                    fullTripId.add(trip.getId());
+//                    listPrice.add(trip.getPrice());
+//                    fullRouteId.add(pUp.getRouteId());
+//                }
                 if (date.equals(currentDay)) {
                     if (Integer.parseInt(trip.getStartTimeReality()) >= currentTime) {
                         if (trip.getStartTimeReality().equals(startTime)) {
                             valid = 1;
                             for (Seat seat : listSeat) {
-                                if(count1>=numberTicket){
+                                if (count1 >= numberTicket) {
                                     break;
                                 }
                                 if (seat.getType() == 3) {
                                     count1++;
-                                    if(count1==1){
-                                        TotalEmptySeat=seat.getId();
-                                    }else {
-                                        TotalEmptySeat+=","+ seat.getId();
+                                    if (count1 == 1) {
+                                        TotalEmptySeat = seat.getId();
+                                    } else {
+                                        TotalEmptySeat += "," + seat.getId();
                                     }
                                 }
 
@@ -131,17 +152,17 @@ public class CallBotClient {
                                 listTripName.add(ConventTimer(trip.getStartTimeReality()));
                                 listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
                                 listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
-                                listPrice.add(trip.getPrice());
+//                                listPrice.add(trip.getPrice());
                                 for (Seat seat : listSeat) {
-                                    if(count1>=numberTicket){
+                                    if (count1 >= numberTicket) {
                                         break;
                                     }
                                     if (seat.getType() == 3) {
                                         count1++;
-                                        if(count1==1){
-                                            TotalEmptySeat=seat.getId();
-                                        }else {
-                                            TotalEmptySeat+=","+ seat.getId();
+                                        if (count1 == 1) {
+                                            TotalEmptySeat = seat.getId();
+                                        } else {
+                                            TotalEmptySeat += "," + seat.getId();
                                         }
                                     }
 
@@ -167,17 +188,17 @@ public class CallBotClient {
                             listTripName.add(ConventTimer(trip.getStartTimeReality()));
                             listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
                             listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
-                            listPrice.add(trip.getPrice());
+                          //  listPrice.add(trip.getPrice());
                             for (Seat seat : listSeat) {
-                                if(count1>=numberTicket){
+                                if (count1 >= numberTicket) {
                                     break;
                                 }
                                 if (seat.getType() == 3) {
                                     count1++;
-                                    if(count1==1){
-                                        TotalEmptySeat=seat.getId();
-                                    }else {
-                                        TotalEmptySeat+=","+ seat.getId();
+                                    if (count1 == 1) {
+                                        TotalEmptySeat = seat.getId();
+                                    } else {
+                                        TotalEmptySeat += "," + seat.getId();
                                     }
                                 }
 
@@ -189,13 +210,15 @@ public class CallBotClient {
                         break;
                     } else {
                         valid = 2;
+
                         listStartTimeReality.add(Integer.parseInt(trip.getStartTimeReality()));
+
                     }
                 }
 
             }
             log.info("listStartReality:{}", listStartTimeReality);
-            log.info("number of route:{}",listStartTimeReality.size());
+            log.info("number of route:{}", listStartTimeReality.size());
             if (req == false) {
                 log.info("listTripID:{}", listTripID);
                 log.info("listTripName:{}", listTripName);
@@ -204,26 +227,26 @@ public class CallBotClient {
 
                 if (temp < listStartTimeReality.get(0)) {
                     numberAbove[0] = listStartTimeReality.get(0);
-                    for(int i=0;i<count;i++){
-                        if(numberAbove[0]!=listStartTimeReality.get(i)){
-                            numberAbove[1] =  listStartTimeReality.get(i);
+                    for (int i = 0; i < count; i++) {
+                        if (numberAbove[0] != listStartTimeReality.get(i)) {
+                            numberAbove[1] = listStartTimeReality.get(i);
                             break;
                         }
 
                     }
 
                 } else if (temp > listStartTimeReality.get(count)) {
-                    for(int i=count-1;i>=0;i--){
+                    for (int i = count - 1; i >= 0; i--) {
                         numberBelow[0] = listStartTimeReality.get(count);
-                        if(numberBelow[0]!=listStartTimeReality.get(i)){
-                            numberBelow[1] =  listStartTimeReality.get(i);
+                        if (numberBelow[0] != listStartTimeReality.get(i)) {
+                            numberBelow[1] = listStartTimeReality.get(i);
                             break;
                         }
 
                     }
 
                 } else {
-                    for(int i=0;i<count;i++){
+                    for (int i = 0; i < count; i++) {
                         if (listStartTimeReality.get(i) > temp && req == false) {
                             numberAbove[0] = listStartTimeReality.get(i);
                             numberBelow[0] = listStartTimeReality.get(i - 1);
@@ -234,16 +257,20 @@ public class CallBotClient {
 
                 }
 
+
                 log.info("numberAbove:{}", numberAbove);
                 log.info("numberBelow:{}", numberBelow);
 
             }
+
+
             for (Trip trip : data) {
+
                 Point pUp = trip.getPointUp();
                 Point pDown = trip.getPointDown();
                 SeatMap seatMap = trip.getSeatMap();
                 List<Seat> listSeat = seatMap.getSeatList();
-                if (trip.getStartTimeReality().equals(String.valueOf(numberAbove[0])) || trip.getStartTimeReality().equals(String.valueOf(numberBelow[0]))||
+                if (trip.getStartTimeReality().equals(String.valueOf(numberAbove[0])) || trip.getStartTimeReality().equals(String.valueOf(numberBelow[0])) ||
                         trip.getStartTimeReality().equals(String.valueOf(numberAbove[1])) || trip.getStartTimeReality().equals(String.valueOf(numberBelow[1]))) {
 
                     if (!listTripName.contains(ConventTimer(trip.getStartTimeReality()))) {
@@ -252,17 +279,17 @@ public class CallBotClient {
                         listTripName.add(ConventTimer(trip.getStartTimeReality()));
                         listPickingAtHome.add(pUp.getAllowPickingAndDroppingAtHome());
                         listDroppingAtHome.add(pDown.getAllowPickingAndDroppingAtHome());
-                        listPrice.add(trip.getPrice());
+                      //  listPrice.add(trip.getPrice());
                         for (Seat seat : listSeat) {
-                            if(count1>=numberTicket){
+                            if (count1 >= numberTicket) {
                                 break;
                             }
                             if (seat.getType() == 3) {
                                 count1++;
-                                if(count1==1){
-                                    TotalEmptySeat=seat.getId();
-                                }else {
-                                    TotalEmptySeat+=","+ seat.getId();
+                                if (count1 == 1) {
+                                    TotalEmptySeat = seat.getId();
+                                } else {
+                                    TotalEmptySeat += "," + seat.getId();
                                 }
                             }
 
@@ -272,6 +299,7 @@ public class CallBotClient {
                     }
                 }
             }
+
         }
 
         map.put("valid", valid);
@@ -281,7 +309,10 @@ public class CallBotClient {
         map.put("droppingAtHome", listDroppingAtHome);
         map.put("listRouteId", listRouteId);
         map.put("listPrice", listPrice);
-        map.put("listSeatEmpty",listEmptySeat);
+        map.put("listSeatEmpty", listEmptySeat);
+        map.put("fullTrip",fullTrip);
+        map.put("fullRouteId",fullRouteId);
+        map.put("fullTripId",fullTripId);
 
         log.info("map:{}", map);
         return map;
@@ -480,13 +511,13 @@ public class CallBotClient {
         }
         return listPoints;
     }
-
+//  public String getCommandApi(int status){
+//
+//  }
     public Map<String, String> listRoutesByDB(List<ListPoint> data, String routeId) {
         Map<String, String> listRoutes = new HashMap<>();
         for (ListPoint pointV1 : data) {
-//            if(pointV1.getRouteId().equals(routeId)){
-//
-//            }
+
         }
         return null;
     }

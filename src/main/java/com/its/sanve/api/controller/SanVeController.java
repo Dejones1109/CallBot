@@ -23,6 +23,7 @@ import retrofit2.http.Multipart;
 
 
 import java.io.IOException;
+import java.lang.annotation.Repeatable;
 import java.util.*;
 
 @RestController
@@ -96,6 +97,13 @@ public class SanVeController {
         log.info("data get successful!!");
         return new ResponseEntity<>( SVClient.getTripsTickets(tripId, pointUpId, pointDownId), HttpStatus.OK);
     }
+//    @PostMapping("order/creat")
+//    public ResponseEntity<Object> get_order_creat(@RequestParam String apiKey,@RequestParam String secretKey, @RequestParam Object seatSelected, @RequestParam Object pointSelected,@RequestParam String routeId,@RequestParam String tripId,@RequestParam String phone,@RequestParam String CompanyId,@Request String phoneOrder) throws Exception {
+//
+//        String fullName = "Khách đặt vé qua điện thoại";
+//        log.info("data get successful!!");
+//        return new ResponseEntity<Object>(SVClient.creatOrder(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId), HttpStatus.OK);
+//    }
 
     @PostMapping("order/calc_price")
     public ResponseEntity get_order_calc_price(@ModelAttribute CalculatePriceRequest request) throws Exception {

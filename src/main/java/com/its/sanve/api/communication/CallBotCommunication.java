@@ -49,6 +49,7 @@ public class CallBotCommunication extends AbstractCommunication {
 
     public int orderTicket(OrderTicketRequest orderTicketRequest) {
         try {
+
             RequestBody secretPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSecretKey().toString());
             RequestBody apiPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getApiKey().toString());
             RequestBody seatPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSeat().toString());

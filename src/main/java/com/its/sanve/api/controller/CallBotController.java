@@ -61,23 +61,6 @@ public class CallBotController {
         return new ResponseEntity<>(callBotClient.listRoutes(data, startCity, endCity, routeId), HttpStatus.OK);
     }
 
-
-
-
-    //    @PostMapping("getListStartTimer")
-//    public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String date, @RequestParam String companyId) throws Exception {
-//
-//        int size = 0;
-//        int page = 0;
-//        String startTimeFrom = "";
-//        String endTimeFrom = "";
-//        Long requestAPI = System.currentTimeMillis();
-//        Map<String, List<Trip>> data = sanveClient.getTripByPoints(page, size, convertDateTime(date), startCity, endCity, startTimeFrom, endTimeFrom);
-//        Long responseAPI = System.currentTimeMillis();
-//        log.info("Response data by SanVe : {}", responseAPI - requestAPI);
-//        log.info("date:{},parseDate:{}", date, convertDateTime(date));
-//        return new ResponseEntity<>(callBotClient.listStartTimeReality(data, convertDateTime(date), companyId), HttpStatus.OK);
-//    }
     @PostMapping("getListStartTimer")
     public ResponseEntity<Object> getListStartTimerOfDay(@RequestParam String pointUp, @RequestParam String pointDown, @RequestParam String date, @RequestParam int numberTicket, @RequestParam String companyId, @RequestParam String startTime) throws Exception {
         Long requestAPI = System.currentTimeMillis();
@@ -120,13 +103,17 @@ public class CallBotController {
                                                            @RequestBody TransactionRequest transaction) throws ParseException {
         Map<String, String> orderTicket = new HashMap<>();
         if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
-            orderTicket.put("data", "true");
+            orderTicket.put("result", "true");
             return new ResponseEntity<>(orderTicket, HttpStatus.OK);
-
         } else {
-            orderTicket.put("data", "false");
+            orderTicket.put("result", "false");
             return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
         }}
+
+
+    @PostMapping("command_API")
+    public  String getCommandApi(@RequestParam int status){
+        return "Ok";}
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -141,4 +128,6 @@ public class CallBotController {
         time = Integer.parseInt(number[0]) * 3600000 + Integer.parseInt(number[1]) * 60000;
         return String.valueOf(time);
     }
+
+
 }
