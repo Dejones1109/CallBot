@@ -42,6 +42,7 @@ C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\dto\GwRespons
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\utils\GwJwtTokenFactory.java
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\exceptions\handlers\BussinessExceptionHandler.java
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\exceptions\ProcessErrorException.java
+C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\callbot\SocketIO.java
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\TripRepository.java
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\AbstractCommunication.java
 C:\Users\PhuongAnh\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\SanVeCommunicateV1.java

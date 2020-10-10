@@ -20,28 +20,98 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac844f-a233-49a5-ac5d-4343e65cdea2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CallBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CallBot.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/callbot/SocketIO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/callbot/CallBotClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/callbot/CallBotClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/CallBotFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/CallBotFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBot/CallBotClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBot/CallBotClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBotCommunication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBotCommunication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/SanVeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/SanVeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/CallBotFacade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/CallBotFacade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/GatewayApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/aop/MonitorAspect.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AbstractCommunication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBotCommunication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/SanVeCommunicate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/SanVeCommunicateV1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceRequest$CalculatePriceRequestBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/OrderTicketRequest$OrderTicketRequestBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/OrderTicketRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/PaymentRequest$PaymentRequestBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/PaymentRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/Request.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/sanve/SanVeClientV1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/CorsFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/GwConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/LoggingAspectConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/SwaggerConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/WebMvcConfigurerAdapter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/SanVeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/dto/GwResponseDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/dto/TransactionRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Agency.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/CompanyInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/District.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/ListPoint.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/OrderTicket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Province.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/RouteInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Seat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/SeatMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Ticket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/TransactionLog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Trip.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/UserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Vehicle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/AuthenException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/ProcessErrorException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/absException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/handlers/BussinessExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/handlers/CommonExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/CallBotFacade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/GwInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/LoginInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/limititer/RequestRateLimiter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/AgencyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/CompanyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/DistrictRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/ListPointRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/OrderTicketRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/PointRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/ProvinceRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/RouteInfoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/SeatMapRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/SeatRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TicketRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TransactionLogRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TripRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/UserInfoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/VehicleRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/services/ProvinceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/ClientManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/GwJwtTokenFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/MessageUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +127,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/socket.io-client-java-master/socket.io-client-java-master" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -112,7 +182,7 @@
       <workItem from="1602038176204" duration="7300000" />
       <workItem from="1602227082638" duration="579000" />
       <workItem from="1602227675370" duration="2091000" />
-      <workItem from="1602230065598" duration="7543000" />
+      <workItem from="1602230065598" duration="17320000" />
     </task>
     <servers />
   </component>
@@ -148,10 +218,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="707" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1602240364588" />
-    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1602234577960">
+    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1602295049273">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602234577960" />
+    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602295049273" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1602227658524">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

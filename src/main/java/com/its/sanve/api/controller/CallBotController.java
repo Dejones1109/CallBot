@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import src.main.java.com.its.sanve.api.communication.callbot.SocketIO;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -49,6 +50,7 @@ public class CallBotController {
     GetDataFacade getDataFacade;
 
 
+
     @GetMapping("isCheckRoute")
     public Object isCheckRoute(@RequestParam String startCity, @RequestParam String endCity, @RequestParam String companyId) {
         return callBotClient.isCheckRoute(sanveClient.getCompaniesRoutes(companyId), startCity, endCity);
@@ -67,7 +69,7 @@ public class CallBotController {
         List<Trip> listTrips = sanVeClientV1.getListTripByNumber(pointUp, pointDown, convertDateTime(date), companyId, numberTicket);
         Long responseAPI = System.currentTimeMillis();
         log.info("Response data by SanVe : {}", responseAPI - requestAPI);
-        return new ResponseEntity<>(callBotClient.listStartTimeRealityV1(listTrips, convertDateTime(date), convertStartTime(startTime),numberTicket), HttpStatus.OK);
+        return new ResponseEntity<>(callBotClient.listStartTimeRealityV1(listTrips, convertDateTime(date), convertStartTime(startTime), numberTicket), HttpStatus.OK);
     }
 
     @GetMapping("getQualitiesTickets")
@@ -97,6 +99,7 @@ public class CallBotController {
     public ResponseEntity<Object> getListRouteByDb(@RequestParam int limit, @RequestParam String companyId) {
         return new ResponseEntity<>(getDataFacade.getListAllRoute(limit, companyId), HttpStatus.OK);
     }
+
     @PostMapping("orderTicket")
 
     public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
@@ -108,12 +111,25 @@ public class CallBotController {
         } else {
             orderTicket.put("result", "false");
             return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
-        }}
+        }
+    }
 
 
-    @PostMapping("command_API")
-    public  String getCommandApi(@RequestParam int status){
-        return "Ok";}
+    @PostMapping("ringStore")
+    public String getCommandApi(@RequestParam int status, @RequestParam String callId, @RequestParam String text, @RequestParam String voice,@RequestParam int id) throws Exception{
+        String result = null;
+        if (status == 1) {
+            SocketIO clientSocket = new SocketIO();
+            clientSocket.startConnection("123.31.17.59", 7088);
+            String msg = "{\"jsonrpc\": \"2.0\", \"method\": \"CallBot.sendCommand\", \"params\": {\"token\": \"Marvel_20$20@##\", \"call_id\": \"" + callId + "\", \"text_command\": \"" + text + "\", \"voice\": \"" + voice + "\" , \"timeout\": 15, \"type\": 202 }, \"id\": "+id+"}";
+            result = clientSocket.sendMessage(msg.length() + ":" + msg + ",");
+            clientSocket.stopConnection();
+        }else{
+            result = "action_after_wait";
+        }
+        return result;
+    }
+
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
