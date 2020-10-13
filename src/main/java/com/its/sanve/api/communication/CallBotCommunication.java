@@ -47,20 +47,54 @@ public class CallBotCommunication extends AbstractCommunication {
         return retrofit.create(SanVeCommunicate.class);
     }
 
-    public int orderTicket(OrderTicketRequest orderTicketRequest) {
+//    public int orderTicket(OrderTicketRequest orderTicketRequest) {
+//        try {
+//
+//            RequestBody secretPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSecretKey().toString());
+//            RequestBody apiPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getApiKey().toString());
+//            RequestBody seatPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSeat().toString());
+//            RequestBody pointPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getPoint().toString());
+//            RequestBody tripIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getTripId().toString());
+//            RequestBody routeIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getRouteId().toString());
+//            RequestBody fullNamePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerFullname().toString());
+//            RequestBody phonePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerPhone().toString());
+//            RequestBody companyIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCompanyId().toString());
+//
+//            Call<SanVeResponse> request = botCommunicate.orderTicket(secretPart, apiPart, seatPart, pointPart, routeIdPart, tripIdPart, fullNamePart, phonePart, companyIdPart);
+//            log.info(request);
+//            Response<SanVeResponse> response = request.execute();
+//            log.info("response", response);
+//            log.debug("response {}", response);
+//            if(response.isSuccessful()) {
+//                SanVeResponse data = response.body();
+//                log.info("Call api anvui success");
+//                return data.getStatus();
+//            }else {
+//
+//                log.info("Call order ticket failed");
+//                return 0;
+//            }
+//
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//            log.debug(e);
+//            return 0;
+//        }
+//    }
+public Object orderTicket(String apiKey,String secretKey, Object seatSelected, Object pointSelected,String routeId,String tripId, String phone,String fullName, String companyId, String phoneOrder) {
         try {
 
-            RequestBody secretPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSecretKey().toString());
-            RequestBody apiPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getApiKey().toString());
-            RequestBody seatPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getSeat().toString());
-            RequestBody pointPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getPoint().toString());
-            RequestBody tripIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getTripId().toString());
-            RequestBody routeIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getRouteId().toString());
-            RequestBody fullNamePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerFullname().toString());
-            RequestBody phonePart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCustomerPhone().toString());
-            RequestBody companyIdPart = RequestBody.create(MediaType.parse("text/plain"), orderTicketRequest.getCompanyId().toString());
+            RequestParam secretPart = RequestParam.create(MediaType.parse("text/plain"), apiKey);
+            RequestParam apiPart = RequestParam.create(MediaType.parse("text/plain"), secretKey);
+            RequestParam seatPart = RequestParam.create(MediaType.parse("text/plain"), seatSelected);
+            RequestParam pointPart = RequestParam.create(MediaType.parse("text/plain"), pointSelected);
+            RequestParam tripIdPart = RequestParam.create(MediaType.parse("text/plain"), pointSelected);
+            RequestParam routeIdPart = RequestParam.create(MediaType.parse("text/plain"), routeId);
+            RequestParam fullNamePart = RequestParam.create(MediaType.parse("text/plain"), fullName);
+            RequestParam phonePart = RequestParam.create(MediaType.parse("text/plain"), phoneOrder);
+            RequestParam companyIdPart = RequestParam.create(MediaType.parse("text/plain"), companyId);
 
-            Call<SanVeResponse> request = botCommunicate.orderTicket(secretPart, apiPart, seatPart, pointPart, routeIdPart, tripIdPart, fullNamePart, phonePart, companyIdPart);
+            Call<SanVeResponse> request = botCommunicate.orderTicket1(secretPart, apiPart, seatPart, pointPart, routeIdPart, tripIdPart, fullNamePart, phonePart, companyIdPart);
             log.info(request);
             Response<SanVeResponse> response = request.execute();
             log.info("response", response);
@@ -68,17 +102,17 @@ public class CallBotCommunication extends AbstractCommunication {
             if(response.isSuccessful()) {
                 SanVeResponse data = response.body();
                 log.info("Call api anvui success");
-                return data.getStatus();
+                return data.getData();
             }else {
 
                 log.info("Call order ticket failed");
-                return 0;
+                return null;
             }
 
         } catch (Exception e) {
             // TODO: handle exception
             log.debug(e);
-            return 0;
+            return null;
         }
     }
 

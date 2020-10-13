@@ -49,17 +49,17 @@ public interface SanVeCommunicate {
 
     @POST("order/calc_price")
     public Call<CalculatePriceResponse> calculatePrice(@Body CalculatePriceRequest request);
+//    @Multipart
+//    @FormUrlEncoded
+//    @POST("order/create")
+//    public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
+//                                           @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,
+//                                           @Part("point_selected") RequestBody pointSelected, @Part("route_id") RequestBody routeId,
+//                                           @Part("trip_id") RequestBody tripId, @Part("full_name") RequestBody fullName,
+//                                           @Part("phone") RequestBody phone, @Part("company_id") RequestBody companyId);
     @Multipart
     @FormUrlEncoded
     @POST("order/create")
-    public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
-                                           @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,
-                                           @Part("point_selected") RequestBody pointSelected, @Part("route_id") RequestBody routeId,
-                                           @Part("trip_id") RequestBody tripId, @Part("full_name") RequestBody fullName,
-                                           @Part("phone") RequestBody phone, @Part("company_id") RequestBody companyId);
-    @Multipart
-    @FormUrlEncoded
-    @POST("order/create1")
     public Call<SanVeResponse> orderTicket1(@Query("secret_key") String secretKey,
                                            @Query(value= "api_key",encoded=true) String apiKey, @Query("seat_selected") Object seatSelected,
                                            @Query("point_selected") Object pointSelected, @Query("route_id") String routeId,

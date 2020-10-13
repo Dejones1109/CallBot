@@ -100,19 +100,18 @@ public class CallBotController {
         return new ResponseEntity<>(getDataFacade.getListAllRoute(limit, companyId), HttpStatus.OK);
     }
 
-    @PostMapping("orderTicket")
-
-    public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
-                                                           @RequestBody TransactionRequest transaction) throws ParseException {
-        Map<String, String> orderTicket = new HashMap<>();
-        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
-            orderTicket.put("result", "true");
-            return new ResponseEntity<>(orderTicket, HttpStatus.OK);
-        } else {
-            orderTicket.put("result", "false");
-            return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping("orderTicket")
+//    public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
+//                                                           @RequestBody TransactionRequest transaction) throws ParseException {
+//        Map<String, String> orderTicket = new HashMap<>();
+//        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
+//            orderTicket.put("result", "true");
+//            return new ResponseEntity<>(orderTicket, HttpStatus.OK);
+//        } else {
+//            orderTicket.put("result", "false");
+//            return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
     @PostMapping("ringStore")

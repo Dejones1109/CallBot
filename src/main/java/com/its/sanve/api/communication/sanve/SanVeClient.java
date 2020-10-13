@@ -269,7 +269,7 @@ public class SanVeClient extends AbstractCommunication {
 
 
     }
-    public Object creatOrder(String apiKey,String secretKey,Object seatSelected,Object pointSelected,String routeId,String tripId,String fullName,String phone,String companyId){
+    public SanVeResponse creatOrder(String apiKey,String secretKey,Object seatSelected,Object pointSelected,String routeId,String tripId,String fullName,String phone,String companyId){
         SanVeResponse results = null;
         log.info("1");
         Call<SanVeResponse> requests = sanVeCommunicate.orderTicket1(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId);

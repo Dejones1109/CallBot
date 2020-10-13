@@ -41,6 +41,10 @@ public class SanVeController {
     SanVeClientV1 svClientV1;
     @Autowired
     GetDataFacade getDataFacade;
+    @Autowired
+    com.its.sanve.api.facede.CallBotFacade callBotFacade;
+    @Autowired
+    com.its.sanve.api.communication.CallBotCommunication callBotCommunication;
 
     @RequestMapping(value = "saveDbProvinceDistrict", method = RequestMethod.GET)
     public String saveProvinceDistrict() {
@@ -98,11 +102,10 @@ public class SanVeController {
         return new ResponseEntity<>( SVClient.getTripsTickets(tripId, pointUpId, pointDownId), HttpStatus.OK);
     }
     @PostMapping("order/creat")
-    public ResponseEntity<Object> get_order_creat(@RequestParam String apiKey,@RequestParam String secretKey, @RequestParam Object seatSelected, @RequestParam Object pointSelected,@RequestParam String routeId,@RequestParam String tripId,@RequestParam String phone,@RequestParam String CompanyId,@Request String phoneOrder) throws Exception {
-
+    public ResponseEntity<Object> get_order_creat(@RequestParam String apiKey,@RequestParam String secretKey, @RequestParam Object seatSelected, @RequestParam Object pointSelected,@RequestParam String routeId,@RequestParam String tripId,@RequestParam String phone,@RequestParam String companyId,@Request String phoneOrder) throws Exception {
         String fullName = "Khách đặt vé qua điện thoại";
         log.info("data get successful!!");
-        return new ResponseEntity<Object>(SVClient.creatOrder(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId), HttpStatus.OK);
+        return new ResponseEntity<Object>(callBotCommunication.creatOrder(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId), HttpStatus.OK);
     }
 
     @PostMapping("order/calc_price")

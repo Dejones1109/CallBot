@@ -20,86 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac844f-a233-49a5-ac5d-4343e65cdea2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/callbot/SocketIO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/GatewayApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/aop/MonitorAspect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AbstractCommunication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/CallBotCommunication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/SanVeCommunicate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/SanVeCommunicateV1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceRequest$CalculatePriceRequestBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/CalculatePriceResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/OrderTicketRequest$OrderTicketRequestBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/OrderTicketRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/PaymentRequest$PaymentRequestBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/PaymentRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/Request.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/sanve/SanVeClientV1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/CorsFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/GwConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/LoggingAspectConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/SwaggerConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/WebMvcConfigurerAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/SanVeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/dto/GwResponseDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/dto/TransactionRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Agency.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/CompanyInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/District.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/ListPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/OrderTicket.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Province.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/RouteInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Seat.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/SeatMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Ticket.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/TransactionLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Trip.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/UserInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Vehicle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/AuthenException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/ProcessErrorException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/absException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/handlers/BussinessExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/exceptions/handlers/CommonExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/CallBotFacade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/GwInterceptor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/LoginInterceptor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/limititer/RequestRateLimiter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/AgencyRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/CompanyRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/DistrictRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/ListPointRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/OrderTicketRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/PointRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/ProvinceRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/RouteInfoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/SeatMapRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/SeatRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TicketRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TransactionLogRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TripRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/UserInfoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/VehicleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/services/ProvinceService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/ClientManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/GwJwtTokenFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/utils/MessageUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +108,7 @@
       <workItem from="1602038176204" duration="7300000" />
       <workItem from="1602227082638" duration="579000" />
       <workItem from="1602227675370" duration="2091000" />
-      <workItem from="1602230065598" duration="17320000" />
+      <workItem from="1602230065598" duration="21570000" />
     </task>
     <servers />
   </component>
