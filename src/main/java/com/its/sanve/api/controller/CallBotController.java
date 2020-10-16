@@ -3,14 +3,11 @@ package com.its.sanve.api.controller;
 import com.its.sanve.api.communication.callbot.CallBotClient;
 import com.its.sanve.api.communication.sanve.SanVeClient;
 
-import com.its.sanve.api.communication.dto.OrderTicketRequest;
 import com.its.sanve.api.communication.sanve.SanVeClientV1;
 import com.its.sanve.api.dto.TransactionRequest;
 import com.its.sanve.api.entities.*;
 import com.its.sanve.api.facede.CallBotFacade;
 import com.its.sanve.api.facede.GetDataFacade;
-import com.its.sanve.api.repositories.RouteInfoRepository;
-import com.its.sanve.api.repositories.TransactionLogRepository;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -21,12 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import src.main.java.com.its.sanve.api.communication.callbot.SocketIO;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -103,6 +97,8 @@ public class CallBotController {
 //    @PostMapping("orderTicket")
 //    public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
 //                                                           @RequestBody TransactionRequest transaction) throws ParseException {
+//      //  TransactionRequest request = new TransactionRequest();
+//
 //        Map<String, String> orderTicket = new HashMap<>();
 //        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
 //            orderTicket.put("result", "true");
@@ -112,23 +108,55 @@ public class CallBotController {
 //            return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
 //        }
 //    }
+        @PostMapping("orderTicket")
+    public ResponseEntity<Map<String, String>> orderTicket(@RequestParam String secretKey, @RequestParam String apiKey,
+                                                           @RequestParam List<String> seatSelected, @RequestParam String pointSelected, @RequestParam String routeId, @RequestParam String tripId, @RequestParam String phone,@RequestParam String companyId,@RequestParam String phoneOrder) throws ParseException {
+        Map<String, String> orderTicket = new HashMap<>();
+        TransactionRequest transaction = new TransactionRequest();
+        transaction.setSeatId(seatSelected);
+        transaction.setPointSelected(pointSelected);
+        transaction.setRoute(routeId);
+        transaction.setTripId(tripId);
+        transaction.setPhone(phone);
+        transaction.setFull_name("Khách đặt từ điện thoại");
+        transaction.setCompanyId(companyId);
+        transaction.setPhoneOrder(phoneOrder);
 
-
-    @PostMapping("ringStore")
-    public String getCommandApi(@RequestParam int status, @RequestParam String callId, @RequestParam String text, @RequestParam String voice,@RequestParam int id) throws Exception{
-        String result = null;
-        if (status == 1) {
-            SocketIO clientSocket = new SocketIO();
-            clientSocket.startConnection("123.31.17.59", 7088);
-            String msg = "{\"jsonrpc\": \"2.0\", \"method\": \"CallBot.sendCommand\", \"params\": {\"token\": \"Marvel_20$20@##\", \"call_id\": \"" + callId + "\", \"text_command\": \"" + text + "\", \"voice\": \"" + voice + "\" , \"timeout\": 15, \"type\": 202 }, \"id\": "+id+"}";
-            result = clientSocket.sendMessage(msg.length() + ":" + msg + ",");
-            clientSocket.stopConnection();
-        }else{
-            result = "action_after_wait";
+        log.info(transaction);
+        if (callBotFacade.orderTicket(secretKey, apiKey, transaction) == true) {
+            orderTicket.put("result", "true");
+            return new ResponseEntity<>(orderTicket, HttpStatus.OK);
+        } else {
+            orderTicket.put("result", "false");
+            return new ResponseEntity<>(orderTicket, HttpStatus.BAD_REQUEST);
         }
-        return result;
     }
 
+
+
+//    @PostMapping("ringStore")
+//    public String getCommandApi(@RequestParam int status, @RequestParam String callId, @RequestParam String text, @RequestParam String voice,@RequestParam int id) throws Exception{
+//        String result = null;
+//        if (status == 1) {
+//            SocketIO clientSocket = new SocketIO();
+//            clientSocket.startConnection("123.31.17.59", 7088); 
+//            String msg = "{\"jsonrpc\": \"2.0\", \"method\": \"CallBot.sendCommand\", \"params\": {\"token\": \"Marvel_20$20@##\", \"call_id\": \"" + callId + "\", \"text_command\": \"" + text + "\", \"voice\": \"" + voice + "\" , \"timeout\": 15, \"type\": 202 }, \"id\": "+id+"}";
+//            result = clientSocket.sendMessage(msg.length() + ":" + msg + ",");
+//            clientSocket.stopConnection();
+//        }else{
+//            result = "action_after_wait";
+//        }
+//        return result;
+//    }
+//    @PostMapping(path = "/file-upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<String> fileUpload(
+//            @RequestParam(name = "metadata", required = false) List<com.its.sanve.api.communication.dto.OrderTicketRequest> requests, @RequestParam(name = "data", required = false) String data
+//           ) {
+//        log.info(requests);
+//        log.info(data);
+//      //  System.out.println(file);
+//        return new ResponseEntity<>("example", HttpStatus.OK);
+//    }
     private String convertDateTime(String date) throws ParseException {
         Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

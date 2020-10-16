@@ -46,7 +46,7 @@ public class CallBotFacade {
 			orderTicketRequest.setPoint(transactionRequest.getPointSelected());
 			orderTicketRequest.setTripId(transactionRequest.getTripId());
 			orderTicketRequest.setRouteId(transactionRequest.getRoute());
-			orderTicketRequest.setCustomerFullname(transactionRequest.getPhone());
+			orderTicketRequest.setCustomerFullname(transactionRequest.getFull_name());
 			orderTicketRequest.setCustomerPhone(transactionRequest.getPhoneOrder());
 			orderTicketRequest.setCompanyId(transactionRequest.getCompanyId());
 

@@ -43,28 +43,21 @@ public interface SanVeCommunicate {
                                                  @Query("startTimeFrom") String startTimeFrom, @Query("startTimeTo") String startTimeTo, @Query("routeId") String routeId);
 
     @GET("trip/tickets")
-    public Call<SanVeResponse<Map<String, List<Ticket>>>> getTickets(@Query("api_key") String apiKey,
-                                                                     @Query(value = "secret_key",encoded = true) String secretKey, @Query("tripId") String tripId,
-                                                                     @Query("pointUpId") String pointUpId, @Query("pointDownId") String pointDownId);
+    public Call<SanVeResponse<Map<String, List<com.its.sanve.api.entities.Ticket>>>> getTickets(@Query("api_key") String apiKey,
+                                                                                                @Query(value = "secret_key",encoded = true) String secretKey, @Query("tripId") String tripId,
+                                                                                                @Query("pointUpId") String pointUpId, @Query("pointDownId") String pointDownId);
 
     @POST("order/calc_price")
     public Call<CalculatePriceResponse> calculatePrice(@Body CalculatePriceRequest request);
-//    @Multipart
-//    @FormUrlEncoded
-//    @POST("order/create")
-//    public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
-//                                           @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,
-//                                           @Part("point_selected") RequestBody pointSelected, @Part("route_id") RequestBody routeId,
-//                                           @Part("trip_id") RequestBody tripId, @Part("full_name") RequestBody fullName,
-//                                           @Part("phone") RequestBody phone, @Part("company_id") RequestBody companyId);
     @Multipart
     @FormUrlEncoded
     @POST("order/create")
-    public Call<SanVeResponse> orderTicket1(@Query("secret_key") String secretKey,
-                                           @Query(value= "api_key",encoded=true) String apiKey, @Query("seat_selected") Object seatSelected,
-                                           @Query("point_selected") Object pointSelected, @Query("route_id") String routeId,
-                                           @Query("trip_id") String tripId, @Query("full_name") String fullName,
-                                           @Query("phone") String phone, @Query("company_id") String companyId);
+    public Call<SanVeResponse> orderTicket(@Part("secret_key") RequestBody secretKey,
+                                           @Part("api_key") RequestBody apiKey, @Part("seat_selected") RequestBody seatSelected,
+                                           @Part("point_selected") RequestBody pointSelected, @Part("route_id") RequestBody routeId,
+                                           @Part("trip_id") RequestBody tripId, @Part("full_name") RequestBody fullName,
+                                          @Part("phone") RequestBody phone, @Part("company_id") RequestBody companyId);
+
 
     @POST("order/payment")
     public Call paymennt(@Body PaymentRequest request);

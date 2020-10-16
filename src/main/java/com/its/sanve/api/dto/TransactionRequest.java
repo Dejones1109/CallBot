@@ -19,53 +19,55 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionRequest {
 
-	    @JsonProperty("phone")
-	    String phone;
+    @JsonProperty("phone")
+    String phone;
 
-	    @JsonProperty("phone_order")
-	    String phoneOrder;
+    @JsonProperty("phone_order")
+    String phoneOrder;
 
-	    @JsonProperty("call_id")
-	    String callId;
+    @JsonProperty("call_id")
+    String callId;
 
-	    @JsonProperty("hotline")
-	    String hotLine;
+    @JsonProperty("hotline")
+    String hotLine;
 
-	    @JsonProperty("intent")
-	    String intent;
+    @JsonProperty("intent")
+    String intent;
 
-	    @JsonProperty("point_up")
-	    String pointUp;
-	    
-	    @JsonProperty("point_down")
-	    String pointDown;
-	    
-	    @JsonProperty("start_time_reality")
-	    String startTimeReality;
-	    
-	    @JsonProperty("start_date")
-	    String startDate;
-	    
-	    @JsonProperty("created_at")
-	    LocalDateTime createdAt;
-	    
-	    @JsonProperty("route_id")
-	    String route;
-	    
-	    @JsonProperty("status")
-	    Integer status;
+    @JsonProperty("point_up")
+    String pointUp;
 
-	    @JsonProperty("seat_id")
-	    List<String> seatId;
-	    
-	    @JsonProperty("trip_id")
-	    String tripId;
-	    
-	    @JsonProperty("company_id")
-	    String companyId;
-	    
-	    @JsonProperty("point_selected")
-	    String pointSelected;
+    @JsonProperty("point_down")
+    String pointDown;
+
+    @JsonProperty("start_time_reality")
+    String startTimeReality;
+
+    @JsonProperty("start_date")
+    String startDate;
+
+    @JsonProperty("created_at")
+    LocalDateTime createdAt;
+
+    @JsonProperty("route_id")
+    String route;
+
+    @JsonProperty("status")
+    Integer status;
+
+    @JsonProperty("seat_id")
+    List<String> seatId;
+
+    @JsonProperty("trip_id")
+    String tripId;
+
+    @JsonProperty("company_id")
+    String companyId;
+
+    @JsonProperty("point_selected")
+    String pointSelected;
+    @JsonProperty("full_name")
+    String full_name;
 
 
 }

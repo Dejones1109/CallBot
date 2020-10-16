@@ -269,22 +269,22 @@ public class SanVeClient extends AbstractCommunication {
 
 
     }
-    public SanVeResponse creatOrder(String apiKey,String secretKey,Object seatSelected,Object pointSelected,String routeId,String tripId,String fullName,String phone,String companyId){
-        SanVeResponse results = null;
-        log.info("1");
-        Call<SanVeResponse> requests = sanVeCommunicate.orderTicket1(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId);
-        log.info("2");
-        Response<SanVeResponse> response = requests.execute();
-        log.info(response);
-        log.info("3");
-        if (response.isSuccessful()) {
-            log.info("4");
-            results = response.body();
-            log.info(results);
-            log.info("5");
-        }
-        return results;
-    }
+//    public SanVeResponse creatOrder(String apiKey,String secretKey,Object seatSelected,Object pointSelected,String routeId,String tripId,String fullName,String phone,String companyId){
+//        SanVeResponse results = null;
+//        log.info("1");
+//        Call<SanVeResponse> requests = sanVeCommunicate.orderTicket1(apiKey,secretKey,seatSelected,pointSelected,routeId,tripId,fullName,phone,companyId);
+//        log.info("2");
+//        Response<SanVeResponse> response = requests.execute();
+//        log.info(response);
+//        log.info("3");
+//        if (response.isSuccessful()) {
+//            log.info("4");
+//            results = response.body();
+//            log.info(results);
+//            log.info("5");
+//        }
+//        return results;
+//    }
 
     public CalculatePriceResponse calculatePrice(CalculatePriceRequest request) throws Exception {
         CalculatePriceResponse results = null;
