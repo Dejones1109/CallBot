@@ -139,7 +139,7 @@ public class CallBotController {
 //        String result = null;
 //        if (status == 1) {
 //            SocketIO clientSocket = new SocketIO();
-//            clientSocket.startConnection("123.31.17.59", 7088); 
+//            clientSocket.startConnection("123.31.17.59", 7088);
 //            String msg = "{\"jsonrpc\": \"2.0\", \"method\": \"CallBot.sendCommand\", \"params\": {\"token\": \"Marvel_20$20@##\", \"call_id\": \"" + callId + "\", \"text_command\": \"" + text + "\", \"voice\": \"" + voice + "\" , \"timeout\": 15, \"type\": 202 }, \"id\": "+id+"}";
 //            result = clientSocket.sendMessage(msg.length() + ":" + msg + ",");
 //            clientSocket.stopConnection();

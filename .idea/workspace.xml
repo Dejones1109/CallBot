@@ -20,30 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac844f-a233-49a5-ac5d-4343e65cdea2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/ISocketIOService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CallBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CallBot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" afterPath="$PROJECT_DIR$/.project" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/CallBotCommunication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/SanVeCommunicate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/callbot/SocketIO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/sanve/SanVeClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/SanVeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/dto/TransactionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/dto/TransactionRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/CallBotFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/CallBotFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +57,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/java-workspace" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -135,7 +113,8 @@
       <workItem from="1602227082638" duration="579000" />
       <workItem from="1602227675370" duration="2091000" />
       <workItem from="1602230065598" duration="21570000" />
-      <workItem from="1602830540196" duration="7000000" />
+      <workItem from="1602830540196" duration="7312000" />
+      <workItem from="1603165457520" duration="163000" />
     </task>
     <servers />
   </component>
@@ -183,10 +162,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="707" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1602240364588" />
-    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1602830819806">
+    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1602841547000">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602830819806" />
+    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602841547000" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1602649313859">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
