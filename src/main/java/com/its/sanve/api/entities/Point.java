@@ -5,109 +5,74 @@
  */
 package com.its.sanve.api.entities;
 
-import java.util.List;
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
+import java.util.List;
+
 /**
- *
  * @author quangdt
  */
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Table(name = "point")
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Point {
-    /**
-     * Thứ tự điểm dừng trong chuyến
-     */
-    @Column(name = "order")
-    Integer order;
+
     @Id
-    @Column(name = "id")
-    String id;
-    /**
-     * Tên điểm dừng
-     */
+    @Column(name = "point_of_route_id")
+    @JsonProperty("pointOfRouteId")
+    String pointOfRouteId;
+    @Column(name = "point_id")
+    @JsonProperty("id")
+    String pointId;
+
+    @Column(name = "route_id")
+    @JsonProperty("routeId")
+     String routeId;
+
+
     @Column(name = "name")
+    @JsonProperty("name")
     String name;
-    /**
-     * Địa chỉ điểm dừng
-     */
+
     @Column(name = "address")
+    @JsonProperty("address")
     String address;
-    /**
-     * Tên tỉnh
-     */
+
     @Column(name = "province")
+    @JsonProperty("province")
     String province;
-    /**
-     * Tên huyện
-     */
+
     @Column(name = "district")
+    @JsonProperty("district")
     String district;
 
-    /**
-     * Kinh độ
-     */
-    @Column(name = "longtitude")
+    @Column(name = "keyword")
+    @JsonProperty("keyword")
+
+    String keyword;
+
+    @Column(name = "longitude")
+    @JsonProperty("longitude")
     Double longitude;
-    /**
-     * Vĩ độ
-     */
+
     @Column(name = "latitude")
+    @JsonProperty("latitude")
     Double latitude;
-    /**
-     * Tên viết tắt
-     */
-    @Column(name = "point_name_acronym")
-    String pointNameAcronym;
-    @Column(name = "routeId")
-    String routeId;
-    /**
-     * Thời gian đi từ điểm đầu tiên của tuyến đến điểm đang xét (tình theo milisecond)
-     */
-    @Column(name = "time_intend")
-    Integer timeIntend;
-    /**
-     * Danh sách giá, trong đó giá trị phần tử thứ i là giá từ điểm điểm đang xét đến điểm thứ i.
-     * Giá = -1 nghĩa là giữa 2 điểm đó không bán vé
-     */
-    @ElementCollection(targetClass=Double.class)
-    List<Double> listPrice;
-    /**
-     * Cho phép đưa đón tận nhà tại diểm đang xét
-     */
-    @Column(name = "allowPickingAndDroppingAtHome")
-    Boolean allowPickingAndDroppingAtHome;
+
+
+    @JsonProperty("listTransshipmentPoint")
     @Transient
-    List listTransshipmentPoint;
-    @Transient
-    Object transshipmentId;
-    @Column(name ="type")
-    Integer pointType;
-    @Transient
-    Object transshipmentPrice;
-    @Transient
-    Object transshipmentDriver;
-    @Transient
-    Object pickUpDropOffType;
-    @Transient
-    Boolean completedTransshipment;
-    @Transient
-    Object orderTransshipment;
-    @Transient
-    Boolean haveTransshipment;
+    List<TranshipmentPoint> transhipmentPoints;
+
 }

@@ -11,9 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Array;
-import java.util.List;
-
 /**
  *
  * @author quangdt
@@ -22,8 +19,8 @@ import java.util.List;
  */
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyInfo, String>{
-//    @Query("SELECT c.id, c.name FROM CompanyInfo c WHERE c.phoneNumber = :phone")
-//    Object findPhone(@Param("phone") String phone);
-@Query("SELECT c.id, c.name, c.nameShort FROM CompanyInfo c WHERE c.phoneNumber = :phone")
-String findPhone(@Param("phone") String phone);
+
+@Query("SELECT c FROM CompanyInfo c WHERE c.phoneNumber = :phone")
+CompanyInfo findPhone(@Param("phone") String phone);
+
 }
