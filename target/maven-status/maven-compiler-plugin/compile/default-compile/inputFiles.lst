@@ -4,7 +4,6 @@ C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositor
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\utils\ClientManager.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\dto\TripsRequest.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\config\CorsFilter.java
-C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\anvui\TokenResponse.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\TransactionToken.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\controller\AnVuiController.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\config\LoggingAspectConfiguration.java
@@ -15,6 +14,7 @@ C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\exception
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\GatewayApplication.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\config\WebMvcConfigurerAdapter.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\controller\CallBotController.java
+C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\TripRespository.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\RouteInfo.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\exceptions\ProcessErrorException.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\TranshipmentPoint.java
@@ -23,6 +23,7 @@ C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\config\Gw
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\dto\GwResponseDto.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\config\SwaggerConfig.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\exceptions\AuthenException.java
+C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\Route.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\TranshipmentPointRepository.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\Point.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\CompanyRepository.java
@@ -33,10 +34,13 @@ C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\intercept
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\utils\GwJwtTokenFactory.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\dto\TransactionRequest.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\TransactionTokenRepository.java
+C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\implement\QueryEntityImplement.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\utils\Client.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\interceptors\LoginInterceptor.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\repositories\PointRepository.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\exceptions\absException.java
+C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\TokenManage.java
+C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\entities\Trip.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\AbstractCommunication.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\utils\MessageUtils.java
 C:\Users\its-technical\Desktop\CallBot\src\main\java\com\its\sanve\api\communication\AnVuiCommunicate.java

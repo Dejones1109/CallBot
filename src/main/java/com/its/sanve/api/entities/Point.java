@@ -32,6 +32,7 @@ public class Point {
     @Column(name = "point_of_route_id")
     @JsonProperty("pointOfRouteId")
     String pointOfRouteId;
+
     @Column(name = "point_id")
     @JsonProperty("id")
     String pointId;

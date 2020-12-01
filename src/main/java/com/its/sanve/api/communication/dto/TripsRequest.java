@@ -1,10 +1,9 @@
 package com.its.sanve.api.communication.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -12,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TripsRequest {
     @JsonProperty("page")
     int page;
@@ -21,7 +20,7 @@ public class TripsRequest {
     @JsonProperty("timeZone")
     int timeZone;
     @JsonProperty("sortSelections")
-    List sortSelections;
+    ArrayList sortSelections;
     @JsonProperty("companyId")
     String companyId;
     @JsonProperty("date")
@@ -30,6 +29,7 @@ public class TripsRequest {
     String startPoint;
     @JsonProperty("endPoint")
     String endPoint;
+
     @JsonProperty("searchPointOption")
     int searchPointOption;
     @JsonProperty("source")
@@ -40,4 +40,8 @@ public class TripsRequest {
     Boolean newVersion;
     @JsonProperty("routeId")
     String routeId;
+    @JsonProperty("numberTicket")
+    int numberTicket;
+    @JsonProperty("startHour")
+    String startHour;
 }

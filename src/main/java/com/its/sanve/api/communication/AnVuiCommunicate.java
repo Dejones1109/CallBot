@@ -3,9 +3,12 @@ package com.its.sanve.api.communication;
 
 import com.its.sanve.api.communication.anvui.AnVuiResponse;
 import com.its.sanve.api.communication.dto.RouteRequest;
+import com.its.sanve.api.communication.dto.TripsRequest;
 import com.its.sanve.api.entities.RouteInfo;
+import com.its.sanve.api.entities.Trip;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -15,10 +18,10 @@ import java.util.Map;
 
 public interface AnVuiCommunicate {
     @POST("web_admin/rlogin")
-    Call<AnVuiResponse<LinkedHashMap<String,Object>>> login(@Query("userName") String userName, @Query("password") String password, @Query("accessCode") String accessCode, @Query("deviceType") String deviceType, @Query("refreshToken") String refreshToken);
+    Call<AnVuiResponse<LinkedHashMap<String,Object>>> login(@Query("userName") String userName, @Query(value = "password",encoded = true) String password, @Query("accessCode") String accessCode, @Query("deviceType") String deviceType, @Query("refreshToken") String refreshToken);
     @POST("route/getList")
     Call<AnVuiResponse<Map<String,List<RouteInfo>>>> getListRoute(@Body RouteRequest routeRequest);
-//    @POST("planfortrip/search")
-//    Call<AnVuiResponse<T>> getTrips(@Body ListTripsRequest listTripsRequest);
+    @POST("planfortrip/search")
+    Call<AnVuiResponse<LinkedHashMap<String,List<Trip>>>> getTrips(@Header("DOBODY6969")String token, @Body TripsRequest TripsRequest);
 
 }

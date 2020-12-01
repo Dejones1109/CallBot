@@ -46,8 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 
         response.addHeader("X-RateLimit-Limit", String.valueOf(rateLimiter));
         response.addHeader("Content-Type", "application/json");
-        response.addHeader("DOBODY6969", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUQzBDSzFybFV5bjFxcXV5IiwiaXNzIjoiYW52dWkiLCJleHAiOjE2MDU5NTMxNDgsImp0aSI6IlVTMEpVMXViQmlqN3JZdUwifQ.h7C0\n" +
-                "XNr2QX4k28J0fuD-wVFQlr9SPu3FL7-RZUTuXqI");
+        response.addHeader("DOBODY6969", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUQzBDSzFybFV5bjFxcXV5IiwiaXNzIjoiYW52dWkiLCJleHAiOjE2MDY2MTQzMTcsImp0aSI6IlVTMEpVMXViQmlqN3JZdUwifQ.lpLfd91LyIhdRhJ5LEN8PAtnOiWTnu3oUyZnmiIpD_U");
 
         return true;
     }

@@ -43,7 +43,7 @@ public class GetDataFacade {
 
         p.put("companyId", data.getId());
         p.put("companyName",data.getName());
-        p.put("companyShortName", data.getPhoneNumber());
+        p.put("companyShortName", data.getNameShort());
         return p;
     }
 

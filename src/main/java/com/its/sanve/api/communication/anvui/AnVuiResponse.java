@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AnVuiResponse<T>  extends  TokenResponse {
+public class AnVuiResponse<T>  {
     @JsonProperty("code")
     int code;
     @JsonProperty("count")
@@ -21,4 +21,6 @@ public class AnVuiResponse<T>  extends  TokenResponse {
     String type;
     @JsonProperty("results")
     T results;
+    @JsonProperty("tokenKey")
+    String tokenKey;
 }
