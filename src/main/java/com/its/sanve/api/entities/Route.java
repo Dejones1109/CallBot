@@ -16,4 +16,6 @@ public class Route {
     String endPointId;
     String endKeyword;
     String endProvince;
+    String shortKeywordStart;
+    String shortKeywordEnd;
 }

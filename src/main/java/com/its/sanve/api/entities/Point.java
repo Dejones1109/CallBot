@@ -62,6 +62,10 @@ public class Point {
     @JsonProperty("keyword")
 
     String keyword;
+    @Column(name = "short_keyword")
+    @JsonProperty("short_keyword")
+
+    String shortKeyword;
 
     @Column(name = "longitude")
     @JsonProperty("longitude")

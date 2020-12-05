@@ -35,6 +35,8 @@ public  class QueryEntityImplement {
                 r.setEndPointId(ob[4].toString());
                 r.setEndKeyword(ob[5].toString());
                 r.setEndProvince(ob[6].toString());
+                r.setShortKeywordStart(ob[7].toString());
+                r.setShortKeywordEnd(ob[8].toString());
                 routeList.add(r);
             }
              log.info(routeList);
@@ -46,5 +48,5 @@ public  class QueryEntityImplement {
 
     }
 
-    static final String SQL_SELETE_ROUTES = "select tbStart.route_id,tbStart.point_id as start_point_id, tbStart.keyword as start_keyword, lower(tbStart.province) as start_province,tbEnd.point_id as end_point_id,tbEnd.keyword as end_keyword, lower(tbEnd.province) as end_province  from  (SELECT * FROM carticket.point c WHERE c.keyword = :startPoint or lower(c.province) =:startPoint) tbStart join (SELECT * FROM carticket.point c WHERE c.keyword = :endPoint or lower(c.province) =:endPoint) tbEnd on tbStart.route_id = tbEnd.route_id";
+    static final String SQL_SELETE_ROUTES = "select tbStart.route_id,tbStart.point_id as start_point_id, tbStart.keyword as start_keyword, lower(tbStart.province) as start_province,tbEnd.point_id as end_point_id,tbEnd.keyword as end_keyword, lower(tbEnd.province) as end_province,tbStart.short_keyword as short_keyword_start,tbEnd.short_keyword as short_keyword_end from  (SELECT * FROM carticket.point c WHERE c.keyword = :startPoint or lower(c.province) =:startPoint) tbStart join (SELECT * FROM carticket.point c WHERE c.keyword = :endPoint or lower(c.province) =:endPoint) tbEnd on tbStart.route_id = tbEnd.route_id";
 }

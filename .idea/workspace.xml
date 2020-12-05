@@ -20,42 +20,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac844f-a233-49a5-ac5d-4343e65cdea2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/TokenManage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Route.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Trip.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/implement/QueryEntityImplement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/TripRespository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/dto/PriceTicketRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/AnVuiCommunicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/AnVuiCommunicate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/TokenManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/services/TokenManage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/TokenResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/dto/TripsRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/dto/TripsRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/AnVuiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/AnVuiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Route.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/GetDataFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/GetDataFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/interceptors/LoginInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/interceptors/LoginInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/PointRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/PointRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/implement/QueryEntityImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/implement/QueryEntityImplement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AnVuiCommunicate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AnVuiCommunicate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/TokenManage.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiCommunication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiCommunication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/TokenResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/TripsRequest$TripsRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/TripsRequest$TripsRequestBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/TripsRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/dto/TripsRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/AnVuiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/AnVuiController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Route.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Route.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/LoginInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/interceptors/LoginInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/CompanyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/CompanyRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/PointRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/PointRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/implement/QueryEntityImplement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/implement/QueryEntityImplement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
@@ -165,7 +153,7 @@
       <workItem from="1606183419745" duration="20401000" />
       <workItem from="1606271854729" duration="21841000" />
       <workItem from="1606464219055" duration="40376000" />
-      <workItem from="1606813488527" duration="7440000" />
+      <workItem from="1606813488527" duration="83750000" />
     </task>
     <servers />
   </component>
@@ -217,10 +205,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606272487872" />
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606538678768">
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607073598254">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606538678768" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607073598254" />
     <state x="707" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1602240364588">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -249,10 +237,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606794149799" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1601545943227">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607066434967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1601545943227" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607066434967" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -264,8 +252,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java</url>
-          <line>30</line>
+          <line>34</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/config/WebMvcConfigurerAdapter.java</url>

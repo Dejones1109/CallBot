@@ -1,6 +1,8 @@
 package com.its.sanve.api.controller;
 
 import com.its.sanve.api.communication.anvui.AnVuiClient;
+import com.its.sanve.api.communication.anvui.AnVuiCommunication;
+import com.its.sanve.api.communication.dto.PriceTicketRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
 import com.its.sanve.api.facede.GetDataFacade;
 import com.its.sanve.api.repositories.PointRepository;
@@ -27,25 +29,25 @@ public class CallBotController {
     AnVuiClient anVuiClient;
    @Autowired
     PointRepository pointRepository;
+   @Autowired
+    AnVuiCommunication anVuiCommunication;
     @GetMapping("getCompanyInfo")
     public ResponseEntity<Object> getInfoCompany(@RequestParam String phone) throws Exception {
         return new ResponseEntity<>(getDataFacade.getCompanyInfo(phone), HttpStatus.OK);
     }
    @GetMapping("getRouteInfo")
    public Map<String,Object> getRouteInfo(@RequestParam String startPoint, @RequestParam String endPoint){
-//        log.info("data:{}",pointRepository.getTrips());
-//        if(startPoint.contains(endPoint)){
-//            return "duplicate point!";
-//        }
+
         return anVuiClient.getRoute(startPoint,endPoint);
    }
     @PostMapping("getTrip")
     public Map<String,Object> getTrip(@RequestBody TripsRequest request){
-//        log.info("data:{}",pointRepository.getTrips());
-//        if(startPoint.contains(endPoint)){
-//            return "duplicate point!";
-//        }
+
         return anVuiClient.getTrip(request);
+    }
+    @PostMapping("getPriceTicket")
+    public  Map<String, Object> getPriceTicket(@RequestBody PriceTicketRequest request){
+        return anVuiCommunication.getPriceTicket(request);
     }
 
     private String convertDateTime(String date) throws ParseException {

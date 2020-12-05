@@ -2,6 +2,7 @@ package com.its.sanve.api.communication;
 
 
 import com.its.sanve.api.communication.anvui.AnVuiResponse;
+import com.its.sanve.api.communication.dto.PriceTicketRequest;
 import com.its.sanve.api.communication.dto.RouteRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
 import com.its.sanve.api.entities.RouteInfo;
@@ -23,5 +24,7 @@ public interface AnVuiCommunicate {
     Call<AnVuiResponse<Map<String,List<RouteInfo>>>> getListRoute(@Body RouteRequest routeRequest);
     @POST("planfortrip/search")
     Call<AnVuiResponse<LinkedHashMap<String,List<Trip>>>> getTrips(@Header("DOBODY6969")String token, @Body TripsRequest TripsRequest);
+    @POST("sanve/get-price-ticket")
+    Call<AnVuiResponse<Map<String, Map<String,Double>>>> getPriceTicket(@Header("DOBODY6969")String token, @Body PriceTicketRequest request);
 
 }

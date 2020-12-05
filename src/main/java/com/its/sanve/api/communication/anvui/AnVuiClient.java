@@ -33,6 +33,8 @@ public class AnVuiClient {
             List startPointIds = new ArrayList();
             List endPointNames = new ArrayList();
             List endPointIds = new ArrayList();
+            List startShortNames = new ArrayList();
+            List endShortNames = new ArrayList();
 
 
             List<Route> listRoutes = query.getRouteInfo(startPoint, endPoint);
@@ -65,6 +67,8 @@ public class AnVuiClient {
                         startPointIds.add(route.getStartPointId());
                         endPointNames.add(route.getEndKeyword());
                         endPointIds.add(route.getEndPointId());
+                        startShortNames.add(route.getShortKeywordStart());
+                        endShortNames.add(route.getShortKeywordEnd());
                     }
 
                     log.info("status:{}", status);
@@ -77,6 +81,8 @@ public class AnVuiClient {
             mapRoute.put("startPointName", startPointNames);
             mapRoute.put("listEndPointId", endPointIds);
             mapRoute.put("endPointName", endPointNames);
+            mapRoute.put("startShortName",startShortNames);
+            mapRoute.put("endShortName",endShortNames);
             return mapRoute;
 
         } catch (Exception e) {
@@ -96,9 +102,11 @@ public class AnVuiClient {
             List<String> listTripName = new ArrayList<>();
             List<Trip> listTrips = anVuiCommunication.getTrips(request);
             int startHour = conventHour(request.getStartHour());
+            log.info("startHour:{}", startHour);
 
             for (Trip trip : listTrips) {
                 if (trip.getTotalEmptySeat() >= request.getNumberTicket()) {
+
                     log.info("trip:{}", trip);
                     if (listTotalTripName.isEmpty()) {
                         listTotalTripId.add(trip.getId());
@@ -111,10 +119,12 @@ public class AnVuiClient {
                     }
                 }
             }
-             int count = listTotalTripName.size();
+            int count = listTotalTripName.size();
+            log.info("count:{}", count);
             Boolean status = false;
 
             for (int i = 0; i < count; i++) {
+                log.info("tripName:{}", conventHour(listTotalTripName.get(i)));
                 if (startHour == conventHour(listTotalTripName.get(i))) {
                     valid = 1;
                     listTripId.add(listTotalTripId.get(i));
@@ -129,20 +139,21 @@ public class AnVuiClient {
                         listTripName.add(listTotalTripName.get(1));
                         listTripId.add(listTotalTripId.get(1));
                         break;
-                    } else if (startHour>conventHour(listTotalTripName.get(count-1))){
+                    } else if (startHour > conventHour(listTotalTripName.get(count - 1))) {
 
-                        listTripName.add(listTotalTripName.get(count-2));
-                        listTripId.add(listTotalTripId.get(count-2));
-                        listTripName.add(listTotalTripName.get(count-1));
-                        listTripId.add(listTotalTripId.get(count-1));
+                        listTripName.add(listTotalTripName.get(count - 2));
+                        listTripId.add(listTotalTripId.get(count - 2));
+                        listTripName.add(listTotalTripName.get(count - 1));
+                        listTripId.add(listTotalTripId.get(count - 1));
                         break;
-                    }else {
-                        if(conventHour(listTotalTripName.get(i))>startHour&&status==false){
+                    } else {
+                        if (startHour < conventHour(listTotalTripName.get(i)) && status == false) {
                             status = true;
+                            listTripName.add(listTotalTripName.get(i - 1));
+                            listTripId.add(listTotalTripId.get(i - 1));
                             listTripName.add(listTotalTripName.get(i));
                             listTripId.add(listTotalTripId.get(i));
-                            listTripName.add(listTotalTripName.get(i+1));
-                            listTripId.add(listTotalTripId.get(i+1));
+
                             break;
                         }
                     }
@@ -150,9 +161,9 @@ public class AnVuiClient {
             }
             listMap.put("listTotalTripId", listTotalTripId);
             listMap.put("listTotalTripName", listTotalTripName);
-            listMap.put("valid",valid);
-            listMap.put("listTripId",listTripId);
-            listMap.put("listTripName",listTripName);
+            listMap.put("valid", valid);
+            listMap.put("listTripId", listTripId);
+            listMap.put("listTripName", listTripName);
             return listMap;
         } catch (Exception e) {
             log.warn("error:{}", e.getMessage());
@@ -195,6 +206,7 @@ public class AnVuiClient {
 
     private int conventHour(String startHour) {
         String[] substring = startHour.split("h");
-        return Integer.parseInt(substring[0]) * 60 + Integer.parseInt(substring[1]) * 60 * 1000;
+
+        return (Integer.parseInt(substring[0]) * 60 + Integer.parseInt(substring[1])) * 60 * 1000;
     }
 }

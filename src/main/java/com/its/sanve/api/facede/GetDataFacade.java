@@ -39,6 +39,7 @@ public class GetDataFacade {
     public Map<String, Object> getCompanyInfo(String company_phone) throws Exception {
         Map<String, Object> p = new HashMap<>();
         CompanyInfo data = companyRepository.findPhone(company_phone);
+
         log.info(data);
 
         p.put("companyId", data.getId());
