@@ -6,7 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

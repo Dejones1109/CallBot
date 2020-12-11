@@ -8,6 +8,8 @@ package com.its.sanve.api.repositories;
 
 import com.its.sanve.api.entities.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,7 +18,7 @@ public interface PointRepository extends JpaRepository<Point, String> {
 //    @Query("SELECT c.pointId FROM Point c WHERE c.routeId = :routeId and c.province =:province")
 //    List<String> listPointId(@Param("routeId") String routeId, @Param("province") String province);
 //
-//    @Query("SELECT c.province FROM Point c WHERE c.routeId = :routeId and c.province =:province")
-//    List<String>  listProvince(@Param("routeId") String routeId,@Param("province") String province);
+    @Query("SELECT distinct c.keyword,c.shortKeyword,c.province FROM Point c WHERE c.pointId = :pointId")
+    String keyword(@Param("pointId") String pointId);
 
 }

@@ -2,9 +2,11 @@ package com.its.sanve.api.communication;
 
 
 import com.its.sanve.api.communication.anvui.AnVuiResponse;
+import com.its.sanve.api.communication.dto.OldCustomerRequest;
 import com.its.sanve.api.communication.dto.PriceTicketRequest;
 import com.its.sanve.api.communication.dto.RouteRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
+import com.its.sanve.api.entities.Customer;
 import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.entities.Trip;
 import retrofit2.Call;
@@ -26,5 +28,7 @@ public interface AnVuiCommunicate {
     Call<AnVuiResponse<LinkedHashMap<String,List<Trip>>>> getTrips(@Header("DOBODY6969")String token, @Body TripsRequest TripsRequest);
     @POST("sanve/get-price-ticket")
     Call<AnVuiResponse<Map<String, Map<String,Double>>>> getPriceTicket(@Header("DOBODY6969")String token, @Body PriceTicketRequest request);
+    @POST("company_customer/searchByPhoneNumber")
+    Call<AnVuiResponse<LinkedHashMap<String,Customer[]>>> oldCustomer(@Header("DOBODY6969")String token, @Body OldCustomerRequest request);
 
 }

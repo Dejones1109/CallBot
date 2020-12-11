@@ -3,9 +3,11 @@ package com.its.sanve.api.communication.anvui;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.its.sanve.api.communication.AbstractCommunication;
 import com.its.sanve.api.communication.AnVuiCommunicate;
+import com.its.sanve.api.communication.dto.OldCustomerRequest;
 import com.its.sanve.api.communication.dto.PriceTicketRequest;
 import com.its.sanve.api.communication.dto.RouteRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
+import com.its.sanve.api.entities.Customer;
 import com.its.sanve.api.entities.RouteInfo;
 import com.its.sanve.api.entities.TransactionToken;
 import com.its.sanve.api.entities.Trip;
@@ -161,6 +163,30 @@ public class AnVuiCommunication extends AbstractCommunication {
             return null;
         }
 
+    }
+    public Customer[] oldCustomerTicket(OldCustomerRequest oldCustomerRequest){
+        try {
+            Call<AnVuiResponse<LinkedHashMap<String,Customer[]>>> request = anVuiCommunicate.oldCustomer(tokenManage.getToken(), oldCustomerRequest);
+            log.info("request:{}", request);
+            Response<AnVuiResponse<LinkedHashMap<String,Customer[]>>> response = request.execute();
+            log.info("response:{}", response);
+            if (response.isSuccessful()) {
+                log.info("response successfully!!!");
+                AnVuiResponse<LinkedHashMap<String,Customer[]>> data = response.body();
+
+                Customer[] customer = data.getResults().get("customer");
+                log.info("customer:{}",customer);
+                return customer;
+
+            } else {
+                log.error("response failed!!!");
+                return null;
+            }
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        }
     }
 
 

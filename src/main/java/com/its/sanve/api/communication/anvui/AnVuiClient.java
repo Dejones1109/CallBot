@@ -1,7 +1,10 @@
 package com.its.sanve.api.communication.anvui;
 
+import com.its.sanve.api.communication.dto.OldCustomerRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
+import com.its.sanve.api.entities.Customer;
 import com.its.sanve.api.entities.Route;
+import com.its.sanve.api.entities.Ticket;
 import com.its.sanve.api.entities.Trip;
 import com.its.sanve.api.implement.QueryEntityImplement;
 import com.its.sanve.api.repositories.PointRepository;
@@ -81,8 +84,8 @@ public class AnVuiClient {
             mapRoute.put("startPointName", startPointNames);
             mapRoute.put("listEndPointId", endPointIds);
             mapRoute.put("endPointName", endPointNames);
-            mapRoute.put("startShortName",startShortNames);
-            mapRoute.put("endShortName",endShortNames);
+            mapRoute.put("startShortName", startShortNames);
+            mapRoute.put("endShortName", endShortNames);
             return mapRoute;
 
         } catch (Exception e) {
@@ -171,6 +174,64 @@ public class AnVuiClient {
         }
     }
 
+    public Map<String, Object> getOldCustomer(OldCustomerRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        String fullName = "";
+        List<String> pointUp = new ArrayList<>();
+        List<String> pointUpId = new ArrayList<>();
+        List<String> pointUpShort = new ArrayList<>();
+        List<String> pointDownId = new ArrayList<>();
+        List<String> provinceUp = new ArrayList<>();
+        List<String> provinceDown = new ArrayList<>();
+        List<String> pointDown = new ArrayList<>();
+        List<String> pointDownShort = new ArrayList<>();
+        try {
+            Customer[] customers = anVuiCommunication.oldCustomerTicket(request);
+            log.info("customer:{}",customers);
+            for (Customer customer : customers) {
+                log.info("ticket:{}",customer.getTickets());
+                for (Ticket ticket : customer.getTickets()) {
+                    fullName = ticket.getFullName();
+                    log.info("fullName:{}",fullName);
+                    pointUpId.add(ticket.getPointUp().getPointId());
+                    log.info("pointUpId:{}",pointUpId);
+                    String pUp = pointRepository.keyword(ticket.getPointUp().getPointId());
+                    log.info("pUp:{}",pUp);
+                    String[] subPointUp = pUp.split(",");
+                    pointUp.add(subPointUp[0]);
+                    log.info("pointUp:{}",pointUp);
+                    pointUpShort.add(subPointUp[1]);
+                    provinceUp.add(subPointUp[2]);
+                    log.info("pointUpShort:{}",pointUpShort);
+                    pointDownId.add(ticket.getPointDown().getPointId());
+                    log.info("pointDownId:{}",pointDownId);
+                    String pDown = pointRepository.keyword(ticket.getPointDown().getPointId());
+                    log.info("pDown:{}",pDown);
+                    String[] subPointDown = pDown.split(",");
+                    pointDown.add(subPointDown[0]);
+                    pointDownShort.add(subPointDown[1]);
+                    provinceDown.add(subPointDown[2]);
+
+                }
+            }
+
+
+            map.put("pointUp", pointUp);
+            map.put("pointUpId", pointUpId);
+            map.put("pointUpShort", pointUpShort);
+            map.put("pointDown", pointDown);
+            map.put("pointDownId", pointDownId);
+            map.put("pointDownShort", pointDownShort);
+            map.put("fullName", fullName);
+            map.put("provinceUp",provinceUp);
+            map.put("provinceDown",provinceDown);
+            return map;
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return null;
+        }
+    }
+
     private String conventTimer(Double startTimeReality) {
         String timer;
 //        double Time = Double.parseDouble(startTimeReality);
@@ -209,4 +270,5 @@ public class AnVuiClient {
 
         return (Integer.parseInt(substring[0]) * 60 + Integer.parseInt(substring[1])) * 60 * 1000;
     }
+
 }

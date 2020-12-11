@@ -2,6 +2,7 @@ package com.its.sanve.api.controller;
 
 import com.its.sanve.api.communication.anvui.AnVuiClient;
 import com.its.sanve.api.communication.anvui.AnVuiCommunication;
+import com.its.sanve.api.communication.dto.OldCustomerRequest;
 import com.its.sanve.api.communication.dto.PriceTicketRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
 import com.its.sanve.api.facede.GetDataFacade;
@@ -48,6 +49,15 @@ public class CallBotController {
     @PostMapping("getPriceTicket")
     public  Map<String, Object> getPriceTicket(@RequestBody PriceTicketRequest request){
         return anVuiCommunication.getPriceTicket(request);
+    }
+    @PostMapping("oldCustomer")
+    public Map<String,Object> oldCustomer(@RequestParam String phoneNumber ){
+        OldCustomerRequest request = new OldCustomerRequest();
+        request.setCount(5);
+        request.setPage(0);
+        request.setPhoneNumber(phoneNumber);
+        request.setRouteId("");
+        return anVuiClient.getOldCustomer(request);
     }
 
     private String convertDateTime(String date) throws ParseException {
