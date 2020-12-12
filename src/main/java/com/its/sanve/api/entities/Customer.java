@@ -13,4 +13,6 @@ import lombok.*;
 public class Customer {
    @JsonProperty("tickets")
     Ticket[] tickets;
+   @JsonProperty("companyCustomer")
+    CompanyInfo companyInfo;
 }

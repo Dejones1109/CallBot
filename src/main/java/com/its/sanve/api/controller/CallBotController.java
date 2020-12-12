@@ -51,13 +51,13 @@ public class CallBotController {
         return anVuiCommunication.getPriceTicket(request);
     }
     @PostMapping("oldCustomer")
-    public Map<String,Object> oldCustomer(@RequestParam String phoneNumber ){
+    public Map<String,Object> oldCustomer(@RequestParam String phone,@RequestParam String companyId){
         OldCustomerRequest request = new OldCustomerRequest();
         request.setCount(5);
         request.setPage(0);
-        request.setPhoneNumber(phoneNumber);
+        request.setPhoneNumber(phone);
         request.setRouteId("");
-        return anVuiClient.getOldCustomer(request);
+        return anVuiClient.getOldCustomer(request,companyId);
     }
 
     private String convertDateTime(String date) throws ParseException {

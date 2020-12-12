@@ -80,12 +80,12 @@ public class AnVuiClient {
             }
 
             mapRoute.put("status", status);
-            mapRoute.put("startPointId", startPointIds);
-            mapRoute.put("startPointName", startPointNames);
+            mapRoute.put("listStartPointId", startPointIds);
+            mapRoute.put("listStartPointName", startPointNames);
             mapRoute.put("listEndPointId", endPointIds);
-            mapRoute.put("endPointName", endPointNames);
-            mapRoute.put("startShortName", startShortNames);
-            mapRoute.put("endShortName", endShortNames);
+            mapRoute.put("listEndPointName", endPointNames);
+            mapRoute.put("listStartShortName", startShortNames);
+            mapRoute.put("listEndShortName", endShortNames);
             return mapRoute;
 
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class AnVuiClient {
         }
     }
 
-    public Map<String, Object> getOldCustomer(OldCustomerRequest request) {
+    public Map<String, Object> getOldCustomer(OldCustomerRequest request,String companyId) {
         Map<String, Object> map = new HashMap<>();
         String fullName = "";
         List<String> pointUp = new ArrayList<>();
@@ -189,30 +189,35 @@ public class AnVuiClient {
             Customer[] customers = anVuiCommunication.oldCustomerTicket(request);
             log.info("customer:{}",customers);
             for (Customer customer : customers) {
+                log.info("companyCustomer:{}",customer.getCompanyInfo().getId());
                 log.info("ticket:{}",customer.getTickets());
-                for (Ticket ticket : customer.getTickets()) {
-                    fullName = ticket.getFullName();
-                    log.info("fullName:{}",fullName);
-                    pointUpId.add(ticket.getPointUp().getPointId());
-                    log.info("pointUpId:{}",pointUpId);
-                    String pUp = pointRepository.keyword(ticket.getPointUp().getPointId());
-                    log.info("pUp:{}",pUp);
-                    String[] subPointUp = pUp.split(",");
-                    pointUp.add(subPointUp[0]);
-                    log.info("pointUp:{}",pointUp);
-                    pointUpShort.add(subPointUp[1]);
-                    provinceUp.add(subPointUp[2]);
-                    log.info("pointUpShort:{}",pointUpShort);
-                    pointDownId.add(ticket.getPointDown().getPointId());
-                    log.info("pointDownId:{}",pointDownId);
-                    String pDown = pointRepository.keyword(ticket.getPointDown().getPointId());
-                    log.info("pDown:{}",pDown);
-                    String[] subPointDown = pDown.split(",");
-                    pointDown.add(subPointDown[0]);
-                    pointDownShort.add(subPointDown[1]);
-                    provinceDown.add(subPointDown[2]);
+                if(customer.getCompanyInfo().getId().compareTo(companyId)==0){
+                    log.info("ticket:{}",customer.getTickets());
+                    for (Ticket ticket : customer.getTickets()) {
+                        fullName = ticket.getFullName();
+                        log.info("fullName:{}",fullName);
+                        pointUpId.add(ticket.getPointUp().getPointId());
+                        log.info("pointUpId:{}",pointUpId);
+                        String pUp = pointRepository.keyword(ticket.getPointUp().getPointId());
+                        log.info("pUp:{}",pUp);
+                        String[] subPointUp = pUp.split(",");
+                        pointUp.add(subPointUp[0]);
+                        log.info("pointUp:{}",pointUp);
+                        pointUpShort.add(subPointUp[1]);
+                        provinceUp.add(subPointUp[2]);
+                        log.info("pointUpShort:{}",pointUpShort);
+                        pointDownId.add(ticket.getPointDown().getPointId());
+                        log.info("pointDownId:{}",pointDownId);
+                        String pDown = pointRepository.keyword(ticket.getPointDown().getPointId());
+                        log.info("pDown:{}",pDown);
+                        String[] subPointDown = pDown.split(",");
+                        pointDown.add(subPointDown[0]);
+                        pointDownShort.add(subPointDown[1]);
+                        provinceDown.add(subPointDown[2]);
 
+                    }
                 }
+
             }
 
 
