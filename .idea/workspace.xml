@@ -20,17 +20,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac844f-a233-49a5-ac5d-4343e65cdea2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/dto/TicketRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/CustomerOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/CustomerOrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/AnVuiCommunicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/AnVuiCommunicate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/config/WebMvcConfigurerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/config/WebMvcConfigurerAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/controller/CallBotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/TransactionToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/entities/TransactionToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/GetDataFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/facede/GetDataFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/its/sanve/api/repositories/TransactionTokenRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Api-0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Api-0.1.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AnVuiCommunicate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/AnVuiCommunicate.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiCommunication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/communication/anvui/AnVuiCommunication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/WebMvcConfigurerAdapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/config/WebMvcConfigurerAdapter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/controller/CallBotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Ticket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/Ticket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/TransactionToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/entities/TransactionToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/its/sanve/api/facede/GetDataFacade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/its/sanve/api/repositories/TransactionTokenRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +90,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TicketFlight" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -86,6 +105,9 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\its-technical\Desktop\CallBot\src\main\resources" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.its.sanve.api.entities" />
       <recent name="com.its.sanve.api.repositories" />
@@ -145,7 +167,9 @@
       <workItem from="1606464219055" duration="40376000" />
       <workItem from="1606813488527" duration="83750000" />
       <workItem from="1607675747719" duration="7600000" />
-      <workItem from="1607736972352" duration="4034000" />
+      <workItem from="1607736972352" duration="6103000" />
+      <workItem from="1607996831261" duration="13857000" />
+      <workItem from="1608601658605" duration="26637000" />
     </task>
     <servers />
   </component>
@@ -173,6 +197,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="618" y="0" width="893" height="1040" key="#GatewayApplication/0.0.1920.1040@0.0.1920.1040" timestamp="1605772891556" />
+    <state x="550" y="59" key="#Java" timestamp="1608625237671">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="550" y="59" key="#Java/0.0.1920.1040@0.0.1920.1040" timestamp="1608625237671" />
     <state x="440" y="94" key="#Project_Structure" timestamp="1601351402808">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -181,10 +209,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" width="1100" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607677240759" />
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1606807123405">
+    <state x="710" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608200205720">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1606807123405" />
+    <state x="710" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608200205720" />
+    <state x="800" y="214" key="#com.intellij.ide.util.MemberChooser" timestamp="1608690661389">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="800" y="214" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608690661389" />
     <state x="689" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1602585466592">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -197,50 +229,66 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606272487872" />
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607073598254">
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1608604068110">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607073598254" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608604068110" />
     <state x="707" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1602240364588">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="707" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1602240364588" />
-    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1607684039831">
+    <state x="739" y="274" key="FileChooserDialogImpl" timestamp="1608623055959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607684039831" />
-    <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1607740016884">
+    <state x="739" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1608623055959" />
+    <state width="1438" height="611" key="GridCell.Tab.0.bottom" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.0.center" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.0.center" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.0.left" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.0.left" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.0.right" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.0.right" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.1.bottom" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.1.bottom" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.1.center" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.1.center" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.1.left" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.1.left" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
-    <state width="1877" height="372" key="GridCell.Tab.1.right" timestamp="1607740016884">
+    <state width="1438" height="611" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.1.right" timestamp="1608695001245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607740016884" />
+    <state width="1438" height="611" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.2.bottom" timestamp="1608695001245">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1438" height="611" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.2.center" timestamp="1608695001245">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1438" height="611" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.2.left" timestamp="1608695001245">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1438" height="611" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
+    <state width="1438" height="611" key="GridCell.Tab.2.right" timestamp="1608695001245">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1438" height="611" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608695001245" />
     <state x="490" y="175" key="Maven.ArtifactSearchDialog" timestamp="1605769100239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -276,17 +324,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java</url>
-          <line>36</line>
+          <line>33</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java</url>
-          <line>148</line>
+          <line>145</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiCommunication.java</url>
-          <line>136</line>
+          <line>133</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
@@ -299,7 +347,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/its/sanve/api/communication/anvui/AnVuiClient.java</url>
-          <line>239</line>
+          <line>262</line>
           <properties class="com.its.sanve.api.communication.anvui.AnVuiClient" method="conventTimer">
             <option name="EMULATED" value="true" />
           </properties>

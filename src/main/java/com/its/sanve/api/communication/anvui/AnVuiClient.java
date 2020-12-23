@@ -1,11 +1,10 @@
 package com.its.sanve.api.communication.anvui;
 
 import com.its.sanve.api.communication.dto.OldCustomerRequest;
+import com.its.sanve.api.communication.dto.TicketRequest;
 import com.its.sanve.api.communication.dto.TripsRequest;
-import com.its.sanve.api.entities.Customer;
-import com.its.sanve.api.entities.Route;
-import com.its.sanve.api.entities.Ticket;
-import com.its.sanve.api.entities.Trip;
+import com.its.sanve.api.entities.*;
+import com.its.sanve.api.facede.GetDataFacade;
 import com.its.sanve.api.implement.QueryEntityImplement;
 import com.its.sanve.api.repositories.PointRepository;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +26,8 @@ public class AnVuiClient {
     @Autowired
     QueryEntityImplement query;
 
+    @Autowired
+    GetDataFacade getDataFacade;
 
     public Map<String, Object> getRoute(String startPoint, String endPoint) {
         int status = 0;
@@ -174,7 +175,7 @@ public class AnVuiClient {
         }
     }
 
-    public Map<String, Object> getOldCustomer(OldCustomerRequest request,String companyId) {
+    public Map<String, Object> getOldCustomer(OldCustomerRequest request, String companyId) {
         Map<String, Object> map = new HashMap<>();
         String fullName = "";
         List<String> pointUp = new ArrayList<>();
@@ -187,29 +188,29 @@ public class AnVuiClient {
         List<String> pointDownShort = new ArrayList<>();
         try {
             Customer[] customers = anVuiCommunication.oldCustomerTicket(request);
-            log.info("customer:{}",customers);
+            log.info("customer:{}", customers);
             for (Customer customer : customers) {
-                log.info("companyCustomer:{}",customer.getCompanyInfo().getId());
-                log.info("ticket:{}",customer.getTickets());
-                if(customer.getCompanyInfo().getId().compareTo(companyId)==0){
-                    log.info("ticket:{}",customer.getTickets());
+                log.info("companyCustomer:{}", customer.getCompanyInfo().getId());
+                log.info("ticket:{}", customer.getTickets());
+                if (customer.getCompanyInfo().getId().compareTo(companyId) == 0) {
+                    log.info("ticket:{}", customer.getTickets());
                     for (Ticket ticket : customer.getTickets()) {
                         fullName = ticket.getFullName();
-                        log.info("fullName:{}",fullName);
+                        log.info("fullName:{}", fullName);
                         pointUpId.add(ticket.getPointUp().getPointId());
-                        log.info("pointUpId:{}",pointUpId);
+                        log.info("pointUpId:{}", pointUpId);
                         String pUp = pointRepository.keyword(ticket.getPointUp().getPointId());
-                        log.info("pUp:{}",pUp);
+                        log.info("pUp:{}", pUp);
                         String[] subPointUp = pUp.split(",");
                         pointUp.add(subPointUp[0]);
-                        log.info("pointUp:{}",pointUp);
+                        log.info("pointUp:{}", pointUp);
                         pointUpShort.add(subPointUp[1]);
                         provinceUp.add(subPointUp[2]);
-                        log.info("pointUpShort:{}",pointUpShort);
+                        log.info("pointUpShort:{}", pointUpShort);
                         pointDownId.add(ticket.getPointDown().getPointId());
-                        log.info("pointDownId:{}",pointDownId);
+                        log.info("pointDownId:{}", pointDownId);
                         String pDown = pointRepository.keyword(ticket.getPointDown().getPointId());
-                        log.info("pDown:{}",pDown);
+                        log.info("pDown:{}", pDown);
                         String[] subPointDown = pDown.split(",");
                         pointDown.add(subPointDown[0]);
                         pointDownShort.add(subPointDown[1]);
@@ -228,13 +229,35 @@ public class AnVuiClient {
             map.put("pointDownId", pointDownId);
             map.put("pointDownShort", pointDownShort);
             map.put("fullName", fullName);
-            map.put("provinceUp",provinceUp);
-            map.put("provinceDown",provinceDown);
+            map.put("provinceUp", provinceUp);
+            map.put("provinceDown", provinceDown);
             return map;
         } catch (Exception ex) {
             log.error(ex.getMessage());
             return null;
         }
+    }
+
+    public Object orderTicket(TicketRequest request) {
+        Map<String,Integer> map = new HashMap<>();
+        int status = 2;
+        try{
+            AnVuiResponse<Object> ticket = anVuiCommunication.orderTicket(request);
+            log.info("ticket:{}",ticket);
+
+            if(ticket==null){
+                status=0;
+            }else {
+                status=1;
+            }
+        }catch (Exception e){
+            log.info("error",e);
+            status=2;
+        }
+        getDataFacade.orderTicket(request,status);
+        log.info("status:{}",status);
+map.put("status",status);
+       return map ;
     }
 
     private String conventTimer(Double startTimeReality) {
@@ -269,6 +292,7 @@ public class AnVuiClient {
         }
         return timer;
     }
+
 
     private int conventHour(String startHour) {
         String[] substring = startHour.split("h");

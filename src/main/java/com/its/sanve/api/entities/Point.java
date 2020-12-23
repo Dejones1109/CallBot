@@ -8,9 +8,7 @@ package com.its.sanve.api.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,9 +22,24 @@ import java.util.List;
 
 @Table(name = "point")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Point {
+
+    public Point(String pointId, String routeId, String name, String address, String province, String district, String keyword, String shortKeyword, Double longitude, Double latitude) {
+        this.pointId = pointId;
+        this.routeId = routeId;
+        this.name = name;
+        this.address = address;
+        this.province = province;
+        this.district = district;
+        this.keyword = keyword;
+        this.shortKeyword = shortKeyword;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     @Id
     @Column(name = "point_of_route_id")
